@@ -1,0 +1,7 @@
+<svg width="0" height="0">
+  <defs>
+    <clipPath id="grunge-mask" clipPathUnits="objectBoundingBox">
+      <path d="M0.02,0.05 Q0.05,0.01 0.1,0.03 L0.9,0.02 Q0.95,0.01 0.98,0.06 L0.97,0.92 Q0.95,0.98 0.9,0.96 L0.1,0.97 Q0.03,0.99 0.02,0.92 Z M0.05,0.2 L0.03,0.22 L0.05,0.24 Z M0.95,0.7 L0.97,0.72 L0.95,0.74 Z" />
+    </clipPath>
+  </defs>
+</svg>
