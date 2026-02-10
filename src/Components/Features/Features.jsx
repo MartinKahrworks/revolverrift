@@ -24,13 +24,10 @@ const Features = () => {
   return (
     <section className="relative py-24 bg-black text-white overflow-hidden border-t border-white/5">
       {/* Animated Embers Background */}
-      <div
-        className="absolute inset-0 opacity-30 pointer-events-none"
-        style={{
-          backgroundImage: `url(${embersBackground})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}
+      <img
+        src={embersBackground}
+        alt="Background"
+        className="absolute inset-0 w-full h-full object-cover opacity-30 pointer-events-none"
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">

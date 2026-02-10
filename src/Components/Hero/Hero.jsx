@@ -5,7 +5,7 @@ import crackedBox from '../../assets/image.png';
 import SlantedGallery from './SlantedGallery';
 import CinematicSlider from './CinematicSlider';
 import bgGrunge from '../../assets/Texturelabs_Grunge_353M.webp';
-import comingSoonHero from '../../assets/COMINGSOONHERO.png';
+import comingSoonHero from '../../assets/shot2.1.webp';
 
 import ShopPreview from '../Shop/ShopPreview';
 
@@ -82,10 +82,7 @@ const HeroCountdown = () => {
 
                         {/* Bottom message */}
                         <div className="max-w-4xl mx-auto px-2 sm:px-4 w-full">
-                            <h2 className="text-white text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl leading-relaxed mb-4 sm:mb-6 md:mb-8 px-2">
-                                Hardcore PvPvE extraction shooter game. <br />
-                                Wishlisting available soon on PC stores.
-                            </h2>
+
 
                             {/* Store Logos */}
                             <div className="flex items-center justify-center gap-3 md:gap-4 mt-4 md:mt-6">
@@ -109,50 +106,9 @@ const HeroCountdown = () => {
                     </div>}
                 </div>
 
-                {/* Film Border Corners - Grunge Texture */}
-                <div
-                    className="absolute top-0 left-0 w-32 md:w-40 lg:w-48 h-32 md:h-40 lg:h-48 pointer-events-none z-40 opacity-60"
-                    style={{
-                        backgroundImage: `url(${bgGrunge})`,
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'top left',
-                        maskImage: 'linear-gradient(135deg, black 30%, transparent 70%)',
-                        WebkitMaskImage: 'linear-gradient(135deg, black 30%, transparent 70%)'
-                    }}
-                />
-                <div
-                    className="absolute top-0 right-0 w-32 md:w-40 lg:w-48 h-32 md:h-40 lg:h-48 pointer-events-none z-40 opacity-60"
-                    style={{
-                        backgroundImage: `url(${bgGrunge})`,
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'top right',
-                        maskImage: 'linear-gradient(225deg, black 30%, transparent 70%)',
-                        WebkitMaskImage: 'linear-gradient(225deg, black 30%, transparent 70%)'
-                    }}
-                />
-                <div
-                    className="absolute bottom-0 left-0 w-32 md:w-40 lg:w-48 h-32 md:h-40 lg:h-48 pointer-events-none z-40 opacity-60"
-                    style={{
-                        backgroundImage: `url(${bgGrunge})`,
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'bottom left',
-                        maskImage: 'linear-gradient(45deg, black 30%, transparent 70%)',
-                        WebkitMaskImage: 'linear-gradient(45deg, black 30%, transparent 70%)'
-                    }}
-                />
-                <div
-                    className="absolute bottom-0 right-0 w-32 md:w-40 lg:w-48 h-32 md:h-40 lg:h-48 pointer-events-none z-40 opacity-60"
-                    style={{
-                        backgroundImage: `url(${bgGrunge})`,
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'bottom right',
-                        maskImage: 'linear-gradient(315deg, black 30%, transparent 70%)',
-                        WebkitMaskImage: 'linear-gradient(315deg, black 30%, transparent 70%)'
-                    }}
-                />
 
-                {/* Bottom Fade Gradient - Extended for smooth transition */}
-                <div className="absolute bottom-0 left-0 w-full h-64 bg-gradient-to-t from-black via-black/60 to-transparent z-30 pointer-events-none" />
+
+
             </section>
 
             {/* Cinematic Slider - scroll animation is now inside the component */}
