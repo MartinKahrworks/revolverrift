@@ -65,7 +65,7 @@ const HeroCountdown = () => {
 
                 {/* Background Image - COMING SOON */}
                 <div
-                    className="absolute top-0 left-0 w-full h-full bg-cover bg-no-repeat z-0"
+                    className="absolute top-0 left-0 w-full h-[100vh] bg-cover bg-no-repeat z-0"
                     style={{
                         backgroundImage: `url(${comingSoonHero})`,
                         backgroundPosition: isMobile ? '40% center' : 'center center',

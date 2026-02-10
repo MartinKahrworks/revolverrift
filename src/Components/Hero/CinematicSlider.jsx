@@ -49,16 +49,25 @@ const CinematicSlider = () => {
     const sliderY = useTransform(scrollYProgress, [0, 1], [0, -100]);
 
     return (
-        <section ref={sectionRef} className="relative w-full min-h-[100vh] bg-transparent overflow-hidden flex flex-col justify-center pb-32 -mt-[300px] z-30 pointer-events-none">
+        <section ref={sectionRef} className="relative w-full min-h-[100vh] bg-transparent overflow-hidden flex flex-col justify-center pb-32 -mt-[200px] z-30 pointer-events-none">
             {/* Pointer events auto for children to allow interaction */}
 
 
             {/* Atmosphere Layers - Removed for seamless overlay */}
-            <div className="absolute inset-0 top-[300px] z-0 pointer-events-none">
+            <div
+                className="absolute inset-0 z-0 pointer-events-none"
+                style={{
+                    maskImage: 'linear-gradient(to bottom, transparent, black 25%)',
+                    WebkitMaskImage: 'linear-gradient(to bottom, transparent, black 25%)'
+                }}
+            >
+                {/* Solid Base to block Hero ghosting */}
+                <div className="absolute inset-0 bg-[#000000]" />
+
                 <img
                     src={embersBackground}
                     alt="Embers Background"
-                    className="w-full h-full object-cover opacity-100 mix-blend-screen"
+                    className="absolute inset-0 w-full h-full object-cover opacity-100 mix-blend-screen"
                 />
                 <div className="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black opacity-80" />
             </div>
@@ -138,7 +147,7 @@ const CinematicSlider = () => {
                             // Square dimensions to prevent cutting
                             className="w-[350px] h-[350px] sm:w-[450px] sm:h-[450px] md:w-[700px] md:h-[700px] relative transition-all duration-700 ease-out"
                         >
-                            <div className="w-full h-full relative overflow-hidden shadow-2xl group transition-all duration-500">
+                            <div className="w-full h-full relative overflow-hidden shadow-2xl shadow-black group transition-all duration-500">
                                 <img
                                     src={slide.image}
                                     alt={slide.title}
@@ -192,7 +201,7 @@ const CinematicSlider = () => {
             `}</style>
             {/* Removed top grunge border for better blending */}
             <div className="grunge-border-bottom mix-blend-multiply opacity-80" />
-        </section>
+        </section >
     );
 };
 
