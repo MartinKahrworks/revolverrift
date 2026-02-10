@@ -120,7 +120,7 @@ const App = () => {
         {isLoading && <Loader key="loader" isLoading={isLoading} />}
       </AnimatePresence>
       {/* Global Cinematic Vignette Overlay */}
-      <div className="fixed inset-0 pointer-events-none z-[9999] cinematic-vignette mix-blend-multiply" />
+      {/* <div className="fixed inset-0 pointer-events-none z-[9999] cinematic-vignette mix-blend-multiply" /> */}
       <main className="overflow-x-hidden bg-white dark:bg-black text-black dark:text-white duration-300">
         <Navbar />
         <Routes>
@@ -146,7 +146,11 @@ const App = () => {
               {/* <Banner7 /> */}
             </>
           } />
-          <Route path="/showcase" element={<Showcase />} />
+          <Route path="/showcase" element={
+            <><Showcase />
+              <Footer />
+            </>
+          } />
           <Route path="/shop" element={<Shop />} />
           {/* Character Routes */}
           <Route path="/characters" element={<Navigate to="/characters/leader" replace />} />

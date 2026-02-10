@@ -61,7 +61,7 @@ const CinematicSlider = () => {
             </div>
 
             {/* Atmosphere Layers */}
-            <div className="absolute inset-0 pointer-events-none z-10 cinematic-vignette mix-blend-multiply" />
+            {/* <div className="absolute inset-0 pointer-events-none z-10 cinematic-vignette mix-blend-multiply" /> */}
             <div className="absolute inset-0 pointer-events-none z-20 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20" />
 
             {/* Social Icons - Left Side */}
