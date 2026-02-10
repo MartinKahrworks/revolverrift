@@ -1,40 +1,14 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
 import poster2 from '../../assets/posters/fullposter1.png';
 import movingVideo from '../../assets/posters/moving video.mp4';
 import crackedBox from '../../assets/image.png';
 import SlantedGallery from './SlantedGallery';
 import CinematicSlider from './CinematicSlider';
 import bgGrunge from '../../assets/Texturelabs_Grunge_353M.webp';
+import comingSoonHero from '../../assets/COMINGSOONHERO.png';
 
 import ShopPreview from '../Shop/ShopPreview';
 
-// Scroll-linked wrapper component for carousel overlap effect
-const ScrollLinkedCarouselWrapper = ({ children }) => {
-    const targetRef = useRef(null);
-
-    // Track scroll progress relative to this component
-    // Start tracking when component enters viewport, end when it reaches overlap position
-    const { scrollYProgress } = useScroll({
-        target: targetRef,
-        offset: ["start end", "start start"] // Trigger: when carousel enters viewport → when it reaches top
-    });
-
-    // Map scroll progress to vertical translation
-    // 0% scroll → y = 0px (no overlap)
-    // 100% scroll → y = -400px (full overlap with hero, matching GodLike visual)
-    const y = useTransform(scrollYProgress, [0, 1], [0, -400]);
-
-    return (
-        <motion.div
-            ref={targetRef}
-            style={{ y }} // GPU-accelerated transform
-            className="relative z-30" // Ensure carousel appears above hero
-        >
-            {children}
-        </motion.div>
-    );
-};
 
 const HeroCountdown = () => {
     const sectionRef = useRef(null);
@@ -79,25 +53,25 @@ const HeroCountdown = () => {
     return (
         <div className="bg-black overflow-x-hidden">
             <section ref={sectionRef} className="relative w-full text-white font-serif overflow-hidden" style={{ minHeight: '100vh', maxWidth: '100vw' }}>
-                {/* Background Video */}
-                <video
+                {/* Background Video (Commented Out) */}
+                {/* <video
                     className="absolute top-0 left-0 w-full h-full object-cover z-0"
                     src={movingVideo}
                     autoPlay
                     loop
                     muted
                     playsInline
-                />
+                /> */}
 
-                {/* Background Image (Commented Out) */}
-                {/* <div
+                {/* Background Image - COMING SOON */}
+                <div
                     className="absolute top-0 left-0 w-full h-full bg-cover bg-no-repeat z-0"
                     style={{
-                        backgroundImage: `url(${poster2})`,
+                        backgroundImage: `url(${comingSoonHero})`,
                         backgroundPosition: isMobile ? '40% center' : 'center center',
                         minHeight: '100vh'
                     }}
-                /> */}
+                />
 
                 {/* 📜 Content */}
                 <div className="relative z-20 flex flex-col md:flex-row items-center justify-center px-4 sm:px-6 lg:px-8 py-8 md:py-10 w-full min-h-screen max-w-screen-2xl mx-auto">
@@ -177,16 +151,12 @@ const HeroCountdown = () => {
                     }}
                 />
 
-                {/* Bottom Fade Gradient */}
-                <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-[#050505] to-transparent z-30 pointer-events-none" />
+                {/* Bottom Fade Gradient - Extended for smooth transition */}
+                <div className="absolute bottom-0 left-0 w-full h-64 bg-gradient-to-t from-black via-black/60 to-transparent z-30 pointer-events-none" />
             </section>
 
-            {/* Scroll-linked carousel wrapper - creates cinematic overlap effect */}
-            {/* As user scrolls down, carousel moves upward to overlap hero bottom */}
-            {/* Motion is GPU-accelerated and tied strictly to scroll (no listeners) */}
-            <ScrollLinkedCarouselWrapper>
-                <CinematicSlider />
-            </ScrollLinkedCarouselWrapper>
+            {/* Cinematic Slider - scroll animation is now inside the component */}
+            <CinematicSlider />
 
             <SlantedGallery />
         </div >

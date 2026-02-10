@@ -133,7 +133,7 @@ const App = () => {
                 <Features />
                 <AboutGame />
                 <Trailer />
-                <ReleaseCountdown />
+
                 <Footer />
               </>
             }

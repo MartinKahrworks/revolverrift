@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { EffectCoverflow, Pagination, Navigation, Autoplay } from 'swiper/modules';
 import { FaTwitter, FaFacebook, FaInstagram, FaDiscord } from 'react-icons/fa';
+import { motion, useScroll, useTransform } from 'framer-motion';
 
 // Import Swiper styles
 import 'swiper/css';
@@ -13,7 +14,7 @@ import gun1 from '../../assets/newassets/GUN1.png';
 import gun2 from '../../assets/newassets/GUN2.png';
 import gun3 from '../../assets/newassets/GUN3.png';
 import gun4 from '../../assets/newassets/GUN4.png';
-import bgGrunge from '../../assets/Texturelabs_Grunge_353M.webp';
+import embersBackground from '../../assets/embers_background.gif';
 
 const slides = [
     { id: 1, image: gun1, title: 'Epic Battle Awaits', subtitle: 'Prepare for Glory' },
@@ -30,20 +31,33 @@ const socialLinks = [
 ];
 
 const CinematicSlider = () => {
+    const sectionRef = useRef(null);
+
+    // Track scroll progress relative to this section
+    const { scrollYProgress } = useScroll({
+        target: sectionRef,
+        offset: ["start end", "start start"] // Trigger: when section enters viewport → when it reaches top
+    });
+
+    // Map scroll progress to vertical translation for slider only
+    // 0% scroll → y = 0px (no overlap)
+    // 100% scroll → y = -150px (subtle overlap with hero)
+    const sliderY = useTransform(scrollYProgress, [0, 1], [0, -150]);
+
     return (
-        <section className="relative w-full h-[85vh] md:h-screen bg-transparent overflow-hidden flex flex-col justify-center py-10">
+        <section ref={sectionRef} className="relative w-full min-h-[100vh] bg-transparent overflow-hidden flex flex-col justify-center pb-32">
             {/* Background Texture & Pulse */}
             <div className="absolute inset-0 z-0">
                 <div
-                    className="absolute inset-0 opacity-20"
+                    className="absolute inset-0 opacity-30"
                     style={{
-                        backgroundImage: `url(${bgGrunge})`,
+                        backgroundImage: `url(${embersBackground})`,
                         backgroundSize: 'cover',
                         backgroundPosition: 'center',
                     }}
                 />
-                {/* Dynamic Background that changes could be added here, keeping it simple/dark for now */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent" />
+                {/* Dynamic Background gradient - smooth blend from hero */}
+                <div className="absolute inset-0 bg-gradient-to-b from-black/90 via-black/50 to-black/70" />
             </div>
 
             {/* Atmosphere Layers */}
@@ -65,8 +79,11 @@ const CinematicSlider = () => {
                 <div className="w-[1px] h-24 bg-gradient-to-b from-transparent via-white/20 to-transparent mx-auto mt-4" />
             </div> */}
 
-            {/* Swiper Container using strict overflow to limit view */}
-            <div className="w-full max-w-[1600px] relative z-30 px-4 md:px-0 mx-auto overflow-hidden">
+            {/* Swiper Container with scroll animation - only the cards move up */}
+            <motion.div
+                style={{ y: sliderY }}
+                className="w-full max-w-[1600px] relative z-30 px-4 md:px-0 mx-auto overflow-hidden"
+            >
                 <Swiper
                     effect={'coverflow'}
                     grabCursor={true}
@@ -136,7 +153,7 @@ const CinematicSlider = () => {
                         </SwiperSlide>
                     ))}
                 </Swiper>
-            </div>
+            </motion.div>
 
             {/* Custom Styles for Swiper Pagination/Bullets to match Red theme */}
             <style jsx>{`

@@ -1,6 +1,6 @@
 import React from 'react';
 import { FaGhost, FaGamepad, FaTrophy } from 'react-icons/fa';
-import bgGrunge from '../../assets/Texturelabs_Grunge_353M.webp';
+import embersBackground from '../../assets/embers_background.gif';
 
 const features = [
   {
@@ -23,11 +23,11 @@ const features = [
 const Features = () => {
   return (
     <section className="relative py-24 bg-black text-white overflow-hidden border-t border-white/5">
-      {/* Background Texture */}
+      {/* Animated Embers Background */}
       <div
-        className="absolute inset-0 opacity-10 pointer-events-none"
+        className="absolute inset-0 opacity-30 pointer-events-none"
         style={{
-          backgroundImage: `url(${bgGrunge})`,
+          backgroundImage: `url(${embersBackground})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}
