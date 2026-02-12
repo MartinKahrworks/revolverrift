@@ -47,6 +47,7 @@ const ScrollToTop = () => {
 };
 
 import Cursor from "./Components/Cursor/Cursor";
+import ViewportFrame from "./Components/Frame/ViewportFrame";
 
 const App = () => {
   const [isPlay, setIsPlay] = useState(false);
@@ -119,59 +120,67 @@ const App = () => {
       <AnimatePresence mode="wait">
         {isLoading && <Loader key="loader" isLoading={isLoading} />}
       </AnimatePresence>
-      {/* Global Cinematic Vignette Overlay */}
-      {/* <div className="fixed inset-0 pointer-events-none z-[9999] cinematic-vignette mix-blend-multiply" /> */}
-      <main className="overflow-x-hidden bg-white dark:bg-black text-black dark:text-white duration-300">
-        <Navbar />
-        <Routes>
-          {/* Home Page Route */}
-          <Route
-            path="/"
-            element={
-              <>
-                <HeroCountdown />
-                <Features />
-                <AboutGame />
-                <Trailer />
 
+      {/* Root Overlay Container */}
+      <div className="relative min-h-screen">
+
+        {/* Frame Overlay Layer */}
+        <ViewportFrame />
+
+        {/* Main Scrollable Content */}
+        <main className="relative z-10 overflow-x-hidden bg-white dark:bg-black text-black dark:text-white duration-300">
+          <Navbar />
+          <Routes>
+            {/* Home Page Route */}
+            <Route
+              path="/"
+              element={
+                <>
+                  <HeroCountdown />
+                  <Features />
+                  <AboutGame />
+                  <Trailer />
+
+                  <Footer />
+                </>
+              }
+            />
+            {/* Blog Routes */}
+            <Route path="/news" element={<NewsPage />} />
+            <Route path="/credits" element={
+              <>
+                <Testimonials />
+                {/* <Banner7 /> */}
+              </>
+            } />
+            <Route path="/showcase" element={
+              <><Showcase />
                 <Footer />
               </>
-            }
-          />
-          {/* Blog Routes */}
-          <Route path="/news" element={<NewsPage />} />
-          <Route path="/credits" element={
-            <>
-              <Testimonials />
-              {/* <Banner7 /> */}
-            </>
-          } />
-          <Route path="/showcase" element={
-            <><Showcase />
-              <Footer />
-            </>
-          } />
-          <Route path="/shop" element={<Shop />} />
-          {/* Character Routes */}
-          <Route path="/characters" element={<Navigate to="/characters/leader" replace />} />
-          <Route path="/characters/:id" element={<CharactersPage />} />
+            } />
+            <Route path="/shop" element={<Shop />} />
+            {/* Character Routes */}
+            <Route path="/characters" element={<Navigate to="/characters/leader" replace />} />
+            <Route path="/characters/:id" element={<CharactersPage />} />
 
-          <Route path="/partners" element={<Partners />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/content" element={
-            <>
-              <Banner />
-              <Banner8 />
-              <Banner9 />
-              <Banner10 />
-              <NewsCardGrid />
-            </>} />
+            <Route path="/partners" element={<Partners />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/content" element={
+              <>
+                <Banner />
+                <Banner8 />
+                <Banner9 />
+                <Banner10 />
+                <NewsCardGrid />
+              </>} />
 
-          <Route path="/blogs" element={<AllBlogsPage />} />
-          <Route path="/blog/:blogId" element={<BlogPostPage />} />
-        </Routes>
-        <PopupPlayer isPlay={isPlay} togglePlay={togglePlay} />
-      </main>
+            <Route path="/blogs" element={<AllBlogsPage />} />
+            <Route path="/blog/:blogId" element={<BlogPostPage />} />
+          </Routes>
+          <PopupPlayer isPlay={isPlay} togglePlay={togglePlay} />
+        </main>
+
+      </div>
     </>
   );
 };
