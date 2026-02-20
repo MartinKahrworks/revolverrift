@@ -1,0 +1,80 @@
+/* Cutting / Slice Animation */
+.cut-text {
+    position: relative;
+    display: inline-block;
+    color: transparent;
+    /* Hide original text to show pseudo-elements */
+    overflow: visible;
+}
+
+.cut-text::before,
+.cut-text::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    color: rgba(255, 255, 255, 0.85);
+    /* Default white color */
+    background: #030712;
+    /* Match Navbar bg to hide the cut */
+    overflow: hidden;
+    transition: transform 0.3s cubic-bezier(0.7, 0, 0.3, 1);
+}
+
+/* Top half */
+.cut-text::before {
+    clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%);
+    z-index: 2;
+}
+
+/* Bottom half */
+.cut-text::after {
+    clip-path: polygon(0 50%, 100% 50%, 100% 100%, 0 100%);
+    z-index: 1;
+}
+
+/* Hover Effects */
+.group:hover .cut-text::before,
+.cut-text.active::before {
+    transform: translate(-4px, -1px);
+    /* More split like reference */
+    transition-delay: 0.1s;
+    color: #ffffff;
+}
+
+.group:hover .cut-text::after,
+.cut-text.active::after {
+    transform: translate(4px, 1px);
+    /* More split like reference */
+    transition-delay: 0.1s;
+    color: #ffffff;
+}
+
+/* Active State Override - Gold/Yellow */
+/* Removed previous standalone block as it is now combined above */
+
+/* The Line */
+.cut-line {
+    position: absolute;
+    top: 50%;
+    left: -25%;
+    width: 150%;
+    height: 1px;
+    background: #ffffff;
+    /* Red color for the cut/glitch vibe like reference */
+    /* Gold/Yellow to match active text? Reference uses red usually */
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 0.3s cubic-bezier(0.7, 0, 0.3, 1);
+    z-index: 5;
+    pointer-events: none;
+    box-shadow: 0 0 5px #ffffff;
+}
+
+.group:hover .cut-line,
+.cut-text.active .cut-line {
+    transform: scaleX(1);
+    transition-delay: 0s;
+}

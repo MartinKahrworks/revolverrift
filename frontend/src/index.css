@@ -1,0 +1,190 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap');
+@import "slick-carousel/slick/slick.css";
+@import "slick-carousel/slick/slick-theme.css";
+@import url('https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap');
+
+@font-face {
+  font-family: 'MelmaCracked';
+  src: url('./assets/fonts/melma.cracked.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .primary-btn {
+    @apply bg-gradient-to-r from-primary to-secondary duration-300 py-2 px-6 text-white rounded-full hover:scale-105;
+  }
+
+  /* Cinematic Vignette Effect */
+  .cinematic-vignette {
+    /* Original black vignette - temporarily disabled */
+    background: radial-gradient(ellipse at center,
+        transparent 0%,
+        transparent 40%,
+        rgba(0, 0, 0, 0.4) 60%,
+        rgba(0, 0, 0, 0.9) 100%);
+
+    /* Temporary white vignette for visibility while working - now disabled */
+    /* background: radial-gradient(ellipse at center,
+        transparent 0%,
+        transparent 40%,
+        rgba(255, 255, 255, 0.4) 60%,
+        rgba(255, 255, 255, 0.9) 100%); */
+    pointer-events: none;
+  }
+
+  /* Grunge Border Mask */
+  .mask-grunge {
+    mask-image: url("data:image/svg+xml,%3Csvg width='100%25' height='100%25' viewBox='0 0 100 100' preserveAspectRatio='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M2,5 Q5,1 10,3 L90,2 Q95,1 98,6 L97,92 Q95,98 90,96 L10,97 Q3,99 2,92 Z' fill='black'/%3E%3C/svg%3E");
+    mask-size: 100% 100%;
+    mask-repeat: no-repeat;
+    mask-position: center;
+  }
+
+  .text-godlike {
+    font-family: 'Cinzel', serif;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
+  }
+
+  @keyframes drift {
+    0% {
+      transform: translateX(0) translateY(0);
+      opacity: 0;
+    }
+
+    20% {
+      opacity: 0.6;
+    }
+
+    80% {
+      opacity: 0.6;
+    }
+
+    100% {
+      transform: translateX(-50px) translateY(-20px);
+      opacity: 0;
+    }
+  }
+
+  .animate-fog {
+    animation: drift 20s infinite linear;
+  }
+}
+
+
+
+/* .animated-wrapper {
+  animation-name: move-wrapper;
+  animation-duration: 25s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+  position: absolute;
+}
+
+@keyframes move-wrapper {
+  0% {
+    transform: translate(150%, 30%) rotate(0) scale(0.8);
+  }
+
+  50% {
+    transform: translate(60vw, 0vh) rotate(150deg) scale(1.2);
+  }
+
+  to {
+    transform: translate(40vw, 40vh) rotate(0deg) scale(0.8);
+  }
+} */
+
+
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100%;
+  overflow-x: hidden;
+  font-family: 'Cinzel', serif;
+}
+
+#root,
+main {
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* GodLike Hero Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+/* Hero Element Animations */
+.godlike-hero .hero-title {
+  animation: fadeInUp 1s ease-out 0.3s both;
+}
+
+.godlike-hero .hero-subtitle {
+  animation: fadeInUp 1s ease-out 0.6s both;
+}
+
+.godlike-hero .hero-buttons {
+  animation: fadeInUp 1s ease-out 0.9s both;
+}
+
+.godlike-hero .hero-stores {
+  animation: fadeInUp 1s ease-out 1.2s both;
+}
+
+.godlike-hero .hero-scroll-indicator {
+  animation: fadeIn 1s ease-out 1.5s both;
+}
+
+.godlike-hero .social-icon {
+  animation: fadeIn 1s ease-out 1.8s both;
+}
+
+/* Button Styles */
+.godlike-btn-primary,
+.godlike-btn-secondary {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.godlike-btn-primary:hover,
+.godlike-btn-secondary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* @media (min-width: 768px) {
+  * {
+    cursor: none !important;
+  }
+} */
