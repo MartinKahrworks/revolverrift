@@ -1,0 +1,14 @@
+{
+  "kind": "singleType",
+  "collectionName": "credits_pages",
+  "info": {
+    "singularName": "credits-page",
+    "pluralName": "credits-pages",
+    "displayName": "credits-page"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {}
+}

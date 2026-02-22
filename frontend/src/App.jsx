@@ -180,8 +180,9 @@ const App = () => {
                 <NewsCardGrid />
               </>} />
 
+            {/* Blog Routes — powered by Strapi CMS */}
             <Route path="/blogs" element={<AllBlogsPage />} />
-            <Route path="/blog/:blogId" element={<BlogPostPage />} />
+            <Route path="/blog/:link" element={<BlogPostPage />} />
           </Routes>
           <PopupPlayer isPlay={isPlay} togglePlay={togglePlay} />
         </main>

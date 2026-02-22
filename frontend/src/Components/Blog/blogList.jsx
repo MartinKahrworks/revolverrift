@@ -1,8 +1,16 @@
 // src/Pages/BlogList.js
 import { Link } from "react-router-dom";
-import { NewsData } from "../../constant/blog";
+import { useEffect, useState } from "react";
+import { getBlogs } from "../../../api/blogApi";
 
 const BlogList = () => {
+
+  const [blogs, setBlogs] = useState([]);
+
+  useEffect(() => {
+    getBlogs().then(setBlogs);
+  }, []);
+
   return (
     <div className="w-full bg-black text-[#d1c7b7] pt-4 pb-16">
       <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -18,7 +26,7 @@ const BlogList = () => {
 
         {/* News Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 sm:gap-14">
-          {NewsData.map((news, index) => (
+          {blogs.map((news, index) => (
             <Link key={index} to={`/blog/${news.link}`}>
               <div
                 data-aos="fade-up"

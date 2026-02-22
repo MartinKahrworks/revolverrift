@@ -1,0 +1,14 @@
+{
+  "kind": "collectionType",
+  "collectionName": "showcase_galleries",
+  "info": {
+    "singularName": "showcase-gallery",
+    "pluralName": "showcase-galleries",
+    "displayName": "showcase-gallery"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {}
+}

@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { getBlogs, getBlogBySlug } from "../../../api/blogApi";
 import { Link, useParams, useNavigate } from "react-router-dom"; // Import useNavigate
 import { FaCameraRetro } from "react-icons/fa";
 import { GiNotebook } from "react-icons/gi";
@@ -70,7 +71,11 @@ export const NewsData = [
 // NewsCardGrid Component
 // ===================================
 export const NewsCardGrid = () => {
-  const displayedBlogs = NewsData.slice(0, 3);
+  const [blogs, setBlogs] = useState([]);
+
+  useEffect(() => {
+    getBlogs().then((data) => setBlogs(data.slice(0, 3)));
+  }, []);
 
   return (
     <div className="w-full bg-black text-[#d1c7b7] pt-4 pb-0 bg-cover bg-fixed "
@@ -85,20 +90,21 @@ export const NewsCardGrid = () => {
           </h1>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 sm:gap-14">
-          {displayedBlogs.map((news) => (
+          {blogs.map((news, index) => (
             <Link
-              to={`/blog/${news.id}`}
-              key={news.id}
-              // data-aos="fade-up"
-              data-aos-delay={news.delay}
+              to={`/blog/${news.link}`}
+              key={news.id ?? index}
               className="group backdrop-blur-md bg-[rgba(40,30,30,0.4)] border border-[#5a3e3e40] transition-all rounded-xl overflow-hidden p-8 sm:py-12 duration-300 cursor-pointer"
             >
-              <img
-                src={news.image}
-                alt={news.title}
-                className="w-full h-44 object-cover rounded-md mb-5 hover:scale-105 transition-transform duration-300 shadow-md"
-              />
-              {/* <div className="flex justify-center mb-3">{news.icon}</div> */}
+              {news.image ? (
+                <img
+                  src={news.image}
+                  alt={news.title}
+                  className="w-full h-44 object-cover rounded-md mb-5 hover:scale-105 transition-transform duration-300 shadow-md"
+                />
+              ) : (
+                <div className="w-full h-44 bg-[#1a0a0a] rounded-md mb-5" />
+              )}
               <h2
                 className="text-2xl font-bold mb-3"
                 style={{ fontFamily: "'Cinzel', serif", color: "#b89a6f" }}
@@ -131,21 +137,29 @@ export const NewsCardGrid = () => {
 };
 
 // ===================================
-// AllBlogsPage Component (Enhanced)
+// AllBlogsPage Component — Strapi CMS
 // ===================================
 export const AllBlogsPage = () => {
-  const navigate = useNavigate();
-  const sortedBlogs = [...NewsData].sort(
-    (a, b) => new Date(b.date) - new Date(a.date)
-  );
-
-  // Verify we have blogs
-  const featuredBlog = sortedBlogs[0];
-  const regularBlogs = sortedBlogs.slice(1);
+  const [blogs, setBlogs] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    getBlogs().then((data) => {
+      setBlogs(data);
+      setLoading(false);
+    });
   }, []);
+
+  const sortedBlogs = [...blogs].sort((a, b) => {
+    if (!a.publishDate && !b.publishDate) return 0;
+    if (!a.publishDate) return 1;
+    if (!b.publishDate) return -1;
+    return new Date(b.publishDate) - new Date(a.publishDate);
+  });
+
+  const featuredBlog = sortedBlogs[0];
+  const regularBlogs = sortedBlogs.slice(1);
 
   return (
     <div className="min-h-screen w-full bg-[#0a0a0a] text-white overflow-x-hidden relative">
@@ -157,12 +171,9 @@ export const AllBlogsPage = () => {
 
       {/* Navigation / Header Area */}
       <div className="relative z-10 pt-28 px-6 md:px-12 lg:px-24 pb-12">
-        {/* Back Button - Styled */}
-
-
         {/* Title Section */}
         <div className="mb-16 border-b border-white/10 pb-8">
-          <h1 className="text-6xl md:text-8xl font-black tracking-tighter uppercase text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-500 mb-4 font-custom">
+          <h1 className="text-6xl md:text-8xl font-black tracking-tighter uppercase text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-500 mb-4 font-melma">
             ALL DEVELOPER BLOGS
           </h1>
           <p className="text-red-500 font-mono tracking-widest uppercase text-sm">
@@ -170,15 +181,25 @@ export const AllBlogsPage = () => {
           </p>
         </div>
 
+        {loading && (
+          <div className="flex items-center justify-center py-32">
+            <p className="text-gray-500 font-mono uppercase tracking-widest animate-pulse">Loading posts...</p>
+          </div>
+        )}
+
         {/* Featured Article Section */}
-        {featuredBlog && (
-          <Link to={`/blog/${featuredBlog.id}`} className="block group mb-24 relative aspect-video md:aspect-[21/9] w-full overflow-hidden rounded-sm border border-white/10">
+        {!loading && featuredBlog && (
+          <Link to={`/blog/${featuredBlog.link}`} className="block group mb-24 relative aspect-video md:aspect-[21/9] w-full overflow-hidden rounded-sm border border-white/10">
             <div className="absolute inset-0 bg-gray-900 transition-transform duration-700 group-hover:scale-105">
-              <img
-                src={featuredBlog.image}
-                alt={featuredBlog.title}
-                className="w-full h-full object-cover opacity-60 group-hover:opacity-40 transition-opacity duration-500"
-              />
+              {featuredBlog.image ? (
+                <img
+                  src={featuredBlog.image}
+                  alt={featuredBlog.title}
+                  className="w-full h-full object-cover opacity-60 group-hover:opacity-40 transition-opacity duration-500"
+                />
+              ) : (
+                <div className="w-full h-full bg-[#1a0a0a]" />
+              )}
             </div>
 
             {/* Overlay Content */}
@@ -193,7 +214,7 @@ export const AllBlogsPage = () => {
                 {featuredBlog.description}
               </p>
               <div className="flex items-center gap-4 text-sm text-white font-mono uppercase">
-                <span>{new Date(featuredBlog.date).toDateString()}</span>
+                {featuredBlog.publishDate && <span>{new Date(featuredBlog.publishDate).toDateString()}</span>}
                 <span className="w-1 h-1 bg-red-600 rounded-full"></span>
                 <span>Read Article &rarr;</span>
               </div>
@@ -202,69 +223,147 @@ export const AllBlogsPage = () => {
         )}
 
         {/* Grid Section */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {regularBlogs.map((news) => (
-            <Link
-              to={`/blog/${news.id}`}
-              key={news.id}
-              className="group relative bg-white/5 border border-white/5 hover:border-red-600/50 transition-colors duration-300 overflow-hidden"
-            >
-              {/* Image Area */}
-              <div className="aspect-[4/3] overflow-hidden relative">
-                <img
-                  src={news.image}
-                  alt={news.title}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-300" />
-              </div>
-
-              {/* Content Area */}
-              <div className="p-8">
-                <div className="text-xs text-red-500 font-mono uppercase tracking-wider mb-3">
-                  {new Date(news.date).toLocaleDateString()}
+        {!loading && (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {regularBlogs.map((news) => (
+              <Link
+                to={`/blog/${news.link}`}
+                key={news.id}
+                className="group relative bg-white/5 border border-white/5 hover:border-red-600/50 transition-colors duration-300 overflow-hidden"
+              >
+                {/* Image Area */}
+                <div className="aspect-[4/3] overflow-hidden relative bg-[#1a0a0a]">
+                  {news.image ? (
+                    <img
+                      src={news.image}
+                      alt={news.title}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-[#1a0a0a]" />
+                  )}
+                  <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-300" />
                 </div>
-                <h3 className="text-2xl font-bold uppercase mb-4 leading-tight font-custom group-hover:text-red-500 transition-colors duration-300">
-                  {news.title}
-                </h3>
-                <p className="text-gray-400 font-serif line-clamp-3 leading-relaxed">
-                  {news.description}
-                </p>
-              </div>
 
-              {/* Hover Effect Line */}
-              <div className="absolute bottom-0 left-0 w-0 h-1 bg-red-600 transition-all duration-300 group-hover:w-full" />
-            </Link>
-          ))}
-        </div>
+                {/* Content Area */}
+                <div className="p-8">
+                  {news.publishDate && (
+                    <div className="text-xs text-red-500 font-mono uppercase tracking-wider mb-3">
+                      {new Date(news.publishDate).toLocaleDateString()}
+                    </div>
+                  )}
+                  <h3 className="text-2xl font-bold uppercase mb-4 leading-tight font-custom group-hover:text-red-500 transition-colors duration-300">
+                    {news.title}
+                  </h3>
+                  <p className="text-gray-400 font-serif line-clamp-3 leading-relaxed">
+                    {news.description}
+                  </p>
+                </div>
+
+                {/* Hover Effect Line */}
+                <div className="absolute bottom-0 left-0 w-0 h-1 bg-red-600 transition-all duration-300 group-hover:w-full" />
+              </Link>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
 };
 
 // ===================================
-// BlogPostPage Component
+// Rich Text Renderer (Strapi v5 Blocks)
+// ===================================
+const renderTextNode = (node, index) => {
+  let text = node.text;
+  if (!text) return null;
+  if (node.bold) return <strong key={index}>{text}</strong>;
+  if (node.italic) return <em key={index}>{text}</em>;
+  if (node.underline) return <u key={index}>{text}</u>;
+  if (node.code) return <code key={index} className="bg-white/10 px-1 rounded font-mono text-sm">{text}</code>;
+  return <span key={index}>{text}</span>;
+};
+
+const renderBlock = (block, index) => {
+  const children = block.children?.map((child, i) => {
+    if (child.type === "link") {
+      return (
+        <a key={i} href={child.url} target="_blank" rel="noopener noreferrer" className="text-red-500 underline">
+          {child.children?.map((c, j) => renderTextNode(c, j))}
+        </a>
+      );
+    }
+    return renderTextNode(child, i);
+  });
+  const sizeMap = { 1: "text-4xl", 2: "text-3xl", 3: "text-2xl", 4: "text-xl", 5: "text-lg", 6: "text-base" };
+  switch (block.type) {
+    case "paragraph":
+      return <p key={index} className="text-lg leading-relaxed text-[#e0c4a2] mb-5" style={{ fontFamily: "'EB Garamond', serif" }}>{children}</p>;
+    case "heading":
+      const Tag = `h${block.level}`;
+      return <Tag key={index} className={`${sizeMap[block.level] || "text-2xl"} font-bold text-white mb-4 mt-8 uppercase font-custom`}>{children}</Tag>;
+    case "list":
+      const ListTag = block.format === "ordered" ? "ol" : "ul";
+      const listStyle = block.format === "ordered" ? "list-decimal" : "list-disc";
+      return (
+        <ListTag key={index} className={`${listStyle} pl-6 mb-5 text-[#e0c4a2] space-y-1`} style={{ fontFamily: "'EB Garamond', serif" }}>
+          {block.children?.map((item, i) => (
+            <li key={i} className="text-lg leading-relaxed">{item.children?.map((c, j) => renderTextNode(c, j))}</li>
+          ))}
+        </ListTag>
+      );
+    case "quote":
+      return <blockquote key={index} className="border-l-4 border-red-600 pl-6 italic text-gray-400 my-6 text-lg" style={{ fontFamily: "'EB Garamond', serif" }}>{children}</blockquote>;
+    case "code":
+      return (
+        <pre key={index} className="bg-white/5 border border-white/10 rounded-lg p-4 overflow-x-auto my-6">
+          <code className="font-mono text-sm text-[#e0c4a2]">{block.children?.map((c) => c.text).join("")}</code>
+        </pre>
+      );
+    default:
+      return null;
+  }
+};
+
+const RichTextContent = ({ content }) => {
+  if (typeof content === "string") return <p className="text-lg leading-relaxed text-[#e0c4a2]" style={{ fontFamily: "'EB Garamond', serif" }}>{content}</p>;
+  if (Array.isArray(content)) return <>{content.map((block, i) => renderBlock(block, i))}</>;
+  return null;
+};
+
+// ===================================
+// BlogPostPage Component — Strapi CMS
 // ===================================
 export const BlogPostPage = () => {
-  const { blogId } = useParams();
-  const blogPost = NewsData.find((blog) => blog.id === blogId);
+  const { link } = useParams();
+  const [blogPost, setBlogPost] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
+    getBlogBySlug(link).then((data) => {
+      setBlogPost(data);
+      setLoading(false);
+    });
+  }, [link]);
+
+  if (loading) {
+    return (
+      <div className="w-full bg-cover bg-fixed text-[#d1c7b7] py-20 text-center"
+        style={{ backgroundImage: `url(${bgImage})` }}>
+        <p className="text-[#b89a6f] font-mono animate-pulse uppercase tracking-widest">Loading...</p>
+      </div>
+    );
+  }
 
   if (!blogPost) {
     return (
       <div className="w-full bg-cover bg-fixed text-[#d1c7b7] py-20 text-center"
-        style={{ backgroundImage: `url(${bgImage})` }}
-      >
-        <h1
-          className="text-4xl font-bold text-[#b89a6f]"
-          style={{ fontFamily: "'Cinzel', serif" }}
-        >
+        style={{ backgroundImage: `url(${bgImage})` }}>
+        <h1 className="text-4xl font-bold text-[#b89a6f]" style={{ fontFamily: "'Cinzel', serif" }}>
           Blog Post Not Found
         </h1>
-        <Link to="/blogs" className="text-blue-500 mt-4 inline-block font-custom">
+        <Link to="/blogs" className="text-red-500 mt-4 inline-block font-custom">
           Go back to all blogs
         </Link>
       </div>
@@ -272,34 +371,26 @@ export const BlogPostPage = () => {
   }
 
   return (
-    <div className="w-full  bg-cover bg-fixed text-[#d1c7b7] py-60 "
-      style={{ backgroundImage: `url(${bgImage})` }}
-    >
+    <div className="w-full bg-cover bg-fixed text-[#d1c7b7] py-60"
+      style={{ backgroundImage: `url(${bgImage})` }}>
       <div className="max-w-screen-md mx-auto px-4 sm:px-6 lg:px-8">
-        <h1
-          className="text-5xl font-bold mb-6 text-[#f4e1c1]"
-          style={{ fontFamily: "'Cinzel', serif" }}
-        >
+        <h1 className="text-5xl font-bold mb-6 text-[#f4e1c1] font-melma">
           {blogPost.title}
         </h1>
-        <div className="text-sm text-gray-500 mb-8">
-          Published on: {new Date(blogPost.date).toDateString()}
-        </div>
-        <img
-          src={blogPost.image}
-          alt={blogPost.title}
-          className="w-full h-80 object-cover rounded-lg mb-8 shadow-md"
-        />
-        <p
-          className="text-lg leading-relaxed font-light text-[#e0c4a2]"
-          style={{ fontFamily: "'EB Garamond', serif" }}
-        >
-          {blogPost.fullDescription}
-        </p>
-        <Link
-          to="/blogs"
-          className="mt-12 inline-block text-[#e4d6c3] hover:underline font-custom"
-        >
+        {blogPost.publishDate && (
+          <div className="text-sm text-gray-500 mb-8">
+            Published on: {new Date(blogPost.publishDate).toDateString()}
+          </div>
+        )}
+        {blogPost.image && (
+          <img
+            src={blogPost.image}
+            alt={blogPost.title}
+            className="w-full h-80 object-cover rounded-lg mb-8 shadow-md"
+          />
+        )}
+        <RichTextContent content={blogPost.fullDescription} />
+        <Link to="/blogs" className="mt-12 inline-block text-[#e4d6c3] hover:underline font-custom">
           ← Back to all blogs
         </Link>
       </div>

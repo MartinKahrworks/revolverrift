@@ -1,0 +1,14 @@
+{
+  "kind": "collectionType",
+  "collectionName": "developer_quotes",
+  "info": {
+    "singularName": "developer-quote",
+    "pluralName": "developer-quotes",
+    "displayName": "developer-quote"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {}
+}

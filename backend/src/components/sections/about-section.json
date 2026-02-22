@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_sections_about_sections",
+  "info": {
+    "displayName": "about-section"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "blocks"
+    },
+    "statistics": {
+      "type": "component",
+      "component": "elements.statistic-item",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}

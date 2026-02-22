@@ -1,0 +1,23 @@
+{
+  "collectionName": "components_sections_trailer_sections",
+  "info": {
+    "displayName": "trailer-section"
+  },
+  "options": {},
+  "attributes": {
+    "thumbnail": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "video_url": {
+      "type": "string"
+    }
+  },
+  "config": {}
+}

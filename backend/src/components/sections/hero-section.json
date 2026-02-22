@@ -1,0 +1,32 @@
+{
+  "collectionName": "components_sections_hero_sections",
+  "info": {
+    "displayName": "hero-section"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "subtitle": {
+      "type": "text"
+    },
+    "background_image": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "button_text": {
+      "type": "string"
+    },
+    "button_link": {
+      "type": "string"
+    }
+  },
+  "config": {}
+}
