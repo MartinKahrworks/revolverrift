@@ -21,9 +21,11 @@ import Banner7 from "./Components/Banner/Banner7";
 import Banner8 from "./Components/Banner/Banner8";
 import Banner9 from "./Components/Banner/Banner9";
 import Banner10 from "./Components/Banner/Banner10";
+import ContentPage from "./Components/ContentPage/ContentPage";
 import { NewsCardGrid, AllBlogsPage, BlogPostPage } from "./Components/Features/NewsCardGrid";
 import NewsPage from "./Components/News/NewsPage";
 import Showcase from "./Components/Showcase/Showcase";
+import GunsShowcase from "./Components/Showcase/GunsShowcase";
 import Partners from "./Components/Partners/partners";
 import Contact from "./Components/Contact/Contact";
 import Shop from "./Components/Shop/Shop";
@@ -155,7 +157,9 @@ const App = () => {
               </>
             } />
             <Route path="/showcase" element={
-              <><Showcase />
+              <>
+                <Showcase />
+                <GunsShowcase />
                 <Footer />
               </>
             } />
@@ -171,14 +175,7 @@ const App = () => {
 
             <Route path="/partners" element={<Partners />} />
             <Route path="/contact" element={<Contact />} />
-            <Route path="/content" element={
-              <>
-                <Banner />
-                <Banner8 />
-                <Banner9 />
-                <Banner10 />
-                <NewsCardGrid />
-              </>} />
+            <Route path="/content" element={<ContentPage />} />
 
             {/* Blog Routes — powered by Strapi CMS */}
             <Route path="/blogs" element={<AllBlogsPage />} />

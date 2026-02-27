@@ -10,5 +10,18 @@
     "draftAndPublish": true
   },
   "pluginOptions": {},
-  "attributes": {}
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "role": {
+      "type": "string"
+    },
+    "quote": {
+      "type": "blocks"
+    },
+    "order": {
+      "type": "integer"
+    }
+  }
 }

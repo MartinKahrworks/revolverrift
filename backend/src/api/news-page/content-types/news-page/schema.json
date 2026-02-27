@@ -10,5 +10,29 @@
     "draftAndPublish": true
   },
   "pluginOptions": {},
-  "attributes": {}
+  "attributes": {
+    "page_title": {
+      "type": "string",
+      "required": true,
+      "default": "ALL DEVELOPER BLOGS"
+    },
+    "subtitle": {
+      "type": "string",
+      "default": "// Official Developer Logs"
+    },
+    "background_texture": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "seo_title": {
+      "type": "string"
+    },
+    "seo_description": {
+      "type": "text"
+    }
+  }
 }

@@ -43,13 +43,25 @@ module.exports = [
     name: 'strapi::cors',
     config: {
       // Allow any localhost port — covers Vite's auto-incrementing ports (5173, 5174, 5175...)
+      // Also allows the deployed Vercel frontend in production
       origin: (ctx) => {
         const origin = ctx.request.header.origin;
         if (!origin) return false;
-        // Allow any localhost or 127.0.0.1 origin during development
+
+        // ✅ Local development — any localhost or 127.0.0.1 port
         if (origin.startsWith('http://localhost:') || origin.startsWith('http://127.0.0.1:')) {
           return origin;
         }
+
+        // ✅ Production — deployed Vercel frontend
+        const allowedProduction = [
+          'https://revolver2.vercel.app',
+          'https://revolverrift.vercel.app',  // add any other production domains here
+        ];
+        if (allowedProduction.includes(origin)) {
+          return origin;
+        }
+
         return false;
       },
       methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS', 'HEAD'],

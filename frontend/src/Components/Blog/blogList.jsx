@@ -33,12 +33,15 @@ const BlogList = () => {
                 data-aos-delay={news.delay}
                 className="group backdrop-blur-md bg-[rgba(40,30,30,0.4)] border border-[#5a3e3e40] transition-all rounded-xl overflow-hidden p-8 sm:py-12 duration-300 cursor-pointer"
               >
-                <img
-                  src={news.image}
-                  alt={news.title}
-                  className="w-full h-44 object-cover rounded-md mb-5 hover:scale-105 transition-transform duration-300 shadow-md"
-                />
-                <div className="flex justify-center mb-3">{news.icon}</div>
+                {news.image ? (
+                  <img
+                    src={news.image}
+                    alt={news.title}
+                    className="w-full h-44 object-cover rounded-md mb-5 hover:scale-105 transition-transform duration-300 shadow-md"
+                  />
+                ) : (
+                  <div className="w-full h-44 bg-[#1a0a0a] rounded-md mb-5" />
+                )}
                 <h2
                   className="text-2xl font-bold mb-3"
                   style={{ fontFamily: "'Cinzel', serif", color: "#b89a6f" }}

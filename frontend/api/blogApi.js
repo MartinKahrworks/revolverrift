@@ -65,3 +65,26 @@ export const getBlogBySlug = async (slug) => {
         publishDate: item.publish_date,
     };
 };
+
+// ─── News Page Metadata ───────────────────────────────────────────────────────
+// Fetches the global page data (title, subtitle, background image) for /blogs
+export const getNewsPageData = async () => {
+    try {
+        const res = await fetch(`${STRAPI_URL}/api/news-page?populate=*`);
+        if (!res.ok) return null;
+
+        const { data } = await res.json();
+        if (!data) return null;
+
+        return {
+            pageTitle: data.page_title || "ALL DEVELOPER BLOGS",
+            subtitle: data.subtitle || "// Official Developer Logs",
+            backgroundTexture: resolveImageUrl(data.background_texture?.url),
+            seoTitle: data.seo_title,
+            seoDescription: data.seo_description
+        };
+    } catch (err) {
+        console.error("[blogApi] getNewsPageData error:", err);
+        return null;
+    }
+};

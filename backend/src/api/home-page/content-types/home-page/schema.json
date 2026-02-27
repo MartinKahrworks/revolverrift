@@ -26,6 +26,11 @@
       "component": "sections.about-section",
       "repeatable": true
     },
+    "gallery_items": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::gallery-item.gallery-item"
+    },
     "trailer": {
       "type": "component",
       "component": "sections.trailer-section",

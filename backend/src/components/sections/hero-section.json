@@ -26,6 +26,16 @@
     },
     "button_link": {
       "type": "string"
+    },
+    "cinematic_slider": {
+      "type": "media",
+      "multiple": true,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
     }
   },
   "config": {}

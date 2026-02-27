@@ -21,7 +21,8 @@
     right: 0;
     width: 100%;
     height: auto;
-    max-height: 25vh;
+    max-height: clamp(80px, 15vh, 200px);
+    /* 👈 Clamped size */
     object-fit: fill;
 }
 
@@ -31,7 +32,8 @@
     right: 0;
     width: 100%;
     height: auto;
-    max-height: 25vh;
+    max-height: clamp(80px, 15vh, 200px);
+    /* 👈 Clamped size */
     object-fit: fill;
 }
 
@@ -41,7 +43,8 @@
     left: 0;
     height: 100%;
     width: auto;
-    max-width: 25vw;
+    max-width: clamp(60px, 15vw, 150px);
+    /* 👈 Clamped size */
     object-fit: fill;
 }
 
@@ -51,6 +54,7 @@
     right: 0;
     height: 100%;
     width: auto;
-    max-width: 25vw;
+    max-width: clamp(60px, 15vw, 150px);
+    /* 👈 Clamped size */
     object-fit: fill;
 }

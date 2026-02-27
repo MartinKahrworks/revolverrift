@@ -4,11 +4,26 @@
   "info": {
     "singularName": "showcase-page",
     "pluralName": "showcase-pages",
-    "displayName": "showcase-Page"
+    "displayName": "showcase-page"
   },
   "options": {
     "draftAndPublish": true
   },
   "pluginOptions": {},
-  "attributes": {}
+  "attributes": {
+    "page_title": {
+      "type": "string",
+      "default": "MEDIA GALLERY"
+    },
+    "subtitle": {
+      "type": "string",
+      "default": "// Visual Field Reports"
+    },
+    "seo_title": {
+      "type": "string"
+    },
+    "seo_description": {
+      "type": "text"
+    }
+  }
 }

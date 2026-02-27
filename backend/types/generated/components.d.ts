@@ -57,6 +57,10 @@ export interface SectionsHeroSection extends Struct.ComponentSchema {
     >;
     button_link: Schema.Attribute.String;
     button_text: Schema.Attribute.String;
+    cinematic_slider: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios',
+      true
+    >;
     subtitle: Schema.Attribute.Text;
     title: Schema.Attribute.String;
   };

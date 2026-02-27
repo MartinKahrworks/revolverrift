@@ -1,80 +1,25 @@
 import React, { useEffect, useState } from "react";
-import { getBlogs, getBlogBySlug } from "../../../api/blogApi";
-import { Link, useParams, useNavigate } from "react-router-dom"; // Import useNavigate
-import { FaCameraRetro } from "react-icons/fa";
-import { GiNotebook } from "react-icons/gi";
-import { SlNote } from "react-icons/sl";
+import { getBlogs, getBlogBySlug, getNewsPageData } from "../../../api/blogApi";
+import { getHomePage } from "../../../api/homeApi";
+import { Link, useParams } from "react-router-dom";
 
-// Your image imports
-import img1 from "../../assets/newassets/colt 19111.png";
-
-import img2 from "../../assets/newassets/trench_gun_3.webp";
-import img3 from "../../assets/newassets/p08 2.png";
-import img4 from "../../assets/newassets/Mosin_Nagant_3.webp";
 import bgImage from '../../assets/Texturelabs_Grunge_353M.webp';
 
-// ===================================
-// News Data (Modified)
-// ===================================
-export const NewsData = [
-  {
-    id: "the-art-of-building-immersion",
-    title: "The Art of Building Immersion",
-    icon: <FaCameraRetro className="text-4xl text-accent duration-300" />,
-    image: img1,
-    description:
-      "Creating a truly immersive experience isn’t just about visuals it’s about the small details that pull players into another world.",
-    fullDescription:
-      "Creating a truly immersive experience isn’t just about visuals it’s about the small details that pull players into another world. From ambient sounds to the way light filters through a room, these subtle touches invite players to feel like they’re not just playing a game, but living in it. We focus on atmosphere over perfection, knowing that mood and engagement are what matter most. Every corner tells a story, and even the smallest detail can change how players experience the world we create.",
-    date: "2025-08-26",
-    delay: "300",
-  },
-  {
-    id: "the-power-of-uncertainty",
-    title: "The Power of Uncertainty: Creating Suspense",
-    icon: <GiNotebook className="text-4xl text-accent duration-300" />,
-    image: img2,
-    description:
-      "Suspense is the art of leaving players uncertain about what comes next. It’s not just the big moments that make players tense it’s the quiet ones too.",
-    fullDescription:
-      "Suspense is the art of leaving players uncertain about what comes next. It’s not just the big moments that make players tense it’s the quiet ones too. The moments of silence, slow pacing, and what players don’t see, often have the greatest impact. Creating suspense means building tension without giving too much away, keeping players on edge and making every twist feel unexpected. It’s about playing with their minds as much as the gameplay itself.",
-    date: "2025-08-20",
-    delay: "400",
-  },
-  {
-    id: "the-invisible-work",
-    title: "The Invisible Work: Making the Game Feel Real",
-    icon: <SlNote className="text-4xl text-accent duration-300" />,
-    image: img3,
-    description:
-      "Some of the most important work in game design is invisible. It’s the subtle things.",
-    fullDescription:
-      "Some of the most important work in game design is invisible. It’s the subtle animations, ambient sounds, and interaction feedback that make the world feel real. Whether it’s a hand movement or the soft rustle of leaves, these small details are what create a living, breathing world. The goal is to make every interaction feel natural, and that’s the invisible work that truly brings the game to life.",
-    date: "2025-08-15",
-    delay: "500",
-  },
-  {
-    id: "the-future-of-gaming",
-    title: "The Future of Gaming",
-    icon: <GiNotebook className="text-4xl text-accent duration-300" />,
-    image: img4,
-    description:
-      "Exploring upcoming trends and technologies that will shape the gaming industry.",
-    fullDescription:
-      "The gaming industry is constantly evolving, with new technologies like cloud gaming, AI-driven NPCs, and haptic feedback revolutionizing the player experience. We're looking at how these innovations will create more personalized and dynamic worlds. The future is not just about better graphics it’s about more intelligent and responsive game worlds that adapt to every player.",
-    date: "2025-08-01",
-    delay: "600",
-  },
-];
+
 
 // ===================================
-// NewsCardGrid Component
+// Developer Blogs (Homepage)
 // ===================================
 export const NewsCardGrid = () => {
   const [blogs, setBlogs] = useState([]);
 
   useEffect(() => {
-    getBlogs().then((data) => setBlogs(data.slice(0, 3)));
+    // We get the data pre-fetched by homeApi.js connected to the Blog CMS!
+    getHomePage().then((data) => {
+      if (data && data.latestNews) {
+        setBlogs(data.latestNews);
+      }
+    });
   }, []);
 
   return (
@@ -112,7 +57,7 @@ export const NewsCardGrid = () => {
                 {news.title}
               </h2>
               <p
-                className="text-base leading-relaxed font-light"
+                className="text-base leading-relaxed font-light line-clamp-3"
                 style={{
                   fontFamily: "'EB Garamond', serif",
                   color: "#e0c4a2",
@@ -128,7 +73,7 @@ export const NewsCardGrid = () => {
             to="/blogs"
             className="text-[#e4d6c3] border border-[#b89a6f] px-6 py-3 rounded-md transition-all duration-300 hover:bg-[#b89a6f] hover:text-black font-custom"
           >
-            See All Blogs
+            Explore More Blogs
           </Link>
         </div>
       </div>
@@ -141,12 +86,17 @@ export const NewsCardGrid = () => {
 // ===================================
 export const AllBlogsPage = () => {
   const [blogs, setBlogs] = useState([]);
+  const [pageData, setPageData] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    getBlogs().then((data) => {
-      setBlogs(data);
+    Promise.all([
+      getBlogs(),
+      getNewsPageData()
+    ]).then(([blogsData, metadata]) => {
+      setBlogs(blogsData);
+      setPageData(metadata);
       setLoading(false);
     });
   }, []);
@@ -163,10 +113,13 @@ export const AllBlogsPage = () => {
 
   return (
     <div className="min-h-screen w-full bg-[#0a0a0a] text-white overflow-x-hidden relative">
-      {/* Background Texture */}
+      {/* Background Texture — Strapi image if available, else local fallback */}
       <div
         className="fixed inset-0 opacity-20 pointer-events-none z-0"
-        style={{ backgroundImage: `url(${bgImage})`, backgroundSize: 'cover' }}
+        style={{
+          backgroundImage: `url(${pageData?.backgroundTexture || bgImage})`,
+          backgroundSize: 'cover'
+        }}
       />
 
       {/* Navigation / Header Area */}
@@ -174,10 +127,10 @@ export const AllBlogsPage = () => {
         {/* Title Section */}
         <div className="mb-16 border-b border-white/10 pb-8">
           <h1 className="text-6xl md:text-8xl font-black tracking-tighter uppercase text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-500 mb-4 font-melma">
-            ALL DEVELOPER BLOGS
+            {pageData?.pageTitle || "ALL DEVELOPER BLOGS"}
           </h1>
           <p className="text-red-500 font-mono tracking-widest uppercase text-sm">
-               // Official Developer Logs
+            {pageData?.subtitle || "// Official Developer Logs"}
           </p>
         </div>
 

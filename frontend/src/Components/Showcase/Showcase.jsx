@@ -1,270 +1,348 @@
-import { useState, useEffect } from "react";
-import { getGalleryMedia } from "../../api/galleryApi";
-
-// Animated background
+import { useState, useEffect, useCallback } from "react";
+import { getGalleryMediaFromStrapi, getShowcasePageData, FALLBACK_SHOWCASE_PAGE } from "../../api/galleryApi";
 import embersBackground from "../../assets/embers_background.gif";
 
-const Showcase = () => {
-  const [selectedImageIndex, setSelectedImageIndex] = useState(null);
-  const [isExploreOpen, setIsExploreOpen] = useState(false);
-  const [allImages, setAllImages] = useState([]);
+// ─── Category badge colours ────────────────────────────────────────────────────
+const CATEGORY_COLORS = {
+  screenshot: { bg: "bg-red-600", text: "text-black" },
+  artwork: { bg: "bg-[#e4d6c3]", text: "text-black" },
+  weapon: { bg: "bg-white/90", text: "text-black" },
+  environment: { bg: "bg-emerald-700", text: "text-white" },
+};
 
-  // Fetch gallery media on mount
-  useEffect(() => {
-    const data = getGalleryMedia();
-    setAllImages(data);
-  }, []);
+const CategoryBadge = ({ category }) => {
+  const style = CATEGORY_COLORS[category] ?? CATEGORY_COLORS.screenshot;
+  return (
+    <span className={`inline-block ${style.bg} ${style.text} px-2 py-0.5 text-[9px] font-bold uppercase tracking-widest rounded-sm`}>
+      {category}
+    </span>
+  );
+};
 
-  // Main gallery shows curated artistic selection (first 10 images)
-  const mainGalleryImages = allImages.slice(0, 10);
+// ─── Bento grid span classes ───────────────────────────────────────────────────
+const getSpan = (orientation, index) => {
+  if (orientation === "panoramic") return "col-span-2 md:col-span-3 lg:col-span-4 row-span-1";
+  if (orientation === "portrait") return "col-span-1 row-span-2";
+  if (orientation === "landscape" && index % 7 === 0) return "col-span-2 row-span-1";
+  return "col-span-1 row-span-1";
+};
 
-  const handleImageClick = (index) => {
-    setSelectedImageIndex(index);
-  };
-
-  const closeModal = () => setSelectedImageIndex(null);
-
-  const openExplore = () => setIsExploreOpen(true);
-  const closeExplore = () => setIsExploreOpen(false);
-
-  // Navigate to next/previous image
-  const goToNext = (e) => {
-    e.stopPropagation();
-    if (allImages.length > 0) {
-      setSelectedImageIndex((prev) => (prev + 1) % allImages.length);
-    }
-  };
-
-  const goToPrevious = (e) => {
-    e.stopPropagation();
-    if (allImages.length > 0) {
-      setSelectedImageIndex((prev) => (prev - 1 + allImages.length) % allImages.length);
-    }
-  };
-
-  // ESC key to close modals, Arrow keys for navigation
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (e.key === "Escape") {
-        closeModal();
-        closeExplore();
-      }
-      if (selectedImageIndex !== null) {
-        if (e.key === "ArrowRight") goToNext(e);
-        if (e.key === "ArrowLeft") goToPrevious(e);
-      }
-    };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [selectedImageIndex, allImages.length]);
-
-  // Prevent body scroll when modal is open
-  useEffect(() => {
-    if (selectedImageIndex !== null || isExploreOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "unset";
-    }
-  }, [selectedImageIndex, isExploreOpen]);
-
-  // Get dynamic grid classes based on orientation
-  const getGridClasses = (orientation) => {
-    switch (orientation) {
-      case 'panoramic':
-        return 'col-span-1 md:col-span-2 lg:col-span-3 row-span-1'; // Full width
-      case 'landscape':
-        return 'col-span-1 md:col-span-2 lg:col-span-2 row-span-1'; // Wide
-      case 'portrait':
-        return 'col-span-1 row-span-2'; // Tall
-      case 'square':
-      default:
-        return 'col-span-1 row-span-1'; // Default
-    }
-  };
+// ─── Single Lightbox Modal ─────────────────────────────────────────────────────
+const Lightbox = ({ images, index, onClose, onNav }) => {
+  if (index === null || !images[index]) return null;
+  const img = images[index];
 
   return (
-    <>
-      {/* Scrolling Content Section with Embers Background */}
-      <section
-        className="relative w-full min-h-screen py-20 md:py-32 bg-cover bg-center bg-fixed"
-        style={{
-          backgroundImage: `url(${embersBackground})`,
-        }}
+    <div
+      className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-sm flex items-center justify-center"
+      onClick={onClose}
+    >
+      {/* Film grain overlay */}
+      <div className="absolute inset-0 opacity-[0.04] pointer-events-none"
+        style={{ backgroundImage: "url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22n%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.9%22 numOctaves=%224%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23n)%22/%3E%3C/svg%3E')" }}
+      />
+
+      {/* Close */}
+      <button onClick={onClose} className="absolute top-5 right-6 text-white/50 hover:text-red-500 font-mono text-sm tracking-widest uppercase transition-colors z-10">
+        ✕ ESC
+      </button>
+
+      {/* Prev */}
+      <button
+        onClick={(e) => { e.stopPropagation(); onNav(-1); }}
+        className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-10 border border-white/20 hover:border-red-600 bg-black/60 text-white p-3 transition-all duration-300 hover:bg-red-600/20"
+        aria-label="Previous"
       >
-        {/* Dark overlay for better readability */}
-        <div className="absolute inset-0 bg-black/40 pointer-events-none" />
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 19l-7-7 7-7" />
+        </svg>
+      </button>
 
-        <div className="container mx-auto px-4 md:px-8 max-w-7xl relative z-10">
+      {/* Image */}
+      <div className="flex flex-col items-center gap-4 max-w-[88vw]" onClick={(e) => e.stopPropagation()}>
+        <img
+          src={img.image}
+          alt={img.title}
+          className="max-h-[78vh] max-w-full object-contain shadow-2xl"
+        />
+        {/* Caption bar */}
+        <div className="flex items-center gap-4 text-sm font-mono">
+          <CategoryBadge category={img.category} />
+          {img.title && <span className="text-white/70 uppercase tracking-widest text-xs">{img.title}</span>}
+          <span className="text-white/30 ml-auto">{index + 1} / {images.length}</span>
+        </div>
+      </div>
 
-          {/* Dynamic Orientation-Aware Gallery Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mb-12 auto-rows-[minmax(200px,auto)] grid-flow-dense">
-            {mainGalleryImages.map((media, idx) => (
+      {/* Next */}
+      <button
+        onClick={(e) => { e.stopPropagation(); onNav(1); }}
+        className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-10 border border-white/20 hover:border-red-600 bg-black/60 text-white p-3 transition-all duration-300 hover:bg-red-600/20"
+        aria-label="Next"
+      >
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5l7 7-7 7" />
+        </svg>
+      </button>
+    </div>
+  );
+};
+
+// ─── Explore Drawer ────────────────────────────────────────────────────────────
+const ExploreDrawer = ({ images, onClose, onImageClick, activeFilter, setActiveFilter }) => {
+  const categories = ["all", ...new Set(images.map((i) => i.category))];
+  const filtered = activeFilter === "all" ? images : images.filter((i) => i.category === activeFilter);
+
+  return (
+    <div className="fixed inset-0 z-50 overflow-y-auto">
+      {/* BG */}
+      <div className="fixed inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${embersBackground})` }} />
+      <div className="fixed inset-0 backdrop-blur-2xl bg-black/70" />
+
+      <div className="relative z-10 min-h-screen">
+        {/* Sticky Header */}
+        <div className="sticky top-0 z-20 bg-black/60 backdrop-blur-md border-b border-white/10">
+          <div className="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
+            <div>
+              <h2 className="text-2xl md:text-3xl font-custom uppercase tracking-widest text-white">Media Gallery</h2>
+              <p className="text-red-500 font-mono text-xs tracking-[0.3em] uppercase mt-1">// Visual Field Reports</p>
+            </div>
+            <button onClick={onClose} className="text-white/40 hover:text-red-500 font-mono text-sm uppercase tracking-widest transition-colors">
+              ✕ Close
+            </button>
+          </div>
+          {/* Filter tabs */}
+          <div className="max-w-7xl mx-auto px-6 pb-4 flex gap-3 flex-wrap">
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setActiveFilter(cat)}
+                className={`px-4 py-1.5 text-xs font-mono uppercase tracking-widest border transition-all duration-200 ${activeFilter === cat
+                    ? "border-red-600 bg-red-600/10 text-white"
+                    : "border-white/20 text-white/50 hover:border-white/40 hover:text-white/80"
+                  }`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Grid */}
+        <div className="max-w-7xl mx-auto px-6 py-8">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+            {filtered.map((media, idx) => (
               <div
                 key={media.id}
-                className={`group relative overflow-hidden rounded-xl shadow-2xl cursor-pointer transition-all duration-300 hover:shadow-red-900/30 ${getGridClasses(media.orientation)}`}
+                onClick={() => onImageClick(images.indexOf(media))}
+                className="group relative aspect-square overflow-hidden border border-white/10 hover:border-red-600/50 transition-all duration-300 cursor-pointer bg-[#0a0a0a]"
               >
                 <img
                   src={media.image}
-                  alt={media.name}
-                  onClick={() => handleImageClick(idx)}
-                  className="w-full h-full object-cover rounded-xl hover:scale-[1.02] transition-transform duration-500"
+                  alt={media.title}
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                 />
+                {/* Hover overlay */}
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/50 transition-all duration-300 flex flex-col justify-end p-3 opacity-0 group-hover:opacity-100">
+                  <CategoryBadge category={media.category} />
+                  {media.title && (
+                    <p className="text-white text-xs font-mono uppercase tracking-wider mt-1 line-clamp-1">{media.title}</p>
+                  )}
+                </div>
+                {/* Bottom red bar on hover */}
+                <div className="absolute bottom-0 left-0 w-0 h-[2px] bg-red-600 transition-all duration-300 group-hover:w-full" />
               </div>
             ))}
           </div>
-
-          {/* Explore More Button */}
-          <div className="flex justify-center mb-20">
-            <button
-              onClick={openExplore}
-              className="group relative px-10 py-4 bg-gradient-to-r from-red-900/80 to-red-800/80 hover:from-red-800 hover:to-red-700 text-white font-bold text-lg rounded-lg shadow-2xl transition-all duration-300 hover:scale-105 hover:shadow-red-900/50 border border-red-700/50"
-            >
-              <span className="relative z-10 flex items-center gap-3">
-                EXPLORE MORE
-                <svg
-                  className="w-5 h-5 group-hover:translate-x-1 transition-transform"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M13 7l5 5m0 0l-5 5m5-5H6"
-                  />
-                </svg>
-              </span>
-              <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 rounded-lg transition-opacity duration-300" />
-            </button>
-          </div>
+          <p className="text-center text-white/20 font-mono text-xs uppercase tracking-widest mt-8">{filtered.length} items</p>
         </div>
-      </section>
+      </div>
+    </div>
+  );
+};
 
-      {/* Single Image Modal/Lightbox with Navigation */}
-      {selectedImageIndex !== null && allImages[selectedImageIndex] && (
-        <div
-          onClick={closeModal}
-          className="fixed inset-0 bg-black/95 flex items-center justify-center z-50 cursor-pointer backdrop-blur-sm animate-fadeIn"
-        >
-          {/* Close Button */}
-          <button
-            className="absolute top-6 right-6 text-white/80 hover:text-white text-4xl font-light transition-colors z-10"
-            onClick={closeModal}
-          >
-            ×
-          </button>
+// ─── Main Component ────────────────────────────────────────────────────────────
+const Showcase = () => {
+  const [allImages, setAllImages] = useState([]);
+  const [pageData, setPageData] = useState(FALLBACK_SHOWCASE_PAGE);
+  const [selectedIndex, setSelectedIndex] = useState(null);
+  const [isExploreOpen, setIsExploreOpen] = useState(false);
+  const [activeFilter, setActiveFilter] = useState("all");
+  const [loading, setLoading] = useState(true);
 
-          {/* Previous Arrow */}
-          <button
-            onClick={goToPrevious}
-            className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-10 bg-black/50 hover:bg-black/80 text-white p-3 md:p-4 rounded-full transition-all duration-300 hover:scale-110 backdrop-blur-sm"
-            aria-label="Previous image"
-          >
-            <svg
-              className="w-6 h-6 md:w-8 md:h-8"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M15 19l-7-7 7-7"
-              />
-            </svg>
-          </button>
+  useEffect(() => {
+    Promise.all([getGalleryMediaFromStrapi(), getShowcasePageData()]).then(
+      ([media, page]) => {
+        setAllImages(media);
+        setPageData(page);
+        setLoading(false);
+      }
+    );
+  }, []);
 
-          {/* Image */}
-          <img
-            src={allImages[selectedImageIndex].image}
-            alt={allImages[selectedImageIndex].name}
-            onClick={(e) => e.stopPropagation()}
-            className="max-w-[90%] md:max-w-[85%] max-h-[85vh] rounded-lg shadow-2xl cursor-default object-contain animate-scaleIn"
-          />
+  // Keyboard navigation
+  const handleNav = useCallback((dir) => {
+    setSelectedIndex((prev) => {
+      if (prev === null) return null;
+      return (prev + dir + allImages.length) % allImages.length;
+    });
+  }, [allImages.length]);
 
-          {/* Next Arrow */}
-          <button
-            onClick={goToNext}
-            className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-10 bg-black/50 hover:bg-black/80 text-white p-3 md:p-4 rounded-full transition-all duration-300 hover:scale-110 backdrop-blur-sm"
-            aria-label="Next image"
-          >
-            <svg
-              className="w-6 h-6 md:w-8 md:h-8"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M9 5l7 7-7 7"
-              />
-            </svg>
-          </button>
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.key === "Escape") { setSelectedIndex(null); setIsExploreOpen(false); }
+      if (selectedIndex !== null) {
+        if (e.key === "ArrowRight") handleNav(1);
+        if (e.key === "ArrowLeft") handleNav(-1);
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [selectedIndex, handleNav]);
 
-          {/* Image Counter */}
-          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 bg-black/60 backdrop-blur-sm px-4 py-2 rounded-full text-white text-sm">
-            {selectedImageIndex + 1} / {allImages.length}
-          </div>
-        </div>
-      )}
+  useEffect(() => {
+    document.body.style.overflow = selectedIndex !== null || isExploreOpen ? "hidden" : "unset";
+    return () => { document.body.style.overflow = "unset"; };
+  }, [selectedIndex, isExploreOpen]);
 
-      {/* Explore More Full-Screen Overlay with Glassmorphism */}
-      {isExploreOpen && (
-        <div className="fixed inset-0 z-50 overflow-y-auto animate-fadeIn">
-          {/* Background Layer - Embers GIF */}
-          <div
-            className="fixed inset-0 bg-cover bg-center"
-            style={{
-              backgroundImage: `url(${embersBackground})`,
-              backgroundAttachment: 'fixed',
-            }}
-          />
+  // First 12 for main bento grid, rest in drawer
+  const mainImages = allImages.slice(0, 12);
+  const featuredImage = allImages.find((img) => img.featured) ?? allImages[0];
 
-          {/* Glassmorphism Blur Layer */}
-          <div className="fixed inset-0 backdrop-blur-3xl bg-gradient-to-br from-black/60 via-red-950/40 to-black/70" />
+  return (
+    <>
+      <section
+        className="relative w-full min-h-screen bg-[#050505] overflow-hidden"
+      >
+        {/* Embers ambient BG */}
+        <img
+          src={embersBackground}
+          alt=""
+          className="absolute inset-0 w-full h-full object-cover opacity-30 mix-blend-screen pointer-events-none"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/80 pointer-events-none" />
 
-          {/* Content Layer */}
-          <div className="relative z-10">
-            {/* Close Button */}
-            <button
-              onClick={closeExplore}
-              className="fixed top-6 right-6 text-white/90 hover:text-white text-5xl font-light transition-colors z-20 hover:rotate-90 duration-300 drop-shadow-2xl"
-            >
-              ×
-            </button>
+        <div className="relative z-10 max-w-[1500px] mx-auto px-4 md:px-8 pt-16 pb-24">
 
-            {/* Overlay Title */}
-            <div className="text-center pt-12 pb-8 sticky top-0 backdrop-blur-md bg-black/30 z-10 border-b border-white/20">
-              <h2 className="text-4xl md:text-5xl font-bold text-white tracking-wider mb-2 drop-shadow-2xl">
-                MEDIA GALLERY
-              </h2>
-              <div className="w-24 h-1 bg-gradient-to-r from-red-900 to-red-700 mx-auto shadow-2xl shadow-red-900/70" />
+          {/* ── Page Header ── */}
+          <div className="mb-14 flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+            <div>
+              <p className="text-red-500 font-mono tracking-[0.3em] uppercase text-xs mb-3">
+                {pageData.subtitle}
+              </p>
+              <h1 className="text-4xl md:text-6xl lg:text-7xl font-custom uppercase tracking-tight text-white leading-none">
+                {pageData.page_title}
+              </h1>
             </div>
+            <div className="flex items-center gap-2">
+              <span className="w-8 h-[1px] bg-white/20" />
+              <span className="text-white/30 font-mono text-xs uppercase tracking-widest">{allImages.length} assets</span>
+            </div>
+          </div>
 
-            {/* Compact 4-Column Gallery Grid */}
-            <div className="container mx-auto px-4 md:px-8 max-w-7xl pb-20 pt-8">
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
-                {allImages.map((media, idx) => (
+          {/* ── Featured Hero Strip ── */}
+          {featuredImage && (
+            <div
+              className="group relative w-full h-[45vh] md:h-[55vh] overflow-hidden mb-6 border border-white/10 cursor-pointer"
+              onClick={() => setSelectedIndex(allImages.indexOf(featuredImage))}
+            >
+              <img
+                src={featuredImage.image}
+                alt={featuredImage.title}
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
+
+              {/* Corner decor */}
+              <div className="absolute top-4 left-4 w-6 h-6 border-t-2 border-l-2 border-white/30" />
+              <div className="absolute top-4 right-4 w-6 h-6 border-t-2 border-r-2 border-white/30" />
+              <div className="absolute bottom-4 left-4 w-6 h-6 border-b-2 border-l-2 border-white/30" />
+              <div className="absolute bottom-4 right-4 w-6 h-6 border-b-2 border-r-2 border-white/30" />
+
+              <div className="absolute bottom-0 left-0 right-0 p-6 md:p-10 flex items-end justify-between">
+                <div>
+                  <div className="inline-block bg-red-600 px-2 py-0.5 text-[9px] font-bold uppercase tracking-widest text-black mb-3">
+                    Featured
+                  </div>
+                  <h2 className="text-2xl md:text-4xl font-custom uppercase text-white leading-none group-hover:text-red-400 transition-colors duration-300">
+                    {featuredImage.title || "Featured Shot"}
+                  </h2>
+                </div>
+                <div className="hidden md:flex items-center gap-3 text-white/50 font-mono text-xs uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                  <span>View Full</span>
+                  <span className="w-8 h-[1px] bg-white/40" />
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* ── Bento Grid ── */}
+          {!loading && (
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 auto-rows-[220px] grid-flow-dense mb-8">
+              {mainImages.map((media, idx) => {
+                if (media.id === featuredImage?.id) return null; // skip featured (shown above)
+                return (
                   <div
                     key={media.id}
-                    className="group relative overflow-hidden rounded-xl shadow-lg border border-white/20 bg-white/5 backdrop-blur-sm hover:border-white/40 transition-all duration-300 aspect-square"
+                    className={`group relative overflow-hidden border border-white/5 hover:border-red-600/40 transition-all duration-300 cursor-pointer bg-[#0a0a0a] ${getSpan(media.orientation, idx)}`}
+                    onClick={() => setSelectedIndex(allImages.indexOf(media))}
                   >
                     <img
                       src={media.image}
-                      alt={media.name}
-                      onClick={() => handleImageClick(idx)}
-                      className="w-full h-full object-cover cursor-pointer transition-transform duration-500 group-hover:scale-110"
+                      alt={media.title}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                     />
+                    {/* Overlay on hover */}
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/50 transition-all duration-300" />
+
+                    {/* Category + title */}
+                    <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300 bg-gradient-to-t from-black/90 to-transparent">
+                      <CategoryBadge category={media.category} />
+                      {media.title && (
+                        <p className="text-white text-xs font-mono uppercase tracking-wider mt-1.5 line-clamp-1">{media.title}</p>
+                      )}
+                    </div>
+
+                    {/* Bottom accent line */}
+                    <div className="absolute bottom-0 left-0 w-0 h-[2px] bg-red-600 transition-all duration-500 group-hover:w-full" />
                   </div>
-                ))}
-              </div>
+                );
+              })}
             </div>
+          )}
+
+          {/* ── Explore More Button ── */}
+          <div className="flex justify-center mt-4">
+            <button
+              onClick={() => setIsExploreOpen(true)}
+              className="group relative inline-flex items-center gap-3 border border-white/20 hover:border-red-600 bg-transparent px-8 py-4 font-mono text-sm tracking-widest text-white uppercase transition-all duration-300 hover:bg-red-600/10"
+            >
+              <span>Explore Full Gallery</span>
+              <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
+            </button>
           </div>
+
         </div>
+      </section>
+
+      {/* ── Lightbox ── */}
+      <Lightbox
+        images={allImages}
+        index={selectedIndex}
+        onClose={() => setSelectedIndex(null)}
+        onNav={handleNav}
+      />
+
+      {/* ── Explore Drawer ── */}
+      {isExploreOpen && (
+        <ExploreDrawer
+          images={allImages}
+          onClose={() => setIsExploreOpen(false)}
+          onImageClick={(idx) => { setSelectedIndex(idx); setIsExploreOpen(false); }}
+          activeFilter={activeFilter}
+          setActiveFilter={setActiveFilter}
+        />
       )}
     </>
   );

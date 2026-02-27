@@ -10,5 +10,22 @@
     "draftAndPublish": true
   },
   "pluginOptions": {},
-  "attributes": {}
+  "attributes": {
+    "page_title": {
+      "type": "string"
+    },
+    "page_subtitle": {
+      "type": "string"
+    },
+    "developer_quotes": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::developer-quote.developer-quote"
+    },
+    "partner_logos": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::partner-logo.partner-logo"
+    }
+  }
 }

@@ -1,11 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaPlay } from 'react-icons/fa';
-import poster from '../../assets/posters/poster2.png';
-import trailerVideo from '../../assets/newassets/1.mp4'; // Local trailer video
+import poster from '../../assets/posters/poster2.png';          // fallback thumbnail
+import trailerVideo from '../../assets/newassets/1.mp4';        // fallback video
 import embersBackground from '../../assets/embers_background.gif';
+import { getHomePage, FALLBACK_TRAILER } from '../../../api/homeApi';
 
 const Trailer = () => {
     const [isPlaying, setIsPlaying] = useState(false);
+
+    // State initialised with fallback — local assets always render first
+    const [trailerData, setTrailerData] = useState(FALLBACK_TRAILER);
+
+    useEffect(() => {
+        getHomePage().then((data) => {
+            if (!data) return; // Strapi unavailable — fallback stays
+            if (data.trailer) setTrailerData(data.trailer);
+        });
+    }, []);
+
+    // Resolve which video and thumbnail to use
+    const videoSrc = trailerData.videoUrl || trailerVideo;
+    const thumbnailSrc = trailerData.thumbnailUrl || poster;
 
     return (
         <section className="relative w-full bg-black overflow-hidden flex items-center justify-center py-16 border-t border-white/5">
@@ -21,14 +36,11 @@ const Trailer = () => {
 
             {/* Centered Container with 16:9 aspect ratio */}
             <div className="relative w-full max-w-4xl aspect-video group z-20 bg-black">
-                {/* Background Image / Thumbnail */}
+                {/* Thumbnail — CMS image if uploaded, else local poster2.png */}
                 <div
                     className="absolute inset-0 bg-cover bg-center transition-transform duration-1000 group-hover:scale-105 opacity-60 group-hover:opacity-40"
-                    style={{ backgroundImage: `url(${poster})` }}
+                    style={{ backgroundImage: `url(${thumbnailSrc})` }}
                 />
-
-                {/* Dark Overlay */}
-                {/* <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-all duration-500" /> */}
 
                 {/* Content - Centered */}
                 <div className="absolute inset-0 flex flex-col items-center justify-center z-10">
@@ -55,7 +67,7 @@ const Trailer = () => {
                             </button>
                             <video
                                 className="w-full h-full"
-                                src={trailerVideo}
+                                src={videoSrc}
                                 controls
                                 autoPlay
                             />
