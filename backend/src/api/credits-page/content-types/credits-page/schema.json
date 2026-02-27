@@ -21,11 +21,6 @@
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::developer-quote.developer-quote"
-    },
-    "partner_logos": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::partner-logo.partner-logo"
     }
   }
 }

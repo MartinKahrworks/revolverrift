@@ -462,39 +462,42 @@ export interface ApiBlogBlog extends Struct.CollectionTypeSchema {
   };
 }
 
-export interface ApiContentContent extends Struct.CollectionTypeSchema {
-  collectionName: 'contents';
+export interface ApiContentPageContentPage extends Struct.SingleTypeSchema {
+  collectionName: 'content_pages';
   info: {
-    displayName: 'content';
-    pluralName: 'contents';
-    singularName: 'content';
+    displayName: 'content-page';
+    pluralName: 'content-pages';
+    singularName: 'content-page';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
-    align_text: Schema.Attribute.Enumeration<['left', 'right', 'center']> &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<'right'>;
     background_image: Schema.Attribute.Media<'images'>;
-    bg_position: Schema.Attribute.String &
-      Schema.Attribute.DefaultTo<'center center'>;
-    body: Schema.Attribute.Blocks & Schema.Attribute.Required;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    description1: Schema.Attribute.Text &
+      Schema.Attribute.DefaultTo<'A hardcore PvPvE Extraction Shooter with tactical depth and hellish stakes.'>;
+    description2: Schema.Attribute.Text &
+      Schema.Attribute.DefaultTo<'Every match is a sandbox of deadly choices: drop into war-torn 1944, loot powerful artifacts, and face demons, undead, and rival players before the Rift collapses.'>;
+    hud_text: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'// Use period weapons, perks, and gadgets to build your loadout, track enemies, and ambush with precision.'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
-      'api::content.content'
+      'api::content-page.content-page'
     > &
       Schema.Attribute.Private;
-    order: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
+    lore_sections: Schema.Attribute.Component<'sections.lore-section', true>;
     publishedAt: Schema.Attribute.DateTime;
-    title: Schema.Attribute.String & Schema.Attribute.Required;
+    title: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'WELCOME TO THE RIFT'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    warning_text: Schema.Attribute.Text &
+      Schema.Attribute.DefaultTo<'But remember only what you extract survives. High risk. High reward. No second chances.'>;
   };
 }
 
@@ -524,10 +527,6 @@ export interface ApiCreditsPageCreditsPage extends Struct.SingleTypeSchema {
       Schema.Attribute.Private;
     page_subtitle: Schema.Attribute.String;
     page_title: Schema.Attribute.String;
-    partner_logos: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::partner-logo.partner-logo'
-    >;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -709,64 +708,6 @@ export interface ApiNewsPageNewsPage extends Struct.SingleTypeSchema {
   };
 }
 
-export interface ApiPartnerLogoPartnerLogo extends Struct.CollectionTypeSchema {
-  collectionName: 'partner_logos';
-  info: {
-    displayName: 'partner-logo';
-    pluralName: 'partner-logos';
-    singularName: 'partner-logo';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::partner-logo.partner-logo'
-    > &
-      Schema.Attribute.Private;
-    logo: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
-    name: Schema.Attribute.String;
-    order: Schema.Attribute.Integer;
-    publishedAt: Schema.Attribute.DateTime;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-  };
-}
-
-export interface ApiPartnerStagePartnerStage
-  extends Struct.CollectionTypeSchema {
-  collectionName: 'partner_stages';
-  info: {
-    displayName: 'partner-stage';
-    pluralName: 'partner-stages';
-    singularName: 'partner-stage';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::partner-stage.partner-stage'
-    > &
-      Schema.Attribute.Private;
-    publishedAt: Schema.Attribute.DateTime;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-  };
-}
-
 export interface ApiPartnersPagePartnersPage extends Struct.SingleTypeSchema {
   collectionName: 'partners_pages';
   info: {
@@ -775,19 +716,26 @@ export interface ApiPartnersPagePartnersPage extends Struct.SingleTypeSchema {
     singularName: 'partners-page';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
+    background_image: Schema.Attribute.Media<'images'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    intro_text: Schema.Attribute.Blocks;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::partners-page.partners-page'
     > &
       Schema.Attribute.Private;
+    logos: Schema.Attribute.Component<'sections.partner-logo', true>;
+    outro_text: Schema.Attribute.Blocks;
     publishedAt: Schema.Attribute.DateTime;
+    stages: Schema.Attribute.Component<'sections.partner-stage', true>;
+    title: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Revolver Rift Partnership Program'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -875,6 +823,10 @@ export interface ApiShowcasePageShowcasePage extends Struct.SingleTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    gallery_items: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::showcase-gallery.showcase-gallery'
+    >;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -1406,15 +1358,13 @@ declare module '@strapi/strapi' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
       'api::blog.blog': ApiBlogBlog;
-      'api::content.content': ApiContentContent;
+      'api::content-page.content-page': ApiContentPageContentPage;
       'api::credits-page.credits-page': ApiCreditsPageCreditsPage;
       'api::developer-quote.developer-quote': ApiDeveloperQuoteDeveloperQuote;
       'api::gallery-item.gallery-item': ApiGalleryItemGalleryItem;
       'api::home-page.home-page': ApiHomePageHomePage;
       'api::news-item.news-item': ApiNewsItemNewsItem;
       'api::news-page.news-page': ApiNewsPageNewsPage;
-      'api::partner-logo.partner-logo': ApiPartnerLogoPartnerLogo;
-      'api::partner-stage.partner-stage': ApiPartnerStagePartnerStage;
       'api::partners-page.partners-page': ApiPartnersPagePartnersPage;
       'api::product.product': ApiProductProduct;
       'api::showcase-gallery.showcase-gallery': ApiShowcaseGalleryShowcaseGallery;

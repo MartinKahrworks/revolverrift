@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { getBlogs } from "../../../api/blogApi";
+import { getBlogs } from "../../api/blogApi";
 
 export const FALLBACK_NEWS = [
     {
@@ -80,6 +80,7 @@ const NewsSection = () => {
                                     <img
                                         src={news.image}
                                         alt={news.title}
+                                        loading="lazy"
                                         className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 opacity-80 mix-blend-luminosity group-hover:mix-blend-normal"
                                     />
                                 ) : (

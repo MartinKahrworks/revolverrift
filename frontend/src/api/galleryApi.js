@@ -50,14 +50,18 @@ export const getGalleryMedia = () => {
 export const getGalleryMediaFromStrapi = async () => {
     try {
         const res = await fetch(
-            `${STRAPI_URL}/api/showcase-galleries?populate=*&sort=order:asc`
+            `${STRAPI_URL}/api/showcase-page?populate[gallery_items][populate]=image`
         );
         if (!res.ok) throw new Error("Strapi unavailable");
 
         const json = await res.json();
-        if (!json?.data?.length) throw new Error("Empty response");
+        const data = json.data;
+        if (!data || !data.gallery_items || !data.gallery_items.length) throw new Error("Empty response");
 
-        return json.data.map((item) => {
+        // Sort items by user-defined order to keep album curation intact
+        const sortedItems = [...data.gallery_items].sort((a, b) => (a.order ?? 99) - (b.order ?? 99));
+
+        return sortedItems.map((item) => {
             const imgUrl = item.image?.url;
             return {
                 id: item.documentId ?? item.id,

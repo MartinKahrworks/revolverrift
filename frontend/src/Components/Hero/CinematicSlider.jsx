@@ -18,7 +18,7 @@ import mosin from '../../assets/newassets/Mosin_Nagant_3.webp';
 import winchester from '../../assets/newassets/WINCHESTER1.webp';
 import embersBackground from '../../assets/embers_background.gif';
 
-import { getHomePage } from '../../../api/homeApi';
+import { getHomePage } from '../../api/homeApi';
 
 // Fallback slides — shown when Strapi cinematic_slider is empty
 const FALLBACK_SLIDES = [
@@ -139,6 +139,7 @@ const CinematicSlider = () => {
                                     alt={slide.title}
                                     className="w-full h-full object-contain transform transition-all duration-700 group-hover:scale-110 group-hover:brightness-110"
                                     draggable="false"
+                                    loading={index === 0 ? "eager" : "lazy"}
                                 />
                             </div>
                         </SwiperSlide>

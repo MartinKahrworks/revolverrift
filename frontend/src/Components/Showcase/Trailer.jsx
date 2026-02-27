@@ -3,7 +3,7 @@ import { FaPlay } from 'react-icons/fa';
 import poster from '../../assets/posters/poster2.png';          // fallback thumbnail
 import trailerVideo from '../../assets/newassets/1.mp4';        // fallback video
 import embersBackground from '../../assets/embers_background.gif';
-import { getHomePage, FALLBACK_TRAILER } from '../../../api/homeApi';
+import { getHomePage, FALLBACK_TRAILER } from '../../api/homeApi';
 
 const Trailer = () => {
     const [isPlaying, setIsPlaying] = useState(false);

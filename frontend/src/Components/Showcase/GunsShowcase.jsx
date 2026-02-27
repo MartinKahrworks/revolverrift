@@ -74,6 +74,7 @@ export default function GunsShowcase() {
                 <img
                   src={weapon.img}
                   alt={weapon.name}
+                  loading="lazy"
                   className="h-[110px] w-auto object-contain transition-transform duration-500 group-hover:scale-110 drop-shadow-[0_0_15px_rgba(220,38,38,0.3)]"
                 />
                 {/* Red glow on hover */}

@@ -18,18 +18,9 @@ module.exports = ({ env }) => ({
             // By default Strapi creates 5 versions: thumbnail, small, medium, large, original.
             // These are useful for srcset / responsive images on the frontend.
             //
-            // OPTION A — Keep all formats (RECOMMENDED — good for production):
-            breakpoints: {
-                xlarge: 1920,
-                large: 1000,
-                medium: 750,
-                small: 500,
-                xsmall: 64,
-            },
-
             // OPTION B — Disable ALL extra formats (only original stored):
             // Delete the breakpoints block above and uncomment this instead:
-            // breakpoints: {},
+            breakpoints: {},
         },
     },
 });

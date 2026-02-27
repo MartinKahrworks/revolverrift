@@ -1,7 +1,9 @@
 // src/Components/Blog/index.jsx
 import { useParams, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { getBlogBySlug } from "../../../api/blogApi";
+import { Helmet } from "react-helmet";
+import { getBlogBySlug } from "../../api/blogApi";
+import { PageSkeleton } from "../Skeleton/Skeleton";
 
 // ─── Strapi Rich Text (Blocks) Renderer ───────────────────────────────────────
 // Strapi's "Rich Text (Blocks)" field returns a JSON array of block objects,
@@ -120,10 +122,8 @@ const BlogDetail = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-black flex items-center justify-center">
-        <p className="text-[#b89a6f] text-xl" style={{ fontFamily: "'Cinzel', serif" }}>
-          Loading...
-        </p>
+      <div className="min-h-screen bg-[#050505] px-6 sm:px-16 pt-28">
+        <PageSkeleton rows={10} />
       </div>
     );
   }
@@ -147,6 +147,7 @@ const BlogDetail = () => {
           <img
             src={blog.image}
             alt={blog.title}
+            loading="eager"
             className="w-full h-full object-cover object-center"
           />
         ) : (

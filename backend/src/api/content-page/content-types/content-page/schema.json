@@ -1,0 +1,48 @@
+{
+    "kind": "singleType",
+    "collectionName": "content_pages",
+    "info": {
+        "singularName": "content-page",
+        "pluralName": "content-pages",
+        "displayName": "content-page"
+    },
+    "options": {
+        "draftAndPublish": false
+    },
+    "pluginOptions": {},
+    "attributes": {
+        "title": {
+            "type": "string",
+            "default": "WELCOME TO THE RIFT"
+        },
+        "description1": {
+            "type": "text",
+            "default": "A hardcore PvPvE Extraction Shooter with tactical depth and hellish stakes."
+        },
+        "description2": {
+            "type": "text",
+            "default": "Every match is a sandbox of deadly choices: drop into war-torn 1944, loot powerful artifacts, and face demons, undead, and rival players before the Rift collapses."
+        },
+        "hud_text": {
+            "type": "string",
+            "default": "// Use period weapons, perks, and gadgets to build your loadout, track enemies, and ambush with precision."
+        },
+        "warning_text": {
+            "type": "text",
+            "default": "But remember only what you extract survives. High risk. High reward. No second chances."
+        },
+        "background_image": {
+            "type": "media",
+            "multiple": false,
+            "required": false,
+            "allowedTypes": [
+                "images"
+            ]
+        },
+        "lore_sections": {
+            "type": "component",
+            "repeatable": true,
+            "component": "sections.lore-section"
+        }
+    }
+}

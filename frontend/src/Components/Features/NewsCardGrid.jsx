@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { getBlogs, getBlogBySlug, getNewsPageData } from "../../../api/blogApi";
-import { getHomePage } from "../../../api/homeApi";
+import { getBlogs, getBlogBySlug, getNewsPageData } from "../../api/blogApi";
+import { getHomePage } from "../../api/homeApi";
 import { Link, useParams } from "react-router-dom";
-
+import { FeaturedBlogSkeleton, PageSkeleton } from "../Skeleton/Skeleton";
 import bgImage from '../../assets/Texturelabs_Grunge_353M.webp';
 
 
@@ -135,8 +135,8 @@ export const AllBlogsPage = () => {
         </div>
 
         {loading && (
-          <div className="flex items-center justify-center py-32">
-            <p className="text-gray-500 font-mono uppercase tracking-widest animate-pulse">Loading posts...</p>
+          <div className="py-8">
+            <FeaturedBlogSkeleton />
           </div>
         )}
 
@@ -302,9 +302,8 @@ export const BlogPostPage = () => {
 
   if (loading) {
     return (
-      <div className="w-full bg-cover bg-fixed text-[#d1c7b7] py-20 text-center"
-        style={{ backgroundImage: `url(${bgImage})` }}>
-        <p className="text-[#b89a6f] font-mono animate-pulse uppercase tracking-widest">Loading...</p>
+      <div className="min-h-screen w-full bg-[#0a0a0a] text-white overflow-x-hidden px-6 md:px-12 lg:px-24 pt-28">
+        <PageSkeleton rows={8} />
       </div>
     );
   }

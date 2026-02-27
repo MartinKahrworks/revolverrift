@@ -1,7 +1,8 @@
 // src/Pages/BlogList.js
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { getBlogs } from "../../../api/blogApi";
+import blogfallbackImg from "../../assets/content1.webp"; // Optional fallback image
+import { getBlogs } from "../../api/blogApi";
 
 const BlogList = () => {
 
@@ -37,6 +38,7 @@ const BlogList = () => {
                   <img
                     src={news.image}
                     alt={news.title}
+                    loading="lazy"
                     className="w-full h-44 object-cover rounded-md mb-5 hover:scale-105 transition-transform duration-300 shadow-md"
                   />
                 ) : (

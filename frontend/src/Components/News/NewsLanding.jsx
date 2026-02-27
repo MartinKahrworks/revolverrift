@@ -63,13 +63,13 @@ const Badge = ({ children, color = "bg-red-600" }) => (
     </span>
 );
 
-const ImgFill = ({ src, alt, className = "" }) => (
+const ImgFill = ({ src, alt, className = "", loading = "eager" }) => (
     <div className={`relative w-full h-full overflow-hidden ${className}`}>
         <img
             src={src}
             alt={alt}
             className="block h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
-            loading="lazy"
+            loading={loading}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60" />
     </div>

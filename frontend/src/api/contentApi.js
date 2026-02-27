@@ -69,26 +69,62 @@ export const getContentSections = () => {
 export const getContentSectionsFromStrapi = async () => {
     try {
         const res = await fetch(
-            `${STRAPI_URL}/api/contents?populate=*&sort=order:asc`
+            `${STRAPI_URL}/api/content-page?populate[lore_sections][populate]=background_image`
         );
         if (!res.ok) throw new Error("Strapi unavailable");
 
         const json = await res.json();
-        if (!json?.data?.length) throw new Error("Empty response");
+        const data = json.data;
+        if (!data || !data.lore_sections || !data.lore_sections.length) throw new Error("Empty response");
 
-        return json.data.map((item) => {
+        return data.lore_sections.map((item, index) => {
             const imgUrl = item.background_image?.url;
             return {
-                id: item.documentId ?? item.id,
+                id: item.id || index,
                 title: item.title ?? "",
                 body: item.body ?? [],
                 background_image: imgUrl ? (imgUrl.startsWith("http") ? imgUrl : `${STRAPI_URL}${imgUrl}`) : null,
                 align_text: item.align_text ?? "right",
                 bg_position: item.bg_position ?? "center center",
-                order: item.order ?? 99,
+                order: index + 1,
             };
         });
     } catch {
         return getContentSections();
+    }
+};
+
+// ─── Banner Data Fetcher ──────────────────────────────────────────────────────
+
+export const FALLBACK_BANNER_DATA = {
+    title: "WELCOME TO THE RIFT",
+    description1: "A hardcore PvPvE Extraction Shooter with tactical depth and hellish stakes.",
+    description2: "Every match is a sandbox of deadly choices: drop into war-torn 1944, loot powerful artifacts, and face demons, undead, and rival players before the Rift collapses.",
+    hud_text: "// Use period weapons, perks, and gadgets to build your loadout, track enemies, and ambush with precision.make",
+    warning_text: "But remember only what you extract survives. High risk. High reward. No second chances.",
+    background_image: null // null -> defaults to local content1.webp inside Banner.jsx
+};
+
+export const getContentPageBannerData = async () => {
+    try {
+        const res = await fetch(`${STRAPI_URL}/api/content-page?populate=*`);
+        if (!res.ok) return FALLBACK_BANNER_DATA;
+
+        const json = await res.json();
+        const data = json.data;
+        if (!data) return FALLBACK_BANNER_DATA;
+
+        const imgUrl = data.background_image?.url;
+
+        return {
+            title: data.title || FALLBACK_BANNER_DATA.title,
+            description1: data.description1 || FALLBACK_BANNER_DATA.description1,
+            description2: data.description2 || FALLBACK_BANNER_DATA.description2,
+            hud_text: data.hud_text || FALLBACK_BANNER_DATA.hud_text,
+            warning_text: data.warning_text || FALLBACK_BANNER_DATA.warning_text,
+            background_image: imgUrl ? (imgUrl.startsWith("http") ? imgUrl : `${STRAPI_URL}${imgUrl}`) : null,
+        };
+    } catch {
+        return FALLBACK_BANNER_DATA;
     }
 };

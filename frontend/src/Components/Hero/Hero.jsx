@@ -2,7 +2,9 @@ import React, { useRef, useState, useEffect } from 'react';
 import SlantedGallery from './SlantedGallery';
 import CinematicSlider from './CinematicSlider';
 import skull from '../../assets/skull.png';
-import { getHomePage } from '../../../api/homeApi';
+
+// Import our new consolidated API fetcher
+import { getHomePage } from '../../api/homeApi';
 
 const HeroCountdown = () => {
     const sectionRef = useRef(null);

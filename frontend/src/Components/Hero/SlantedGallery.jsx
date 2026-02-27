@@ -6,8 +6,7 @@ import char2 from '../../assets/newassets/char2.png';
 import gun2 from '../../assets/newassets/GUN2.png';
 import gun3 from '../../assets/newassets/GUN3.png';
 import gun4 from '../../assets/newassets/GUN4.png';
-
-import { getHomePage } from '../../../api/homeApi';
+import { getHomePage } from '../../api/homeApi';
 
 // ── 4 fixed fallback slots — always the safety net ───────────────────────────
 const PANEL_COUNT = 4;

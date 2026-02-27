@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { FaGhost, FaGamepad, FaTrophy } from 'react-icons/fa';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/effect-creative';
 import embersBackground from '../../assets/embers_background.gif';
-import { getHomePage, FALLBACK_FEATURES } from '../../../api/homeApi';
+import { getHomePage, FALLBACK_FEATURES } from '../../api/homeApi';
 
 // Fallback icons map — used when Strapi doesn't provide icon images
 const iconMap = [FaGhost, FaGamepad, FaTrophy];

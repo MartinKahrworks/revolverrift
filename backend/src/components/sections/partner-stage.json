@@ -1,0 +1,22 @@
+{
+    "collectionName": "components_sections_partner_stages",
+    "info": {
+        "displayName": "partner-stage",
+        "description": "A single partnership stage/tier"
+    },
+    "options": {},
+    "attributes": {
+        "title": {
+            "type": "string",
+            "required": true
+        },
+        "description": {
+            "type": "text",
+            "required": true
+        },
+        "benefits": {
+            "type": "blocks",
+            "required": true
+        }
+    }
+}

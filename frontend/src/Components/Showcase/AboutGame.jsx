@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getHomePage, FALLBACK_ABOUT } from '../../../api/homeApi';
+import { getHomePage, FALLBACK_ABOUT } from '../../api/homeApi';
 
 const AboutGame = () => {
     // ── State initialised with hardcoded fallback ──────────────────────────────

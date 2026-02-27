@@ -66,6 +66,48 @@ export interface SectionsHeroSection extends Struct.ComponentSchema {
   };
 }
 
+export interface SectionsLoreSection extends Struct.ComponentSchema {
+  collectionName: 'components_sections_lore_sections';
+  info: {
+    displayName: 'lore-section';
+  };
+  attributes: {
+    align_text: Schema.Attribute.Enumeration<['left', 'right', 'center']> &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'right'>;
+    background_image: Schema.Attribute.Media<'images'>;
+    bg_position: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'center center'>;
+    body: Schema.Attribute.Blocks & Schema.Attribute.Required;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface SectionsPartnerLogo extends Struct.ComponentSchema {
+  collectionName: 'components_sections_partner_logos';
+  info: {
+    description: 'A logo for a partner brand or creator';
+    displayName: 'partner-logo';
+  };
+  attributes: {
+    logo: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface SectionsPartnerStage extends Struct.ComponentSchema {
+  collectionName: 'components_sections_partner_stages';
+  info: {
+    description: 'A single partnership stage/tier';
+    displayName: 'partner-stage';
+  };
+  attributes: {
+    benefits: Schema.Attribute.Blocks & Schema.Attribute.Required;
+    description: Schema.Attribute.Text & Schema.Attribute.Required;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
 export interface SectionsTrailerSection extends Struct.ComponentSchema {
   collectionName: 'components_sections_trailer_sections';
   info: {
@@ -85,6 +127,9 @@ declare module '@strapi/strapi' {
       'sections.about-section': SectionsAboutSection;
       'sections.features-section': SectionsFeaturesSection;
       'sections.hero-section': SectionsHeroSection;
+      'sections.lore-section': SectionsLoreSection;
+      'sections.partner-logo': SectionsPartnerLogo;
+      'sections.partner-stage': SectionsPartnerStage;
       'sections.trailer-section': SectionsTrailerSection;
     }
   }

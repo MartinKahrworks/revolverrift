@@ -1,0 +1,39 @@
+{
+    "collectionName": "components_sections_lore_sections",
+    "info": {
+        "displayName": "lore-section"
+    },
+    "options": {},
+    "attributes": {
+        "title": {
+            "type": "string",
+            "required": true
+        },
+        "body": {
+            "type": "blocks",
+            "required": true
+        },
+        "background_image": {
+            "type": "media",
+            "multiple": false,
+            "required": false,
+            "allowedTypes": [
+                "images"
+            ]
+        },
+        "align_text": {
+            "type": "enumeration",
+            "enum": [
+                "left",
+                "right",
+                "center"
+            ],
+            "default": "right",
+            "required": true
+        },
+        "bg_position": {
+            "type": "string",
+            "default": "center center"
+        }
+    }
+}

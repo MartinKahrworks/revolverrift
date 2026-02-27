@@ -24,6 +24,11 @@
     },
     "seo_description": {
       "type": "text"
+    },
+    "gallery_items": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::showcase-gallery.showcase-gallery"
     }
   }
 }

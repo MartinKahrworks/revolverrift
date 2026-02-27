@@ -18,7 +18,7 @@ import "swiper/css/pagination";
 import "swiper/css/effect-coverflow";
 import bgImage from '../../assets/Texturelabs_Grunge_353M.webp';
 import Banner7 from "../Banner/Banner7";
-import { getCreditsPage } from "../../../api/creditsApi";
+import { getCreditsPage } from "../../api/creditsApi";
 
 // ─── Fallback data (used when Strapi is unavailable) ─────────────────────────
 const FALLBACK_QUOTES = [

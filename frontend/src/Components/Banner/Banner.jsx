@@ -1,9 +1,17 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import poster from "../../assets/content1.webp"; // Using webp for better performance
 import bgImage from '../../assets/Texturelabs_Grunge_353M.jpg';
+import { getContentPageBannerData, FALLBACK_BANNER_DATA } from "../../api/contentApi";
 
 const Banner = () => {
   const navbarHeight = 80;
+  const [data, setData] = useState(FALLBACK_BANNER_DATA);
+
+  useEffect(() => {
+    getContentPageBannerData().then((res) => {
+      setData(res);
+    });
+  }, []);
 
   return (
     <div
@@ -16,7 +24,7 @@ const Banner = () => {
       <div
         className="absolute inset-0 bg-cover bg-no-repeat z-0"
         style={{
-          backgroundImage: `url(${poster})`,
+          backgroundImage: `url(${data.background_image || poster})`,
           backgroundPosition: "80% 50%",
         }}
       />
@@ -102,12 +110,12 @@ const Banner = () => {
               {/* Header with Glitch Effect */}
               <div className="relative inline-block mb-4">
                 <h1
-                  data-text="WELCOME TO THE RIFT"
+                  data-text={data.title}
                   className="glitch-text text-3xl md:text-4xl lg:text-5xl font-custom tracking-widest text-[#e4d6c3] uppercase relative z-10 drop-shadow-lg"
                   data-aos="fade-right"
                   data-aos-delay="200"
                 >
-                  WELCOME TO THE RIFT
+                  {data.title}
                 </h1>
                 <div className="h-1 w-24 bg-red-600 mt-4 shadow-[0_0_10px_rgba(220,38,38,0.8)]" data-aos="fade-right" data-aos-delay="400" />
               </div>
@@ -125,23 +133,23 @@ const Banner = () => {
 
                 <div className="space-y-6 text-lg md:text-xl text-gray-300 font-serif leading-relaxed">
                   <p className="max-w-2xl">
-                    A hardcore <span className="text-white font-semibold">PvPvE Extraction Shooter</span> with tactical depth and hellish stakes.
+                    {data.description1}
                   </p>
 
                   <p className="max-w-2xl text-base md:text-lg text-gray-400">
-                    Every match is a sandbox of deadly choices: drop into war-torn 1944, loot powerful artifacts, and face demons, undead, and rival players before the Rift collapses.
+                    {data.description2}
                   </p>
 
                   <div className="relative overflow-hidden py-2">
                     <p className="text-sm font-mono tracking-widest uppercase text-red-500/80">
-                        // Use period weapons, perks, and gadgets to build your loadout, track enemies, and ambush with precision.make
+                      {data.hud_text}
                     </p>
                     {/* Scanning Line Animation for this specific alert */}
                     <div className="scanline" style={{ height: '1px', background: 'rgba(220, 38, 38, 0.5)' }}></div>
                   </div>
 
                   <p className="border-t border-white/10 pt-4 text-base md:text-lg">
-                    But remember <span className="font-bold text-[#AA0000] drop-shadow-[0_0_8px_rgba(170,0,0,0.8)]">only what you extract survives.</span> High risk. High reward. No second chances.
+                    {data.warning_text}
                   </p>
                 </div>
               </div>

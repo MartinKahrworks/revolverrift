@@ -1,12 +1,13 @@
 import { useState, useEffect, useCallback } from "react";
 import { getGalleryMediaFromStrapi, getShowcasePageData, FALLBACK_SHOWCASE_PAGE } from "../../api/galleryApi";
 import embersBackground from "../../assets/embers_background.gif";
+import { ShowcaseSkeleton } from "../Skeleton/Skeleton";
 
 // ─── Category badge colours ────────────────────────────────────────────────────
 const CATEGORY_COLORS = {
   screenshot: { bg: "bg-red-600", text: "text-black" },
-  artwork: { bg: "bg-[#e4d6c3]", text: "text-black" },
-  weapon: { bg: "bg-white/90", text: "text-black" },
+  artwork: { bg: "bg-yellow-500", text: "text-black" },
+  weapon: { bg: "bg-blue-600", text: "text-white" },
   environment: { bg: "bg-emerald-700", text: "text-white" },
 };
 
@@ -117,8 +118,8 @@ const ExploreDrawer = ({ images, onClose, onImageClick, activeFilter, setActiveF
                 key={cat}
                 onClick={() => setActiveFilter(cat)}
                 className={`px-4 py-1.5 text-xs font-mono uppercase tracking-widest border transition-all duration-200 ${activeFilter === cat
-                    ? "border-red-600 bg-red-600/10 text-white"
-                    : "border-white/20 text-white/50 hover:border-white/40 hover:text-white/80"
+                  ? "border-red-600 bg-red-600/10 text-white"
+                  : "border-white/20 text-white/50 hover:border-white/40 hover:text-white/80"
                   }`}
               >
                 {cat}
@@ -139,6 +140,7 @@ const ExploreDrawer = ({ images, onClose, onImageClick, activeFilter, setActiveF
                 <img
                   src={media.image}
                   alt={media.title}
+                  loading="lazy"
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                 />
                 {/* Hover overlay */}
@@ -248,6 +250,7 @@ const Showcase = () => {
               <img
                 src={featuredImage.image}
                 alt={featuredImage.title}
+                loading="eager"
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
@@ -275,8 +278,10 @@ const Showcase = () => {
             </div>
           )}
 
-          {/* ── Bento Grid ── */}
-          {!loading && (
+          {/* ── Bento Grid (or skeleton while loading) ── */}
+          {loading ? (
+            <ShowcaseSkeleton />
+          ) : (
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 auto-rows-[220px] grid-flow-dense mb-8">
               {mainImages.map((media, idx) => {
                 if (media.id === featuredImage?.id) return null; // skip featured (shown above)
@@ -289,6 +294,7 @@ const Showcase = () => {
                     <img
                       src={media.image}
                       alt={media.title}
+                      loading="lazy"
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                     />
                     {/* Overlay on hover */}
