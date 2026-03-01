@@ -462,6 +462,47 @@ export interface ApiBlogBlog extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiContactPageContactPage extends Struct.SingleTypeSchema {
+  collectionName: 'contact_pages';
+  info: {
+    description: 'Dynamic Contact Page with customizable fields';
+    displayName: 'contact-page';
+    pluralName: 'contact-pages';
+    singularName: 'contact-page';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    errorMessage: Schema.Attribute.Text &
+      Schema.Attribute.DefaultTo<'Failed to send message. Try again.'>;
+    formFields: Schema.Attribute.Component<'shared.form-field', true>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::contact-page.contact-page'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    submitButtonText: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'SEND MESSAGE'>;
+    subtitle: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'// Transmission_Open'>;
+    successMessage: Schema.Attribute.Text &
+      Schema.Attribute.DefaultTo<'Email sent successfully!'>;
+    title: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'CONTACT US'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiContentPageContentPage extends Struct.SingleTypeSchema {
   collectionName: 'content_pages';
   info: {
@@ -560,6 +601,44 @@ export interface ApiDeveloperQuoteDeveloperQuote
     publishedAt: Schema.Attribute.DateTime;
     quote: Schema.Attribute.Blocks;
     role: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiFooterFooter extends Struct.SingleTypeSchema {
+  collectionName: 'footers';
+  info: {
+    description: 'Global footer content';
+    displayName: 'footer';
+    pluralName: 'footers';
+    singularName: 'footer';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    bottomLogos: Schema.Attribute.Media<'images', true>;
+    companyUrl: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'https://www.kahrworks.at'>;
+    connectHeading: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'Connect With Us'>;
+    copyrightText: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'\u00A9 2026 KAHZWORKS GMBH \u2014 All rights reserved.'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::footer.footer'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    socialLinks: Schema.Attribute.Component<'shared.social-link', true>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -742,9 +821,47 @@ export interface ApiPartnersPagePartnersPage extends Struct.SingleTypeSchema {
   };
 }
 
+export interface ApiProductCategoryProductCategory
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'product_categories';
+  info: {
+    description: 'Grouping label used to filter products in the shop (e.g. Apparel, Accessories, Digital)';
+    displayName: 'product-category';
+    pluralName: 'product-categories';
+    singularName: 'product-category';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Text;
+    icon: Schema.Attribute.Media<'images'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::product-category.product-category'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    order: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<99>;
+    products: Schema.Attribute.Relation<'oneToMany', 'api::product.product'>;
+    publishedAt: Schema.Attribute.DateTime;
+    slug: Schema.Attribute.UID<'name'> & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiProductProduct extends Struct.CollectionTypeSchema {
   collectionName: 'products';
   info: {
+    description: 'A sellable item in the Revolver Rift merch / digital shop';
     displayName: 'product';
     pluralName: 'products';
     singularName: 'product';
@@ -753,16 +870,119 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    badges: Schema.Attribute.Component<'elements.product-badge', true>;
+    category: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::product-category.product-category'
+    >;
+    compare_at_price: Schema.Attribute.Decimal;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    description: Schema.Attribute.Blocks & Schema.Attribute.Required;
+    featured: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    gallery: Schema.Attribute.Media<'images', true>;
+    hover_image: Schema.Attribute.Media<'images'>;
+    is_new: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::product.product'
     > &
       Schema.Attribute.Private;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    order: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<99>;
+    price: Schema.Attribute.Decimal &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      >;
+    product_type: Schema.Attribute.Enumeration<
+      [
+        'apparel',
+        'accessory',
+        'digital',
+        'collectible',
+        'bundle',
+        'weapon_skin',
+      ]
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'apparel'>;
     publishedAt: Schema.Attribute.DateTime;
+    related_products: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::product.product'
+    >;
+    seo_description: Schema.Attribute.Text;
+    seo_title: Schema.Attribute.String;
+    sku: Schema.Attribute.String & Schema.Attribute.Unique;
+    slug: Schema.Attribute.UID<'name'> & Schema.Attribute.Required;
+    status: Schema.Attribute.Enumeration<
+      ['available', 'sold_out', 'coming_soon', 'archived']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'available'>;
+    stock_quantity: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
+    tagline: Schema.Attribute.String;
+    thumbnail: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    variants: Schema.Attribute.Component<'elements.product-variant', true>;
+  };
+}
+
+export interface ApiShopPageShopPage extends Struct.SingleTypeSchema {
+  collectionName: 'shop_pages';
+  info: {
+    description: 'Global configuration for the Shop / Merch page';
+    displayName: 'shop-page';
+    pluralName: 'shop-pages';
+    singularName: 'shop-page';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    cart_cta_text: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'ADD TO LOADOUT'>;
+    coming_soon_label: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'// COMING SOON'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    empty_state_message: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'// No items found in this category.'>;
+    featured_section_subtitle: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'// Limited. Lethal. Legendary.'>;
+    featured_section_title: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'FEATURED DROPS'>;
+    grid_columns: Schema.Attribute.Enumeration<['col_2', 'col_3', 'col_4']> &
+      Schema.Attribute.DefaultTo<'col_3'>;
+    hero_image: Schema.Attribute.Media<'images' | 'videos'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::shop-page.shop-page'
+    > &
+      Schema.Attribute.Private;
+    page_title: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'THE ARMORY'>;
+    promo_banner: Schema.Attribute.Component<'sections.promo-banner', false>;
+    publishedAt: Schema.Attribute.DateTime;
+    seo_description: Schema.Attribute.Text;
+    seo_title: Schema.Attribute.String;
+    show_category_filter: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<true>;
+    sold_out_label: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'SOLD OUT'>;
+    subtitle: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'// Gear Up. Stand Out.'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1358,15 +1578,19 @@ declare module '@strapi/strapi' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
       'api::blog.blog': ApiBlogBlog;
+      'api::contact-page.contact-page': ApiContactPageContactPage;
       'api::content-page.content-page': ApiContentPageContentPage;
       'api::credits-page.credits-page': ApiCreditsPageCreditsPage;
       'api::developer-quote.developer-quote': ApiDeveloperQuoteDeveloperQuote;
+      'api::footer.footer': ApiFooterFooter;
       'api::gallery-item.gallery-item': ApiGalleryItemGalleryItem;
       'api::home-page.home-page': ApiHomePageHomePage;
       'api::news-item.news-item': ApiNewsItemNewsItem;
       'api::news-page.news-page': ApiNewsPageNewsPage;
       'api::partners-page.partners-page': ApiPartnersPagePartnersPage;
+      'api::product-category.product-category': ApiProductCategoryProductCategory;
       'api::product.product': ApiProductProduct;
+      'api::shop-page.shop-page': ApiShopPageShopPage;
       'api::showcase-gallery.showcase-gallery': ApiShowcaseGalleryShowcaseGallery;
       'api::showcase-page.showcase-page': ApiShowcasePageShowcasePage;
       'plugin::content-releases.release': PluginContentReleasesRelease;

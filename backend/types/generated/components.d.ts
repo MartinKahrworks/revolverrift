@@ -12,6 +12,42 @@ export interface ElementsFeatureItem extends Struct.ComponentSchema {
   };
 }
 
+export interface ElementsProductBadge extends Struct.ComponentSchema {
+  collectionName: 'components_elements_product_badges';
+  info: {
+    description: 'A small label/tag shown on a product card (e.g. NEW, SALE, LIMITED)';
+    displayName: 'product-badge';
+  };
+  attributes: {
+    color: Schema.Attribute.Enumeration<
+      ['gold', 'red', 'green', 'silver', 'dark']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'gold'>;
+    label: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface ElementsProductVariant extends Struct.ComponentSchema {
+  collectionName: 'components_elements_product_variants';
+  info: {
+    description: 'A purchasable variant of a product (e.g. size S, color Black)';
+    displayName: 'product-variant';
+  };
+  attributes: {
+    is_available: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
+    price_modifier: Schema.Attribute.Decimal & Schema.Attribute.DefaultTo<0>;
+    sku_suffix: Schema.Attribute.String;
+    stock_quantity: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
+    variant_label: Schema.Attribute.String & Schema.Attribute.Required;
+    variant_type: Schema.Attribute.Enumeration<
+      ['size', 'color', 'edition', 'bundle']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'size'>;
+  };
+}
+
 export interface ElementsStatisticItem extends Struct.ComponentSchema {
   collectionName: 'components_elements_statistic_items';
   info: {
@@ -108,6 +144,24 @@ export interface SectionsPartnerStage extends Struct.ComponentSchema {
   };
 }
 
+export interface SectionsPromoBanner extends Struct.ComponentSchema {
+  collectionName: 'components_sections_promo_banners';
+  info: {
+    description: 'A promotional banner strip shown at the top of the shop page';
+    displayName: 'promo-banner';
+  };
+  attributes: {
+    background_color: Schema.Attribute.Enumeration<
+      ['gold', 'dark', 'red', 'transparent']
+    > &
+      Schema.Attribute.DefaultTo<'gold'>;
+    cta_link: Schema.Attribute.String;
+    cta_text: Schema.Attribute.String;
+    is_active: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
+    message: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
 export interface SectionsTrailerSection extends Struct.ComponentSchema {
   collectionName: 'components_sections_trailer_sections';
   info: {
@@ -119,10 +173,45 @@ export interface SectionsTrailerSection extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedFormField extends Struct.ComponentSchema {
+  collectionName: 'components_shared_form_fields';
+  info: {
+    description: 'Dynamic form field for contact pages';
+    displayName: 'form-field';
+  };
+  attributes: {
+    inputType: Schema.Attribute.Enumeration<
+      ['text', 'email', 'textarea', 'number', 'tel']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'text'>;
+    isRequired: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    placeholder: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface SharedSocialLink extends Struct.ComponentSchema {
+  collectionName: 'components_shared_social_links';
+  info: {
+    description: 'A single social or generic link for the footer grid';
+    displayName: 'social-link';
+  };
+  attributes: {
+    href: Schema.Attribute.String & Schema.Attribute.Required;
+    icon: Schema.Attribute.Media<'images' | 'files'>;
+    isImprintModal: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<false>;
+    label: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
       'elements.feature-item': ElementsFeatureItem;
+      'elements.product-badge': ElementsProductBadge;
+      'elements.product-variant': ElementsProductVariant;
       'elements.statistic-item': ElementsStatisticItem;
       'sections.about-section': SectionsAboutSection;
       'sections.features-section': SectionsFeaturesSection;
@@ -130,7 +219,10 @@ declare module '@strapi/strapi' {
       'sections.lore-section': SectionsLoreSection;
       'sections.partner-logo': SectionsPartnerLogo;
       'sections.partner-stage': SectionsPartnerStage;
+      'sections.promo-banner': SectionsPromoBanner;
       'sections.trailer-section': SectionsTrailerSection;
+      'shared.form-field': SharedFormField;
+      'shared.social-link': SharedSocialLink;
     }
   }
 }

@@ -1,0 +1,43 @@
+{
+    "kind": "singleType",
+    "collectionName": "contact_pages",
+    "info": {
+        "singularName": "contact-page",
+        "pluralName": "contact-pages",
+        "displayName": "contact-page",
+        "description": "Dynamic Contact Page with customizable fields"
+    },
+    "options": {
+        "draftAndPublish": true
+    },
+    "pluginOptions": {},
+    "attributes": {
+        "title": {
+            "type": "string",
+            "default": "CONTACT US",
+            "required": true
+        },
+        "subtitle": {
+            "type": "string",
+            "default": "// Transmission_Open"
+        },
+        "formFields": {
+            "type": "component",
+            "repeatable": true,
+            "component": "shared.form-field"
+        },
+        "submitButtonText": {
+            "type": "string",
+            "default": "SEND MESSAGE",
+            "required": true
+        },
+        "successMessage": {
+            "type": "text",
+            "default": "Email sent successfully!"
+        },
+        "errorMessage": {
+            "type": "text",
+            "default": "Failed to send message. Try again."
+        }
+    }
+}

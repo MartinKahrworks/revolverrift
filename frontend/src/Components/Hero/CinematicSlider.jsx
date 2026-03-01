@@ -64,7 +64,7 @@ const CinematicSlider = () => {
     return (
         <section
             ref={sectionRef}
-            className="relative w-full min-h-[60vh] bg-transparent overflow-hidden flex flex-col justify-center pb-16 -mt-[150px] z-30 pointer-events-none"
+            className="relative w-full min-h-[60vh] bg-transparent flex flex-col justify-center pb-16 -mt-[150px] z-30 pointer-events-none"
         >
             {/* Embers GIF Background */}
             <img
@@ -80,7 +80,7 @@ const CinematicSlider = () => {
             {/* Swiper with scroll-driven Y offset */}
             <motion.div
                 style={{ y: sliderY }}
-                className="w-full max-w-[1200px] relative z-30 px-4 md:px-0 mx-auto overflow-hidden pointer-events-auto"
+                className="w-full max-w-[1200px] relative z-30 px-4 md:px-0 mx-auto pointer-events-auto"
             >
                 <Swiper
                     effect={'coverflow'}
@@ -132,12 +132,21 @@ const CinematicSlider = () => {
                         <SwiperSlide
                             key={slide.id ?? index}
                             className="w-[250px] h-[250px] sm:w-[300px] sm:h-[300px] md:w-[450px] md:h-[450px] relative transition-all duration-700 ease-out"
+                            style={{ background: 'transparent' }}
                         >
-                            <div className="w-full h-full relative overflow-hidden shadow-2xl group transition-all duration-500 bg-transparent">
+                            <div
+                                className="w-full h-full relative group transition-all duration-500"
+                                style={{
+                                    background: 'transparent',
+                                    backfaceVisibility: 'hidden',
+                                    WebkitBackfaceVisibility: 'hidden',
+                                    transform: 'translateZ(0)'
+                                }}
+                            >
                                 <img
                                     src={slide.image}
                                     alt={slide.title}
-                                    className="w-full h-full object-contain transform transition-all duration-700 group-hover:scale-110 group-hover:brightness-110"
+                                    className="w-full h-full object-cover transform transition-all duration-700 group-hover:scale-110 group-hover:brightness-110"
                                     draggable="false"
                                     loading={index === 0 ? "eager" : "lazy"}
                                 />
@@ -163,6 +172,16 @@ const CinematicSlider = () => {
                 }
                 .swiper-slide-shadow-left, .swiper-slide-shadow-right {
                      background-image: none !important;
+                }
+                .swiper-wrapper {
+                    background: transparent !important;
+                }
+                .swiper-slide {
+                    background: transparent !important;
+                }
+                .swiper {
+                    background: transparent !important;
+                    overflow: visible !important;
                 }
             `}</style>
         </section>

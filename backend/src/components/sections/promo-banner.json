@@ -1,0 +1,38 @@
+{
+    "collectionName": "components_sections_promo_banners",
+    "info": {
+        "displayName": "promo-banner",
+        "description": "A promotional banner strip shown at the top of the shop page"
+    },
+    "options": {},
+    "attributes": {
+        "message": {
+            "type": "string",
+            "required": true,
+            "description": "e.g. 'FREE SHIPPING ON ORDERS OVER $75 // LIMITED STOCK'"
+        },
+        "cta_text": {
+            "type": "string",
+            "description": "Call-to-action button label"
+        },
+        "cta_link": {
+            "type": "string",
+            "description": "URL or anchor for the CTA button"
+        },
+        "is_active": {
+            "type": "boolean",
+            "default": true
+        },
+        "background_color": {
+            "type": "enumeration",
+            "enum": [
+                "gold",
+                "dark",
+                "red",
+                "transparent"
+            ],
+            "default": "gold"
+        }
+    },
+    "config": {}
+}

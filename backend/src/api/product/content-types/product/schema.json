@@ -4,11 +4,137 @@
   "info": {
     "singularName": "product",
     "pluralName": "products",
-    "displayName": "product"
+    "displayName": "product",
+    "description": "A sellable item in the Revolver Rift merch / digital shop"
   },
   "options": {
     "draftAndPublish": true
   },
   "pluginOptions": {},
-  "attributes": {}
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "name",
+      "required": true
+    },
+    "tagline": {
+      "type": "string",
+      "description": "Short one-liner shown under the product name on the card"
+    },
+    "description": {
+      "type": "blocks",
+      "required": true
+    },
+    "price": {
+      "type": "decimal",
+      "required": true,
+      "min": 0
+    },
+    "compare_at_price": {
+      "type": "decimal",
+      "description": "Original price before a sale; shown as strikethrough"
+    },
+    "sku": {
+      "type": "string",
+      "unique": true
+    },
+    "product_type": {
+      "type": "enumeration",
+      "enum": [
+        "apparel",
+        "accessory",
+        "digital",
+        "collectible",
+        "bundle",
+        "weapon_skin"
+      ],
+      "required": true,
+      "default": "apparel"
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": [
+        "available",
+        "sold_out",
+        "coming_soon",
+        "archived"
+      ],
+      "default": "available",
+      "required": true
+    },
+    "featured": {
+      "type": "boolean",
+      "default": false,
+      "description": "Pin to Featured Products section"
+    },
+    "is_new": {
+      "type": "boolean",
+      "default": true,
+      "description": "Show 'NEW' badge automatically for recent drops"
+    },
+    "order": {
+      "type": "integer",
+      "default": 99,
+      "description": "Manual sort order within the shop grid"
+    },
+    "stock_quantity": {
+      "type": "integer",
+      "default": 0,
+      "description": "Global stock (ignored when variants are used)"
+    },
+    "thumbnail": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "gallery": {
+      "type": "media",
+      "multiple": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "hover_image": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ],
+      "description": "Swapped in on card hover for an editorial feel"
+    },
+    "badges": {
+      "type": "component",
+      "repeatable": true,
+      "component": "elements.product-badge"
+    },
+    "variants": {
+      "type": "component",
+      "repeatable": true,
+      "component": "elements.product-variant"
+    },
+    "category": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::product-category.product-category",
+      "inversedBy": "products"
+    },
+    "related_products": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::product.product"
+    },
+    "seo_title": {
+      "type": "string"
+    },
+    "seo_description": {
+      "type": "text"
+    }
+  }
 }

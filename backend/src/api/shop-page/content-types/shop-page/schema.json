@@ -1,0 +1,88 @@
+{
+    "kind": "singleType",
+    "collectionName": "shop_pages",
+    "info": {
+        "singularName": "shop-page",
+        "pluralName": "shop-pages",
+        "displayName": "shop-page",
+        "description": "Global configuration for the Shop / Merch page"
+    },
+    "options": {
+        "draftAndPublish": true
+    },
+    "pluginOptions": {},
+    "attributes": {
+        "page_title": {
+            "type": "string",
+            "required": true,
+            "default": "THE ARMORY"
+        },
+        "subtitle": {
+            "type": "string",
+            "default": "// Gear Up. Stand Out."
+        },
+        "hero_image": {
+            "type": "media",
+            "multiple": false,
+            "allowedTypes": [
+                "images",
+                "videos"
+            ],
+            "description": "Background image or video loop behind the shop hero banner"
+        },
+        "promo_banner": {
+            "type": "component",
+            "repeatable": false,
+            "component": "sections.promo-banner",
+            "description": "Optional top-of-page promotional strip"
+        },
+        "featured_section_title": {
+            "type": "string",
+            "default": "FEATURED DROPS",
+            "description": "Heading for the Featured Products row"
+        },
+        "featured_section_subtitle": {
+            "type": "string",
+            "default": "// Limited. Lethal. Legendary."
+        },
+        "show_category_filter": {
+            "type": "boolean",
+            "default": true,
+            "description": "Toggle the animated category filter tabs above the product grid"
+        },
+        "grid_columns": {
+            "type": "enumeration",
+            "enum": [
+                "col_2",
+                "col_3",
+                "col_4"
+            ],
+            "default": "col_3",
+            "description": "Number of columns in the product grid (desktop)"
+        },
+        "empty_state_message": {
+            "type": "string",
+            "default": "// No items found in this category.",
+            "description": "Message shown when a category filter has no results"
+        },
+        "cart_cta_text": {
+            "type": "string",
+            "default": "ADD TO LOADOUT",
+            "description": "Label for the Add to Cart button across all product cards"
+        },
+        "sold_out_label": {
+            "type": "string",
+            "default": "SOLD OUT"
+        },
+        "coming_soon_label": {
+            "type": "string",
+            "default": "// COMING SOON"
+        },
+        "seo_title": {
+            "type": "string"
+        },
+        "seo_description": {
+            "type": "text"
+        }
+    }
+}

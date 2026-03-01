@@ -1,0 +1,34 @@
+{
+    "collectionName": "components_shared_form_fields",
+    "info": {
+        "displayName": "form-field",
+        "description": "Dynamic form field for contact pages"
+    },
+    "options": {},
+    "attributes": {
+        "name": {
+            "type": "string",
+            "required": true
+        },
+        "placeholder": {
+            "type": "string",
+            "required": true
+        },
+        "inputType": {
+            "type": "enumeration",
+            "enum": [
+                "text",
+                "email",
+                "textarea",
+                "number",
+                "tel"
+            ],
+            "required": true,
+            "default": "text"
+        },
+        "isRequired": {
+            "type": "boolean",
+            "default": true
+        }
+    }
+}

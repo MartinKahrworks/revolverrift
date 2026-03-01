@@ -1,0 +1,30 @@
+{
+    "collectionName": "components_shared_social_links",
+    "info": {
+        "displayName": "social-link",
+        "description": "A single social or generic link for the footer grid"
+    },
+    "options": {},
+    "attributes": {
+        "label": {
+            "type": "string",
+            "required": true
+        },
+        "href": {
+            "type": "string",
+            "required": true
+        },
+        "isImprintModal": {
+            "type": "boolean",
+            "default": false
+        },
+        "icon": {
+            "type": "media",
+            "multiple": false,
+            "allowedTypes": [
+                "images",
+                "files"
+            ]
+        }
+    }
+}

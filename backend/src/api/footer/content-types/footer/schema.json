@@ -1,0 +1,43 @@
+{
+  "kind": "singleType",
+  "collectionName": "footers",
+  "info": {
+    "singularName": "footer",
+    "pluralName": "footers",
+    "displayName": "footer",
+    "description": "Global footer content"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "connectHeading": {
+      "type": "string",
+      "default": "Connect With Us",
+      "required": true
+    },
+    "socialLinks": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.social-link"
+    },
+    "bottomLogos": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "copyrightText": {
+      "type": "string",
+      "default": "© 2026 KAHZWORKS GMBH — All rights reserved.",
+      "required": true
+    },
+    "companyUrl": {
+      "type": "string",
+      "default": "https://www.kahrworks.at"
+    }
+  }
+}

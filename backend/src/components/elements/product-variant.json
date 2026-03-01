@@ -1,0 +1,44 @@
+{
+    "collectionName": "components_elements_product_variants",
+    "info": {
+        "displayName": "product-variant",
+        "description": "A purchasable variant of a product (e.g. size S, color Black)"
+    },
+    "options": {},
+    "attributes": {
+        "variant_label": {
+            "type": "string",
+            "required": true,
+            "description": "e.g. 'Small', 'Black', 'US 10'"
+        },
+        "variant_type": {
+            "type": "enumeration",
+            "enum": [
+                "size",
+                "color",
+                "edition",
+                "bundle"
+            ],
+            "default": "size",
+            "required": true
+        },
+        "sku_suffix": {
+            "type": "string",
+            "description": "Appended to base SKU, e.g. '-BLK-S'"
+        },
+        "price_modifier": {
+            "type": "decimal",
+            "default": 0,
+            "description": "Added to or subtracted from base price (0 = same price)"
+        },
+        "stock_quantity": {
+            "type": "integer",
+            "default": 0
+        },
+        "is_available": {
+            "type": "boolean",
+            "default": true
+        }
+    },
+    "config": {}
+}

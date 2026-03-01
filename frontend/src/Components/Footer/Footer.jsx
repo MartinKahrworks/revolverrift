@@ -1,9 +1,6 @@
 import { Link } from 'react-router-dom';
-import { useRef, useState } from 'react';
-import logo1 from "../../assets/logo/Logo1.png";
-import logo2 from "../../assets/logo/Logo2.png";
-import logo3 from "../../assets/logo/Logo3.png";
-import logo4 from "../../assets/logo/Logo4.png";
+import { useRef, useState, useEffect } from 'react';
+import { getFooterData, FALLBACK_FOOTER_DATA } from '../../api/footerApi';
 import bgImage from '../../assets/Texturelabs_Grunge_353M.webp';
 
 const SocialLink = ({ href, imgSrc, label, onClick }) => {
@@ -39,14 +36,14 @@ const SocialLink = ({ href, imgSrc, label, onClick }) => {
       rel={onClick ? undefined : "noopener noreferrer"}
       className="flex flex-col items-center gap-3.5 p-4"
       ref={ref}
-      
+
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       onClick={handleClick}
       style={{ transition: 'transform 0.3s ease-out' }
-      
-    }
-      
+
+      }
+
     >
       <img style={{ height: '50px' }} src={imgSrc} alt={label} />
       <span style={{ fontSize: '20px', color: 'white' }}>{label}</span>
@@ -55,63 +52,27 @@ const SocialLink = ({ href, imgSrc, label, onClick }) => {
 };
 
 const Footer = () => {
-  const year = new Date().getFullYear();
   const [showModal, setShowModal] = useState(false);
+  const [footerData, setFooterData] = useState(FALLBACK_FOOTER_DATA);
 
-  const socialLinks = [
-    {
-      href: 'https://discord.com/invite/QP6RmdUSA8',
-      label: 'DISCORD',
-      img: 'https://cdn-icons-png.flaticon.com/512/5968/5968756.png',
-    },
-    {
-      href: 'https://reddit.com/RevolverRift',
-      label: 'REDDIT',
-      img: 'https://cdn-icons-png.flaticon.com/512/2111/2111589.png',
-    },
-    {
-      href: 'https://www.youtube.com/@revolverrift',
-      label: 'YOUTUBE',
-      img: 'https://cdn-icons-png.flaticon.com/512/1384/1384060.png',
-    },
-    {
-      href: 'https://x.com/RevolverRift',
-      label: 'TWITTER',
-      img: 'https://cdn-icons-png.flaticon.com/512/5969/5969020.png',
-    },
-    {
-      href: 'https://facebook.com/revolverrift',
-      label: 'FACEBOOK',
-      img: 'https://cdn-icons-png.flaticon.com/512/733/733547.png',
-    },
-    {
-      href: 'https://www.instagram.com/revolverrift/',
-      label: 'INSTAGRAM',
-      img: 'https://cdn-icons-png.flaticon.com/512/1384/1384063.png',
-    },
-    {
-      href: 'mailto:info@revolver-rift.com',
-      label: 'MAIL',
-      img: 'https://cdn-icons-png.flaticon.com/512/732/732200.png',
-    },
-    {
-      href: '#',
-      label: 'IMPRINT',
-      img: 'https://cdn-icons-png.flaticon.com/512/2965/2965358.png', // Info/document icon
-      onClick: () => setShowModal(true),
-    },
-  ];
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getFooterData();
+      setFooterData(data);
+    };
+    fetchData();
+  }, []);
 
   return (
     <div
-    // style={{ backgroundImage: `url(${bgImage})` }}
-    className="relative">
+      // style={{ backgroundImage: `url(${bgImage})` }}
+      className="relative">
       {/* Top angled divider */}
       <svg
         className="absolute top-0 left-0 w-full h-12 text-black"
         preserveAspectRatio="none"
         viewBox="0 0 100 100"
-        
+
       >
         <polygon fill="currentColor" points="0,100 100,0 100,100" />
       </svg>
@@ -124,19 +85,17 @@ const Footer = () => {
         >
           <div className="p-8">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
-              <h2 className="text-5xl md:text-6xl font-black uppercase leading-none font-custom lg:col-span-1 text-[#e4d6c3]">
-                Connect
-                <br />
-                With Us
+              <h2 className="text-5xl md:text-6xl font-black uppercase leading-none font-custom lg:col-span-1 text-[#e4d6c3] whitespace-pre-wrap">
+                {footerData.connectHeading}
               </h2>
               <div className="lg:col-span-2 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-2 font-custom text-[#e4d6c3]">
-                {socialLinks.map((s, i) => (
-                  <SocialLink 
-                    key={i} 
-                    href={s.href} 
-                    imgSrc={s.img} 
-                    label={s.label} 
-                    onClick={s.onClick}
+                {footerData.socialLinks.map((s, i) => (
+                  <SocialLink
+                    key={i}
+                    href={s.href}
+                    imgSrc={s.img}
+                    label={s.label}
+                    onClick={s.isImprintModal ? () => setShowModal(true) : undefined}
                   />
                 ))}
               </div>
@@ -145,8 +104,8 @@ const Footer = () => {
             <div className="mt-12 pt-6 border-t border-gray-700 flex flex-col md:flex-row justify-between items-center text-xs gap-4">
               <div className="w-full">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                  <div className="py-8 grid grid-cols-2 sm:grid-cols-4 place-items-center gap-8 sm:gap-12">
-                    {[logo1, logo2, logo3, logo4].map((src, i) => (
+                  <div className="py-8 grid grid-cols-2 flex-wrap justify-center sm:grid-cols-4 place-items-center gap-8 sm:gap-12">
+                    {footerData.bottomLogos.map((src, i) => (
                       <div
                         key={i}
                         className="aspect-square w-24 sm:w-20 md:w-28 flex items-center justify-center"
@@ -166,11 +125,11 @@ const Footer = () => {
 
                 <div className="w-full text-center mt-10 text-xs text-[#725640] tracking-widest">
                   <a
-                    href="https://www.kahrworks.at"
+                    href={footerData.companyUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    &copy; {year} KAHRWORKS GMBH — All rights reserved.
+                    {footerData.copyrightText}
                   </a>
                 </div>
               </div>

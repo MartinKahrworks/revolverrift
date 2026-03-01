@@ -1,0 +1,48 @@
+{
+    "kind": "collectionType",
+    "collectionName": "product_categories",
+    "info": {
+        "singularName": "product-category",
+        "pluralName": "product-categories",
+        "displayName": "product-category",
+        "description": "Grouping label used to filter products in the shop (e.g. Apparel, Accessories, Digital)"
+    },
+    "options": {
+        "draftAndPublish": false
+    },
+    "pluginOptions": {},
+    "attributes": {
+        "name": {
+            "type": "string",
+            "required": true,
+            "unique": true
+        },
+        "slug": {
+            "type": "uid",
+            "targetField": "name",
+            "required": true
+        },
+        "description": {
+            "type": "text"
+        },
+        "icon": {
+            "type": "media",
+            "multiple": false,
+            "allowedTypes": [
+                "images"
+            ],
+            "description": "SVG or PNG icon for the filter tab"
+        },
+        "order": {
+            "type": "integer",
+            "default": 99,
+            "description": "Display order of the filter tab"
+        },
+        "products": {
+            "type": "relation",
+            "relation": "oneToMany",
+            "target": "api::product.product",
+            "mappedBy": "category"
+        }
+    }
+}

@@ -1,0 +1,27 @@
+{
+    "collectionName": "components_elements_product_badges",
+    "info": {
+        "displayName": "product-badge",
+        "description": "A small label/tag shown on a product card (e.g. NEW, SALE, LIMITED)"
+    },
+    "options": {},
+    "attributes": {
+        "label": {
+            "type": "string",
+            "required": true
+        },
+        "color": {
+            "type": "enumeration",
+            "enum": [
+                "gold",
+                "red",
+                "green",
+                "silver",
+                "dark"
+            ],
+            "default": "gold",
+            "required": true
+        }
+    },
+    "config": {}
+}
