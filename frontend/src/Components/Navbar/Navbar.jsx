@@ -3,6 +3,7 @@ import logo from "../../assets/IMG_0983.png";
 import { HiMenuAlt1, HiMenuAlt3 } from "react-icons/hi";
 import { FaTwitter, FaDribbble, FaInstagram, FaPinterest, FaSearch, FaShoppingCart, FaSignInAlt, FaTh, FaGlobe } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { useCart } from "../../context/CartContext";
 import "./cutting-animation.css";
 
 const NavLinks = [
@@ -17,6 +18,7 @@ const NavLinks = [
 ];
 
 const Navbar = () => {
+  const { cartCount } = useCart();
   const [showMenu, setShowMenu] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeLink, setActiveLink] = useState("/");
@@ -136,6 +138,11 @@ const Navbar = () => {
               <button aria-label="Search" className="hover:text-[#ffb700] hover:scale-110 transition-all duration-300"><FaSearch size={13} /></button>
               <Link to="/cart" aria-label="Cart" className="hover:text-[#ffb700] hover:scale-110 transition-all duration-300 relative">
                 <FaShoppingCart size={13} />
+                {cartCount > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-red-600 text-white text-[8px] font-bold h-3.5 w-3.5 flex items-center justify-center rounded-full shadow-[0_0_10px_rgba(220,38,38,0.8)]">
+                    {cartCount > 9 ? '9+' : cartCount}
+                  </span>
+                )}
               </Link>
               <Link to="/login" aria-label="Login" className="hover:text-[#ffb700] hover:scale-110 transition-all duration-300"><FaSignInAlt size={13} /></Link>
 

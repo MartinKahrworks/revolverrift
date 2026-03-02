@@ -1,5 +1,11 @@
 const STRAPI_URL = import.meta.env.VITE_STRAPI_URL || 'http://127.0.0.1:1337';
 
+// ─── Utilities ─────────────────────────────────────────────────────────────
+const resolveUrl = (url) => {
+    if (!url) return null;
+    return url.startsWith('http') ? url : `${STRAPI_URL}${url}`;
+};
+
 // ─── Shop Page (Single Type) ───────────────────────────────────────────────
 
 export const FALLBACK_SHOP_PAGE = {
@@ -12,12 +18,14 @@ export const FALLBACK_SHOP_PAGE = {
     empty_state_message: "// No items found in this category.",
     cart_cta_text: "ADD TO LOADOUT",
     sold_out_label: "SOLD OUT",
-    coming_soon_label: "// COMING SOON"
+    coming_soon_label: "// COMING SOON",
+    hero_image: null,
+    promo_banner: null
 };
 
 export const getShopPage = async () => {
     try {
-        const res = await fetch(`${STRAPI_URL}/api/shop-page`);
+        const res = await fetch(`${STRAPI_URL}/api/shop-page?populate=*`);
         if (!res.ok) return FALLBACK_SHOP_PAGE;
         const json = await res.json();
         const data = json.data;
@@ -32,7 +40,9 @@ export const getShopPage = async () => {
             empty_state_message: data.empty_state_message || FALLBACK_SHOP_PAGE.empty_state_message,
             cart_cta_text: data.cart_cta_text || FALLBACK_SHOP_PAGE.cart_cta_text,
             sold_out_label: data.sold_out_label || FALLBACK_SHOP_PAGE.sold_out_label,
-            coming_soon_label: data.coming_soon_label || FALLBACK_SHOP_PAGE.coming_soon_label
+            coming_soon_label: data.coming_soon_label || FALLBACK_SHOP_PAGE.coming_soon_label,
+            hero_image: data.hero_image ? resolveUrl(data.hero_image.url) : FALLBACK_SHOP_PAGE.hero_image,
+            promo_banner: data.promo_banner || FALLBACK_SHOP_PAGE.promo_banner
         };
     } catch {
         return FALLBACK_SHOP_PAGE;
@@ -40,11 +50,6 @@ export const getShopPage = async () => {
 };
 
 // ─── Products (Collection Type) ───────────────────────────────────────────
-
-const resolveUrl = (url) => {
-    if (!url) return null;
-    return url.startsWith('http') ? url : `${STRAPI_URL}${url}`;
-};
 
 const mapProduct = (item) => ({
     id: item.id,

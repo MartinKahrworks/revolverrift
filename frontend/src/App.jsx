@@ -29,6 +29,8 @@ import GunsShowcase from "./Components/Showcase/GunsShowcase";
 import Partners from "./Components/Partners/partners";
 import Contact from "./Components/Contact/Contact";
 import Shop from "./Components/Shop/Shop";
+import Cart from "./Components/Shop/Cart";
+import { CartProvider } from "./context/CartContext";
 import Loader from "./Components/Loader/Loader";
 import HeroCountdown from "./Components/Hero/Hero";
 import Features from "./Components/Features/Features";
@@ -116,7 +118,7 @@ const App = () => {
 
   return (
     // BrowserRouter is removed from here
-    <>
+    <CartProvider>
       {/* <Cursor /> */}
       {/* Scroll to the top of the page whenever the route changes */}
       <ScrollToTop />
@@ -166,6 +168,7 @@ const App = () => {
               </>
             } />
             <Route path="/shop" element={<Shop />} />
+            <Route path="/cart" element={<Cart />} />
             {/* Character Routes */}
             <Route path="/characters" element={<Navigate to="/characters/leader" replace />} />
             <Route path="/characters/:id" element={<CharactersPage />} />
@@ -187,7 +190,7 @@ const App = () => {
         </main>
 
       </div>
-    </>
+    </CartProvider>
   );
 };
 
