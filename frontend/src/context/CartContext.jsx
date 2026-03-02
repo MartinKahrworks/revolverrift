@@ -1,8 +1,8 @@
-import React, { createContext, useContext, useReducer, useEffect } from 'react';
+import React, { createContext, useReducer, useContext } from 'react';
 
-const CartContext = createContext(null);
+const CartContext = createContext();
 
-const STORAGE_KEY = 'rr_cart';
+export const useCart = () => useContext(CartContext);
 
 function cartReducer(state, action) {
     switch (action.type) {
@@ -40,29 +40,31 @@ function cartReducer(state, action) {
     }
 }
 
-export function CartProvider({ children }) {
-    const [items, dispatch] = useReducer(
-        cartReducer,
-        [],
-        () => {
-            try {
-                const saved = localStorage.getItem(STORAGE_KEY);
-                return saved ? JSON.parse(saved) : [];
-            } catch {
-                return [];
-            }
+export const CartProvider = ({ children }) => {
+    const [items, dispatch] = useReducer(cartReducer, [], () => {
+        try {
+            const saved = localStorage.getItem('rr_cart');
+            return saved ? JSON.parse(saved) : [];
+        } catch {
+            return [];
         }
-    );
+    });
 
-    // Persist to localStorage whenever cart changes
-    useEffect(() => {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+    // Persist to localStorage on every change
+    React.useEffect(() => {
+        localStorage.setItem('rr_cart', JSON.stringify(items));
     }, [items]);
 
     // Add to cart — accepts a product object (with optional .size)
-    const addToCart = (product) => dispatch({
+    const addToCart = (product, size = 'ONE SIZE') => dispatch({
         type: 'ADD',
-        product: { ...product, size: product.size || 'ONE SIZE' }
+        product: {
+            id: product.id,
+            name: product.name,
+            price: product.price,
+            image: product.thumbnail || product.image,
+            size: size
+        }
     });
 
     // Remove by id + size
@@ -80,7 +82,6 @@ export function CartProvider({ children }) {
 
     return (
         <CartContext.Provider value={{
-            // New API (used by Cart.jsx, Shop.jsx, Navbar.jsx)
             cartItems: items,
             addToCart,
             removeItem,
@@ -92,10 +93,4 @@ export function CartProvider({ children }) {
             {children}
         </CartContext.Provider>
     );
-}
-
-export const useCart = () => {
-    const ctx = useContext(CartContext);
-    if (!ctx) throw new Error('useCart must be used inside <CartProvider>');
-    return ctx;
 };

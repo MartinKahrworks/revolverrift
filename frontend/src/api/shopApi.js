@@ -9,7 +9,7 @@ const resolveUrl = (url) => {
 // ─── Shop Page (Single Type) ───────────────────────────────────────────────
 
 export const FALLBACK_SHOP_PAGE = {
-    page_title: "THE ARMORY",
+    page_title: "THE MERCH AND MORE",
     subtitle: "// Official Merch & Gear",
     featured_section_title: "FEATURED DROPS",
     featured_section_subtitle: "// Limited. Lethal. Legendary.",

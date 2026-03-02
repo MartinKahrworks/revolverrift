@@ -15,7 +15,7 @@
         "page_title": {
             "type": "string",
             "required": true,
-            "default": "THE ARMORY"
+            "default": "THE MERCH AND MORE"
         },
         "subtitle": {
             "type": "string",
