@@ -8,8 +8,11 @@ import borderRight from "../../assets/borders/border-right.png";
 const ViewportFrame = () => {
     return (
         <>
-            {/* Top border — z-40 so it sits BELOW the navbar (z-50) */}
-            <div style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 40, pointerEvents: "none" }}>
+            {/* Top border — perpetually pinned to 0px, naturally hidden behind the header until the header scrolls away */}
+            <div
+                className="top-0 transition-all duration-300"
+                style={{ position: "fixed", left: 0, right: 0, zIndex: 40, pointerEvents: "none" }}
+            >
                 <img src={borderTop} className="frame-border frame-top" alt="" draggable="false" />
             </div>
 

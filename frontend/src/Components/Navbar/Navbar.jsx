@@ -55,7 +55,7 @@ const Navbar = () => {
   }, []);
   return (
     <>
-      <header className={`fixed top-0 w-full z-50 transition-all duration-300 translate-y-0 bg-gray-950 ${isScrolled ? "shadow-lg" : ""}`}>
+      <header className={`fixed top-0 w-full z-50 transition-transform duration-300 ${isVisible ? "translate-y-0" : "-translate-y-full"} bg-gray-950 ${isScrolled ? "shadow-lg" : ""}`}>
 
         {/* ─────────────────────────────────────────────────────────────
             TOP BAR (USA ... PRIVACY CONTACT | Social Icons)

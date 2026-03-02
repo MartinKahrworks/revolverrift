@@ -51,7 +51,7 @@ const Lightbox = ({ images, index, onClose, onNav }) => {
       {/* Prev */}
       <button
         onClick={(e) => { e.stopPropagation(); onNav(-1); }}
-        className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-10 border border-white/20 hover:border-red-600 bg-black/60 text-white p-3 transition-all duration-300 hover:bg-red-600/20"
+        className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-10 border border-white/20 hover:border-[#ff3333] bg-black/60 text-white p-3 transition-all duration-300 hover:bg-[#ff3333] hover:shadow-[0_0_15px_rgba(255,51,51,0.5)]"
         aria-label="Previous"
       >
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -77,7 +77,7 @@ const Lightbox = ({ images, index, onClose, onNav }) => {
       {/* Next */}
       <button
         onClick={(e) => { e.stopPropagation(); onNav(1); }}
-        className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-10 border border-white/20 hover:border-red-600 bg-black/60 text-white p-3 transition-all duration-300 hover:bg-red-600/20"
+        className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-10 border border-white/20 hover:border-[#ff3333] bg-black/60 text-white p-3 transition-all duration-300 hover:bg-[#ff3333] hover:shadow-[0_0_15px_rgba(255,51,51,0.5)]"
         aria-label="Next"
       >
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -118,8 +118,8 @@ const ExploreDrawer = ({ images, onClose, onImageClick, activeFilter, setActiveF
                 key={cat}
                 onClick={() => setActiveFilter(cat)}
                 className={`px-4 py-1.5 text-xs font-mono uppercase tracking-widest border transition-all duration-200 ${activeFilter === cat
-                  ? "border-red-600 bg-red-600/10 text-white"
-                  : "border-white/20 text-white/50 hover:border-white/40 hover:text-white/80"
+                  ? "border-red-600 bg-red-600/10 text-white shadow-[0_0_15px_rgba(255,51,51,0.4)]"
+                  : "border-white/20 text-white/50 hover:border-[#ff3333] hover:text-[#ff3333] hover:shadow-[0_0_15px_rgba(255,51,51,0.3)]"
                   }`}
               >
                 {cat}
@@ -320,7 +320,7 @@ const Showcase = () => {
           <div className="flex justify-center mt-4">
             <button
               onClick={() => setIsExploreOpen(true)}
-              className="group relative inline-flex items-center gap-3 border border-white/20 hover:border-red-600 bg-transparent px-8 py-4 font-mono text-sm tracking-widest text-white uppercase transition-all duration-300 hover:bg-red-600/10"
+              className="group relative inline-flex items-center gap-3 border border-white/20 hover:border-[#ff3333] bg-transparent px-8 py-4 font-mono text-sm tracking-widest text-white uppercase transition-all duration-300 hover:bg-[#ff3333] hover:shadow-[0_0_15px_rgba(255,51,51,0.5)]"
             >
               <span>Explore Full Gallery</span>
               <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">

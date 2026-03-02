@@ -80,7 +80,7 @@ const CinematicSlider = () => {
             {/* Swiper with scroll-driven Y offset */}
             <motion.div
                 style={{ y: sliderY }}
-                className="w-full max-w-[1200px] relative z-30 px-4 md:px-0 mx-auto pointer-events-auto"
+                className="w-full max-w-[1920px] relative z-30 px-4 md:px-0 mx-auto pointer-events-auto"
             >
                 <Swiper
                     effect={'coverflow'}
@@ -112,18 +112,18 @@ const CinematicSlider = () => {
                         320: {
                             slidesPerView: 1.2,
                             spaceBetween: 0,
-                            coverflowEffect: { rotate: 0, stretch: 0, depth: 50, modifier: 1, scale: 0.85 }
+                            coverflowEffect: { rotate: 15, stretch: 0, depth: 50, modifier: 1, scale: 0.85 }
                         },
                         1024: {
                             slidesPerView: 2.2,
                             centeredSlides: true,
-                            spaceBetween: -150,
+                            spaceBetween: -100,
                             coverflowEffect: {
-                                rotate: 0,
+                                rotate: 20,
                                 stretch: 0,
                                 depth: 150,
                                 modifier: 1,
-                                scale: 0.7
+                                scale: 0.8
                             }
                         }
                     }}
@@ -131,7 +131,7 @@ const CinematicSlider = () => {
                     {slides.map((slide, index) => (
                         <SwiperSlide
                             key={slide.id ?? index}
-                            className="w-[250px] h-[250px] sm:w-[300px] sm:h-[300px] md:w-[450px] md:h-[450px] relative transition-all duration-700 ease-out"
+                            className="w-[80vw] h-[55vw] sm:w-[60vw] sm:h-[40vw] md:w-[50vw] md:h-[30vw] lg:w-[45vw] lg:h-[25vw] xl:w-[45vw] xl:h-[25vw] relative transition-all duration-700 ease-out shrink-0"
                             style={{ background: 'transparent' }}
                         >
                             <div
@@ -146,7 +146,7 @@ const CinematicSlider = () => {
                                 <img
                                     src={slide.image}
                                     alt={slide.title}
-                                    className="w-full h-full object-cover transform transition-all duration-700 group-hover:scale-110 group-hover:brightness-110"
+                                    className="w-full h-full object-fill transform transition-all duration-700 group-hover:scale-110 group-hover:brightness-110"
                                     draggable="false"
                                     loading={index === 0 ? "eager" : "lazy"}
                                 />

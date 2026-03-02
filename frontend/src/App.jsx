@@ -127,12 +127,14 @@ const App = () => {
       {/* Root Overlay Container */}
       <div className="relative min-h-screen">
 
+        {/* Navbar sits above the frame completely */}
+        <Navbar />
+
         {/* Frame Overlay Layer */}
         <ViewportFrame />
 
         {/* Main Scrollable Content */}
         <main className="relative z-10 overflow-x-hidden bg-white dark:bg-black text-black dark:text-white duration-300">
-          <Navbar />
           <Routes>
             {/* Home Page Route */}
             <Route

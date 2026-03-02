@@ -71,7 +71,7 @@ function Contact() {
             </div>
 
             {/* Main Content */}
-            <div className="relative z-10 flex-grow flex items-center justify-center py-24 px-4">
+            <div className="relative z-10 flex-grow flex items-center justify-center pt-40 pb-24 px-4">
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -103,7 +103,7 @@ function Contact() {
                                         onChange={handleChange}
                                         required={field.isRequired}
                                         rows={5}
-                                        className="w-full bg-white/5 border border-white/10 px-4 py-3 text-white focus:border-[#ff3333] focus:bg-white/10 focus:outline-none transition-all duration-300 placeholder-white/30 font-mono text-xs tracking-wider resize-none"
+                                        className="w-full bg-white/5 border border-white/10 px-4 py-3 text-white focus:border-[#ff3333] hover:border-[#ff3333] hover:shadow-[0_0_15px_rgba(255,51,51,0.25)] focus:shadow-[0_0_15px_rgba(255,51,51,0.4)] focus:bg-white/10 focus:outline-none transition-all duration-300 placeholder-white/30 font-mono text-xs tracking-wider resize-none"
                                     />
                                 ) : (
                                     <input
@@ -113,7 +113,7 @@ function Contact() {
                                         value={formData[field.name] || ""}
                                         onChange={handleChange}
                                         required={field.isRequired}
-                                        className="w-full bg-white/5 border border-white/10 px-4 py-3 text-white focus:border-[#ff3333] focus:bg-white/10 focus:outline-none transition-all duration-300 placeholder-white/30 font-mono text-xs tracking-wider"
+                                        className="w-full bg-white/5 border border-white/10 px-4 py-3 text-white focus:border-[#ff3333] hover:border-[#ff3333] hover:shadow-[0_0_15px_rgba(255,51,51,0.25)] focus:shadow-[0_0_15px_rgba(255,51,51,0.4)] focus:bg-white/10 focus:outline-none transition-all duration-300 placeholder-white/30 font-mono text-xs tracking-wider"
                                     />
                                 )}
                             </div>

@@ -72,7 +72,7 @@ const NewsSection = () => {
                         <Link
                             to={`/blog/${news.link}`}
                             key={news.id}
-                            className="group relative flex flex-col min-h-[450px] overflow-hidden rounded-sm border border-white/5 bg-[#0a0a0a] transition-all duration-500 hover:border-red-900/40"
+                            className="group relative flex flex-col min-h-[450px] overflow-hidden rounded-sm border border-white/5 bg-[#0a0a0a] transition-all duration-500 hover:border-[#ff3333] hover:shadow-[0_0_20px_rgba(255,51,51,0.2)]"
                         >
                             {/* Image Background (Top Half) */}
                             <div className="absolute inset-0 h-[60%] w-full overflow-hidden bg-[#111]">
@@ -123,7 +123,7 @@ const NewsSection = () => {
                 <div className="mt-16 flex justify-center">
                     <Link
                         to="/blogs"
-                        className="group relative inline-flex items-center justify-center border border-white/20 bg-transparent px-8 py-4 font-mono text-sm tracking-widest text-white uppercase transition-all duration-300 hover:border-red-600 hover:bg-red-600/10"
+                        className="group relative inline-flex items-center justify-center border border-white/20 bg-transparent px-8 py-4 font-mono text-sm tracking-widest text-white uppercase transition-all duration-300 hover:border-[#ff3333] hover:bg-[#ff3333] hover:shadow-[0_0_15px_rgba(255,51,51,0.5)]"
                     >
                         <span>Explore More Blogs</span>
                     </Link>

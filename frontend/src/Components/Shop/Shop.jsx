@@ -63,8 +63,8 @@ function Shop() {
                             onClick={() => setCategory('all')}
                             className={`font-mono text-xs tracking-[0.2em] uppercase px-5 py-2 border transition-all duration-200
                                 ${activeCategory === 'all'
-                                    ? 'bg-red-600 border-red-600 text-white'
-                                    : 'bg-transparent border-white/20 text-gray-400 hover:border-white/50 hover:text-white'
+                                    ? 'bg-red-600 border-red-600 text-white shadow-[0_0_15px_rgba(255,51,51,0.4)]'
+                                    : 'bg-transparent border-white/20 text-gray-400 hover:border-[#ff3333] hover:text-[#ff3333] hover:shadow-[0_0_15px_rgba(255,51,51,0.3)]'
                                 }`}
                         >
                             ALL
@@ -75,8 +75,8 @@ function Shop() {
                                 onClick={() => setCategory(cat.slug)}
                                 className={`font-mono text-xs tracking-[0.2em] uppercase px-5 py-2 border transition-all duration-200
                                     ${activeCategory === cat.slug
-                                        ? 'bg-red-600 border-red-600 text-white'
-                                        : 'bg-transparent border-white/20 text-gray-400 hover:border-white/50 hover:text-white'
+                                        ? 'bg-red-600 border-red-600 text-white shadow-[0_0_15px_rgba(255,51,51,0.4)]'
+                                        : 'bg-transparent border-white/20 text-gray-400 hover:border-[#ff3333] hover:text-[#ff3333] hover:shadow-[0_0_15px_rgba(255,51,51,0.3)]'
                                     }`}
                             >
                                 {cat.name}

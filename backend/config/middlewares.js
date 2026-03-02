@@ -53,6 +53,16 @@ module.exports = [
           return origin;
         }
 
+        // ✅ LAN development — any 192.168.x.x device on the same network (colleagues)
+        if (/^http:\/\/192\.168\.\d+\.\d+:\d+$/.test(origin)) {
+          return origin;
+        }
+
+        // ✅ ngrok tunnels (for remote access / sharing)
+        if (origin.endsWith('.ngrok-free.app') || origin.endsWith('.ngrok.io')) {
+          return origin;
+        }
+
         // ✅ Production — deployed Vercel frontend
         const allowedProduction = [
           'https://revolver2.vercel.app',
