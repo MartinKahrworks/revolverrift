@@ -972,7 +972,7 @@ export interface ApiShopPageShopPage extends Struct.SingleTypeSchema {
       Schema.Attribute.Private;
     page_title: Schema.Attribute.String &
       Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<'THE ARMORY'>;
+      Schema.Attribute.DefaultTo<'THE MERCH AND MORE'>;
     promo_banner: Schema.Attribute.Component<'sections.promo-banner', false>;
     publishedAt: Schema.Attribute.DateTime;
     seo_description: Schema.Attribute.Text;
