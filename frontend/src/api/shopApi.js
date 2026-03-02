@@ -3,7 +3,7 @@ const STRAPI_URL = import.meta.env.VITE_STRAPI_URL || 'http://127.0.0.1:1337';
 // ─── Shop Page (Single Type) ───────────────────────────────────────────────
 
 export const FALLBACK_SHOP_PAGE = {
-    page_title: "THE ARMORY",
+    page_title: "THE MERCH AND MORE",
     subtitle: "// Official Merch & Gear",
     featured_section_title: "FEATURED DROPS",
     featured_section_subtitle: "// Limited. Lethal. Legendary.",
