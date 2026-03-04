@@ -1,0 +1,20 @@
+{
+    "collectionName": "components_sections_partner_perks",
+    "info": {
+        "displayName": "partner-perk",
+        "description": "A single perk for a partner tier"
+    },
+    "options": {},
+    "attributes": {
+        "title": {
+            "type": "string",
+            "required": true
+        },
+        "description": {
+            "type": "text"
+        },
+        "icon": {
+            "type": "string"
+        }
+    }
+}

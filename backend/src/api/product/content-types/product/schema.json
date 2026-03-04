@@ -26,12 +26,10 @@
       "description": "Short one-liner shown under the product name on the card"
     },
     "description": {
-      "type": "blocks",
-      "required": true
+      "type": "blocks"
     },
     "price": {
       "type": "decimal",
-      "required": true,
       "min": 0
     },
     "compare_at_price": {
@@ -39,8 +37,7 @@
       "description": "Original price before a sale; shown as strikethrough"
     },
     "sku": {
-      "type": "string",
-      "unique": true
+      "type": "string"
     },
     "product_type": {
       "type": "enumeration",
@@ -89,7 +86,7 @@
     "thumbnail": {
       "type": "media",
       "multiple": false,
-      "required": true,
+      "required": false,
       "allowedTypes": [
         "images"
       ]

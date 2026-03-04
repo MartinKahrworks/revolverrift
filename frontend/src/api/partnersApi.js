@@ -2,124 +2,126 @@ import bgImage from '../assets/Texturelabs_Grunge_353M.webp';
 
 const STRAPI_URL = import.meta.env.VITE_STRAPI_URL || "http://127.0.0.1:1337";
 
-// ─── Helpers to parse Strapi Blocks without external libraries ──────────────
-
-const extractParagraphs = (blocks) => {
-    if (!blocks || !Array.isArray(blocks)) return [];
-    return blocks
-        .filter(b => b.type === 'paragraph' && Array.isArray(b.children))
-        .map(b => b.children.map(c => c.text || "").join(""))
-        .filter(text => text.trim() !== "");
-};
-
-const extractListItems = (blocks) => {
-    if (!blocks || !Array.isArray(blocks)) return [];
-    let items = [];
-    blocks.forEach(block => {
-        if (block.type === 'list' && Array.isArray(block.children)) {
-            block.children.forEach(li => {
-                if (li.type === 'list-item' && Array.isArray(li.children)) {
-                    items.push(li.children.map(c => c.text || "").join(""));
-                }
-            });
-        }
-    });
-    return items;
-};
-
-// ─── Fallback Data ────────────────────────────────────────────────────────────
+// ─── Fallback Data ─────────────────────────────────────────────────────────────
 
 export const FALLBACK_PARTNERS_DATA = {
-    title: "Revolver Rift Partnership Program",
-    intro_paragraphs: [
-        "Become part of the Revolver Rift Community and join us on our journey to make this game a global success!",
-        "Our partnership program offers exclusive benefits for content creators and streamers, divided into three tiers based on engagement and reach.",
-        "Anyone can apply – whether you are a newcomer or an established streamer."
-    ],
-    outro_paragraphs: [
-        "Everyone is welcome to apply for the partnership program.",
-        "Once your application is received, our team will carefully review it to determine which tier is the best fit for you.",
-        "Please note: The final decision rests solely with KAHRWORKS and may take 1–2 months"
-    ],
-    stages: [
+    heroTitle: "Elite Access Recruitment",
+    heroSubtitle: "Join the inner circle. Revolver Rift's creator program is built for those who don't just play — they lead.",
+    primaryButtonText: "Apply Now",
+    secondaryButtonText: "View Tiers",
+    tiersHeading: "Tier Progression",
+    tiers: [
         {
-            title: "Stage 1 Creator",
-            description: "For all streamers and content creators regardless of existing partnerships.",
-            benefits: ["Access to all DLCs", "Drops for your community", "Your own custom server"]
-        },
-        {
-            title: "Stage 2 Partner",
-            description: "Requirement: At least *1 year of active streaming experience*.",
-            benefits: [
-                "All Stage 1 benefits",
-                "Custom server with personal statistics",
-                "Access to the Developer WhatsApp group for direct communication with our team",
-                "Participation in the annual partner raffle with valuable prizes"
+            stageNumber: "01",
+            title: "Creator",
+            requirement: "Open to all content creators and streamers regardless of existing partnerships.",
+            perks: [
+                { title: "Full DLC Access", description: "Access to all downloadable content, expansions, and future releases.", icon: "📦" },
+                { title: "Community Drops", description: "Exclusive drops and rewards to share with your audience.", icon: "🎁" },
+                { title: "Custom Server", description: "Your own dedicated server to host community events and matches.", icon: "🖥️" },
             ]
         },
         {
-            title: "Stage 3 Ambassador",
-            description: "The highest tier of our partnership program – exclusive and individually tailored.",
-            benefits: [
-                "All Stage 2 benefits",
-                "Custom made graphic material for your stream, designed exclusively for you",
-                "Monthly support provided by KAHRWORKS",
-                "Additional hardware support",
-                "Further conditions will be shared after an official request via email"
+            stageNumber: "02",
+            title: "Partner",
+            requirement: "Requires at least 1 year of active streaming experience.",
+            perks: [
+                { title: "All Creator Benefits", description: "Everything included in the Creator tier.", icon: "✓" },
+                { title: "Personal Statistics Dashboard", description: "Access to a custom server with your personal stream analytics.", icon: "📊" },
+                { title: "Developer Direct Line", description: "Direct access to the developer WhatsApp group for real-time communication with our team.", icon: "💬" },
+                { title: "Annual Partner Raffle", description: "Participation in the annual partner raffle featuring high-value prizes.", icon: "🏆" },
+            ]
+        },
+        {
+            stageNumber: "03",
+            title: "Ambassador",
+            requirement: "The highest tier — exclusive, individually tailored, and invitation-considered.",
+            perks: [
+                { title: "All Partner Benefits", description: "Everything included in the Partner tier, elevated.", icon: "✓" },
+                { title: "Custom Stream Graphics", description: "Bespoke graphic material for your stream, designed exclusively for you by our team.", icon: "🎨" },
+                { title: "Monthly Studio Support", description: "Dedicated monthly support directly from KAHRWORKS.", icon: "🤝" },
+                { title: "Hardware Support", description: "Additional hardware support provided by the studio.", icon: "⚙️" },
+                { title: "Exclusive Conditions", description: "Further Ambassador-exclusive conditions shared directly after an official request.", icon: "🔒" },
             ]
         }
     ],
-    logos: [],
-    backgroundImage: bgImage
+    applicationHeading: "How to Apply",
+    applicationSteps: [
+        { stepNumber: "01", title: "Submit Application", description: "Fill in the application form with your channel details, reach, and content focus." },
+        { stepNumber: "02", title: "Team Review", description: "Our team carefully evaluates each application. This may take up to 1–2 months." },
+        { stepNumber: "03", title: "Tier Placement", description: "We determine the tier that best fits your profile and reach out with your offer." },
+    ],
+    applicationNote: "The final decision rests solely with KAHRWORKS. Review may take 1–2 months.",
+    ctaTitle: "Ready to Represent Revolver Rift?",
+    ctaButtonText: "Apply Now",
+    ctaLink: "",
+    featuredPartners: [],
+    backgroundImage: bgImage,
 };
 
-// ─── API Fetcher ─────────────────────────────────────────────────────────────
+// ─── API Fetcher ───────────────────────────────────────────────────────────────
+
+const resolveUrl = (url) => {
+    if (!url) return null;
+    return url.startsWith("http") ? url : `${STRAPI_URL}${url}`;
+};
 
 export const getPartnersPageData = async () => {
     try {
         const res = await fetch(
-            `${STRAPI_URL}/api/partners-page?populate[stages]=*&populate[logos][populate]=logo&populate[background_image]=*`
+            `${STRAPI_URL}/api/partners-page?populate[tiers][populate][perks]=*&populate[applicationSteps]=*&populate[featuredPartners][populate]=logo&populate[background_image]=*`
         );
         if (!res.ok) throw new Error("Strapi unavailable");
 
         const json = await res.json();
-        const data = json.data;
-        if (!data) return FALLBACK_PARTNERS_DATA;
+        const d = json.data;
+        if (!d) return FALLBACK_PARTNERS_DATA;
 
-        const imgUrl = data.background_image?.url;
-
-        let introParagraphs = extractParagraphs(data.intro_text);
-        if (introParagraphs.length === 0) introParagraphs = FALLBACK_PARTNERS_DATA.intro_paragraphs;
-
-        let outroParagraphs = extractParagraphs(data.outro_text);
-        if (outroParagraphs.length === 0) outroParagraphs = FALLBACK_PARTNERS_DATA.outro_paragraphs;
-
-        const stages = Array.isArray(data.stages) && data.stages.length > 0
-            ? data.stages.map(stage => ({
-                id: stage.id,
-                title: stage.title || "",
-                description: stage.description || "",
-                // Strapi benefits block parsing, failover to splitting newlines if string
-                benefits: stage.benefits
-                    ? extractListItems(stage.benefits)
+        const tiers = Array.isArray(d.tiers) && d.tiers.length > 0
+            ? d.tiers.map(tier => ({
+                stageNumber: tier.stageNumber || "",
+                title: tier.title || "",
+                requirement: tier.requirement || "",
+                perks: Array.isArray(tier.perks)
+                    ? tier.perks.map(p => ({
+                        title: p.title || "",
+                        description: p.description || "",
+                        icon: p.icon || "◆"
+                    }))
                     : []
             }))
-            : FALLBACK_PARTNERS_DATA.stages;
+            : FALLBACK_PARTNERS_DATA.tiers;
 
-        const logos = Array.isArray(data.logos)
-            ? data.logos.map(l => ({
-                name: l.name || "",
-                url: l.logo?.url ? (l.logo.url.startsWith("http") ? l.logo.url : `${STRAPI_URL}${l.logo.url}`) : null
-            })).filter(l => l.url)
+        const applicationSteps = Array.isArray(d.applicationSteps) && d.applicationSteps.length > 0
+            ? d.applicationSteps.map(s => ({
+                stepNumber: s.stepNumber || "",
+                title: s.title || "",
+                description: s.description || ""
+            }))
+            : FALLBACK_PARTNERS_DATA.applicationSteps;
+
+        const featuredPartners = Array.isArray(d.featuredPartners)
+            ? d.featuredPartners.map(p => ({
+                name: p.name || "",
+                url: resolveUrl(p.logo?.url)
+            })).filter(p => p.url)
             : [];
 
         return {
-            title: data.title || FALLBACK_PARTNERS_DATA.title,
-            intro_paragraphs: introParagraphs,
-            outro_paragraphs: outroParagraphs,
-            stages,
-            logos,
-            backgroundImage: imgUrl ? (imgUrl.startsWith("http") ? imgUrl : `${STRAPI_URL}${imgUrl}`) : bgImage
+            heroTitle: d.heroTitle || FALLBACK_PARTNERS_DATA.heroTitle,
+            heroSubtitle: d.heroSubtitle || FALLBACK_PARTNERS_DATA.heroSubtitle,
+            primaryButtonText: d.primaryButtonText || FALLBACK_PARTNERS_DATA.primaryButtonText,
+            secondaryButtonText: d.secondaryButtonText || FALLBACK_PARTNERS_DATA.secondaryButtonText,
+            tiersHeading: d.tiersHeading || FALLBACK_PARTNERS_DATA.tiersHeading,
+            tiers,
+            applicationHeading: d.applicationHeading || FALLBACK_PARTNERS_DATA.applicationHeading,
+            applicationSteps,
+            applicationNote: d.applicationNote || FALLBACK_PARTNERS_DATA.applicationNote,
+            ctaTitle: d.ctaTitle || FALLBACK_PARTNERS_DATA.ctaTitle,
+            ctaButtonText: d.ctaButtonText || FALLBACK_PARTNERS_DATA.ctaButtonText,
+            ctaLink: d.ctaLink || FALLBACK_PARTNERS_DATA.ctaLink,
+            featuredPartners,
+            backgroundImage: resolveUrl(d.background_image?.url) || bgImage,
         };
     } catch {
         return FALLBACK_PARTNERS_DATA;

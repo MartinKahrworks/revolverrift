@@ -2,21 +2,25 @@
     "collectionName": "components_sections_partner_stages",
     "info": {
         "displayName": "partner-stage",
-        "description": "A single partnership stage/tier"
+        "description": "A single partnership stage/tier with structured perks"
     },
     "options": {},
     "attributes": {
+        "stageNumber": {
+            "type": "string",
+            "required": true
+        },
         "title": {
             "type": "string",
             "required": true
         },
-        "description": {
-            "type": "text",
-            "required": true
+        "requirement": {
+            "type": "text"
         },
-        "benefits": {
-            "type": "blocks",
-            "required": true
+        "perks": {
+            "type": "component",
+            "repeatable": true,
+            "component": "sections.partner-perk"
         }
     }
 }

@@ -11,22 +11,57 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "title": {
+    "heroTitle": {
       "type": "string",
-      "default": "Revolver Rift Partnership Program"
+      "default": "Elite Access Recruitment"
     },
-    "intro_text": {
-      "type": "blocks"
+    "heroSubtitle": {
+      "type": "text",
+      "default": "Join the inner circle. Revolver Rift's creator program is built for those who don't just play — they lead."
     },
-    "outro_text": {
-      "type": "blocks"
+    "primaryButtonText": {
+      "type": "string",
+      "default": "Apply Now"
     },
-    "stages": {
+    "secondaryButtonText": {
+      "type": "string",
+      "default": "View Tiers"
+    },
+    "tiersHeading": {
+      "type": "string",
+      "default": "Tier Progression"
+    },
+    "tiers": {
       "type": "component",
       "repeatable": true,
       "component": "sections.partner-stage"
     },
-    "logos": {
+    "applicationHeading": {
+      "type": "string",
+      "default": "How to Apply"
+    },
+    "applicationSteps": {
+      "type": "component",
+      "repeatable": true,
+      "component": "sections.application-step"
+    },
+    "applicationNote": {
+      "type": "text",
+      "default": "The final decision rests with KAHRWORKS. Review may take 1–2 months."
+    },
+    "ctaTitle": {
+      "type": "string",
+      "default": "Ready to Represent Revolver Rift?"
+    },
+    "ctaButtonText": {
+      "type": "string",
+      "default": "Apply Now"
+    },
+    "ctaLink": {
+      "type": "string",
+      "default": "/contact"
+    },
+    "featuredPartners": {
       "type": "component",
       "repeatable": true,
       "component": "sections.partner-logo"

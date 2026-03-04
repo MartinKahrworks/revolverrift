@@ -71,6 +71,19 @@ export interface SectionsAboutSection extends Struct.ComponentSchema {
   };
 }
 
+export interface SectionsApplicationStep extends Struct.ComponentSchema {
+  collectionName: 'components_sections_application_steps';
+  info: {
+    description: 'A single step in the partner application process';
+    displayName: 'application-step';
+  };
+  attributes: {
+    description: Schema.Attribute.Text & Schema.Attribute.Required;
+    stepNumber: Schema.Attribute.String & Schema.Attribute.Required;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
 export interface SectionsFeaturesSection extends Struct.ComponentSchema {
   collectionName: 'components_sections_features_sections';
   info: {
@@ -131,15 +144,29 @@ export interface SectionsPartnerLogo extends Struct.ComponentSchema {
   };
 }
 
+export interface SectionsPartnerPerk extends Struct.ComponentSchema {
+  collectionName: 'components_sections_partner_perks';
+  info: {
+    description: 'A single perk for a partner tier';
+    displayName: 'partner-perk';
+  };
+  attributes: {
+    description: Schema.Attribute.Text;
+    icon: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
 export interface SectionsPartnerStage extends Struct.ComponentSchema {
   collectionName: 'components_sections_partner_stages';
   info: {
-    description: 'A single partnership stage/tier';
+    description: 'A single partnership stage/tier with structured perks';
     displayName: 'partner-stage';
   };
   attributes: {
-    benefits: Schema.Attribute.Blocks & Schema.Attribute.Required;
-    description: Schema.Attribute.Text & Schema.Attribute.Required;
+    perks: Schema.Attribute.Component<'sections.partner-perk', true>;
+    requirement: Schema.Attribute.Text;
+    stageNumber: Schema.Attribute.String & Schema.Attribute.Required;
     title: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
@@ -214,10 +241,12 @@ declare module '@strapi/strapi' {
       'elements.product-variant': ElementsProductVariant;
       'elements.statistic-item': ElementsStatisticItem;
       'sections.about-section': SectionsAboutSection;
+      'sections.application-step': SectionsApplicationStep;
       'sections.features-section': SectionsFeaturesSection;
       'sections.hero-section': SectionsHeroSection;
       'sections.lore-section': SectionsLoreSection;
       'sections.partner-logo': SectionsPartnerLogo;
+      'sections.partner-perk': SectionsPartnerPerk;
       'sections.partner-stage': SectionsPartnerStage;
       'sections.promo-banner': SectionsPromoBanner;
       'sections.trailer-section': SectionsTrailerSection;

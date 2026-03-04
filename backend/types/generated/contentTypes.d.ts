@@ -798,23 +798,42 @@ export interface ApiPartnersPagePartnersPage extends Struct.SingleTypeSchema {
     draftAndPublish: false;
   };
   attributes: {
+    applicationHeading: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'How to Apply'>;
+    applicationNote: Schema.Attribute.Text &
+      Schema.Attribute.DefaultTo<'The final decision rests with KAHRWORKS. Review may take 1\u20132 months.'>;
+    applicationSteps: Schema.Attribute.Component<
+      'sections.application-step',
+      true
+    >;
     background_image: Schema.Attribute.Media<'images'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    intro_text: Schema.Attribute.Blocks;
+    ctaButtonText: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Apply Now'>;
+    ctaLink: Schema.Attribute.String & Schema.Attribute.DefaultTo<'/contact'>;
+    ctaTitle: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Ready to Represent Revolver Rift?'>;
+    featuredPartners: Schema.Attribute.Component<'sections.partner-logo', true>;
+    heroSubtitle: Schema.Attribute.Text &
+      Schema.Attribute.DefaultTo<"Join the inner circle. Revolver Rift's creator program is built for those who don't just play \u2014 they lead.">;
+    heroTitle: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Elite Access Recruitment'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::partners-page.partners-page'
     > &
       Schema.Attribute.Private;
-    logos: Schema.Attribute.Component<'sections.partner-logo', true>;
-    outro_text: Schema.Attribute.Blocks;
+    primaryButtonText: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Apply Now'>;
     publishedAt: Schema.Attribute.DateTime;
-    stages: Schema.Attribute.Component<'sections.partner-stage', true>;
-    title: Schema.Attribute.String &
-      Schema.Attribute.DefaultTo<'Revolver Rift Partnership Program'>;
+    secondaryButtonText: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'View Tiers'>;
+    tiers: Schema.Attribute.Component<'sections.partner-stage', true>;
+    tiersHeading: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Tier Progression'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -879,7 +898,7 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    description: Schema.Attribute.Blocks & Schema.Attribute.Required;
+    description: Schema.Attribute.Blocks;
     featured: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     gallery: Schema.Attribute.Media<'images', true>;
     hover_image: Schema.Attribute.Media<'images'>;
@@ -893,7 +912,6 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
     name: Schema.Attribute.String & Schema.Attribute.Required;
     order: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<99>;
     price: Schema.Attribute.Decimal &
-      Schema.Attribute.Required &
       Schema.Attribute.SetMinMax<
         {
           min: 0;
@@ -919,7 +937,7 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
     >;
     seo_description: Schema.Attribute.Text;
     seo_title: Schema.Attribute.String;
-    sku: Schema.Attribute.String & Schema.Attribute.Unique;
+    sku: Schema.Attribute.String;
     slug: Schema.Attribute.UID<'name'> & Schema.Attribute.Required;
     status: Schema.Attribute.Enumeration<
       ['available', 'sold_out', 'coming_soon', 'archived']
@@ -928,7 +946,7 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
       Schema.Attribute.DefaultTo<'available'>;
     stock_quantity: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
     tagline: Schema.Attribute.String;
-    thumbnail: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
+    thumbnail: Schema.Attribute.Media<'images'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

@@ -1,0 +1,22 @@
+{
+    "collectionName": "components_sections_application_steps",
+    "info": {
+        "displayName": "application-step",
+        "description": "A single step in the partner application process"
+    },
+    "options": {},
+    "attributes": {
+        "stepNumber": {
+            "type": "string",
+            "required": true
+        },
+        "title": {
+            "type": "string",
+            "required": true
+        },
+        "description": {
+            "type": "text",
+            "required": true
+        }
+    }
+}
