@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { getPartnersPageData, FALLBACK_PARTNERS_DATA } from '../../api/partnersApi';
 
 import HeroSection from './HeroSection';
-import TierProgression from './TierProgression';
 import ApplicationTimeline from './ApplicationTimeline';
 import FeaturedPartners from './FeaturedPartners';
 import CTASection from './CTASection';
@@ -29,17 +28,12 @@ function Partners() {
 
     return (
         <div className="bg-[#060606] min-h-screen overflow-x-hidden">
-            {/* 1 ── Cinematic Hero */}
+            {/* 1 ── Cinematic Hero + Tiers */}
             <HeroSection
                 heroTitle={data.heroTitle}
                 heroSubtitle={data.heroSubtitle}
                 primaryButtonText={data.primaryButtonText}
                 secondaryButtonText={data.secondaryButtonText}
-            />
-
-            {/* 2 ── Editorial Tier Progression */}
-            <TierProgression
-                tiersHeading={data.tiersHeading}
                 tiers={data.tiers}
             />
 

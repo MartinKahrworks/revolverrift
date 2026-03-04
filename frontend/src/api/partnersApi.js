@@ -5,11 +5,11 @@ const STRAPI_URL = import.meta.env.VITE_STRAPI_URL || "http://127.0.0.1:1337";
 // ─── Fallback Data ─────────────────────────────────────────────────────────────
 
 export const FALLBACK_PARTNERS_DATA = {
-    heroTitle: "Elite Access Recruitment",
-    heroSubtitle: "Join the inner circle. Revolver Rift's creator program is built for those who don't just play — they lead.",
+    heroTitle: "Partner Program",
+    heroSubtitle: "Join the Revolver Rift creator program. Apply for a partnership tier that fits your content and reach.",
     primaryButtonText: "Apply Now",
     secondaryButtonText: "View Tiers",
-    tiersHeading: "Tier Progression",
+    tiersHeading: "Partnership Tiers",
     tiers: [
         {
             stageNumber: "01",
@@ -51,8 +51,8 @@ export const FALLBACK_PARTNERS_DATA = {
         { stepNumber: "02", title: "Team Review", description: "Our team carefully evaluates each application. This may take up to 1–2 months." },
         { stepNumber: "03", title: "Tier Placement", description: "We determine the tier that best fits your profile and reach out with your offer." },
     ],
-    applicationNote: "The final decision rests solely with KAHRWORKS. Review may take 1–2 months.",
-    ctaTitle: "Ready to Represent Revolver Rift?",
+    applicationNote: "The final decision rests with KAHRWORKS. Review may take 1–2 months.",
+    ctaTitle: "Interested in Partnering with Revolver Rift?",
     ctaButtonText: "Apply Now",
     ctaLink: "",
     featuredPartners: [],

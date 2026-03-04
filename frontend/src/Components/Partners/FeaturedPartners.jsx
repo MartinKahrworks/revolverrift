@@ -11,7 +11,7 @@ const FeaturedPartners = ({ featuredPartners = [] }) => {
         <section className="bg-[#060606] py-20 border-t border-white/[0.04]">
             <div className="max-w-[1200px] mx-auto px-6 md:px-12">
 
-                <p className="text-center font-mono text-[10px] tracking-[0.35em] text-gray-600 uppercase mb-12">
+                <p className="text-center font-custom text-[10px] tracking-[0.35em] text-gray-600 uppercase mb-12">
                     Current Partners
                 </p>
 

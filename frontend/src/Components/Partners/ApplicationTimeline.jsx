@@ -33,11 +33,11 @@ const StepNode = ({ step, index, total }) => {
 
             {/* Step number circle */}
             <div className="relative z-10 w-11 h-11 flex items-center justify-center rounded-full border border-[#AA0000]/50 bg-[#0d0d0d] mb-5 group-hover:border-[#AA0000] group-hover:shadow-[0_0_20px_rgba(170,0,0,0.3)] transition-all duration-300">
-                <span className="font-mono text-[11px] text-[#AA0000] tracking-wider">{step.stepNumber}</span>
+                <span className="font-custom text-[11px] text-[#AA0000] tracking-wider">{step.stepNumber}</span>
             </div>
 
             {/* Title */}
-            <h4 className="font-mono text-[11px] uppercase tracking-[0.2em] text-white mb-2 group-hover:text-[#AA0000] transition-colors duration-300">
+            <h4 className="font-custom text-[11px] uppercase tracking-[0.2em] text-white mb-2 group-hover:text-[#AA0000] transition-colors duration-300">
                 {step.title}
             </h4>
 
@@ -57,7 +57,7 @@ const ApplicationTimeline = ({ applicationHeading, applicationSteps = [], applic
             {/* Section header */}
             <div className="flex items-center gap-4 mb-4">
                 <span className="h-px w-10 bg-[#AA0000]" />
-                <span className="font-mono text-[10px] tracking-[0.35em] text-[#AA0000] uppercase">
+                <span className="font-custom text-[10px] tracking-[0.35em] text-[#AA0000] uppercase">
                     Process
                 </span>
             </div>
@@ -84,14 +84,14 @@ const ApplicationTimeline = ({ applicationHeading, applicationSteps = [], applic
                         {/* Vertical line segment */}
                         <div className="flex flex-col items-center">
                             <div className="w-10 h-10 flex-shrink-0 flex items-center justify-center rounded-full border border-[#AA0000]/50 bg-[#0d0d0d] group-hover:border-[#AA0000] group-hover:shadow-[0_0_20px_rgba(170,0,0,0.25)] transition-all duration-300">
-                                <span className="font-mono text-[11px] text-[#AA0000]">{step.stepNumber}</span>
+                                <span className="font-custom text-[11px] text-[#AA0000]">{step.stepNumber}</span>
                             </div>
                             {i < applicationSteps.length - 1 && (
                                 <div className="w-px flex-1 mt-2 bg-gradient-to-b from-[#AA0000]/40 to-transparent min-h-[40px]" />
                             )}
                         </div>
                         <div className="pt-2">
-                            <h4 className="font-mono text-[11px] uppercase tracking-[0.2em] text-white mb-1">
+                            <h4 className="font-custom text-[11px] uppercase tracking-[0.2em] text-white mb-1">
                                 {step.title}
                             </h4>
                             <p className="text-gray-500 text-xs leading-relaxed">{step.description}</p>
@@ -102,7 +102,7 @@ const ApplicationTimeline = ({ applicationHeading, applicationSteps = [], applic
 
             {/* Application note */}
             {applicationNote && (
-                <p className="mt-14 text-center text-gray-600 font-mono text-[10px] tracking-[0.2em] uppercase max-w-xl mx-auto">
+                <p className="mt-14 text-center text-gray-600 font-custom text-[10px] tracking-[0.2em] uppercase max-w-xl mx-auto">
                     {applicationNote}
                 </p>
             )}

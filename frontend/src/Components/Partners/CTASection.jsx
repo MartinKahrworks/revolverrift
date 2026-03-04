@@ -37,7 +37,7 @@ const CTASection = ({ ctaTitle, ctaButtonText, ctaLink = "" }) => (
             {/* Eyebrow */}
             <div className="flex items-center justify-center gap-3 mb-8">
                 <span className="h-px w-10 bg-[#AA0000]/50" />
-                <span className="font-mono text-[10px] tracking-[0.4em] text-[#AA0000] uppercase">
+                <span className="font-custom text-[10px] tracking-[0.4em] text-[#AA0000] uppercase">
                     Join the Program
                 </span>
                 <span className="h-px w-10 bg-[#AA0000]/50" />
@@ -53,7 +53,7 @@ const CTASection = ({ ctaTitle, ctaButtonText, ctaLink = "" }) => (
 
             {/* Button */}
             <button
-                className="group relative inline-flex items-center justify-center gap-3 border border-[#AA0000] text-white font-mono text-xs tracking-[0.3em] uppercase px-12 py-5 overflow-hidden transition-all duration-300 hover:shadow-[0_0_40px_rgba(170,0,0,0.4)] hover:scale-[1.02]"
+                className="group relative inline-flex items-center justify-center gap-3 border border-[#AA0000] text-white font-custom text-xs tracking-[0.3em] uppercase px-12 py-5 overflow-hidden transition-all duration-300 hover:shadow-[0_0_40px_rgba(170,0,0,0.4)] hover:scale-[1.02]"
             >
                 {/* Fill sweep — left to right on hover */}
                 <span className="absolute inset-0 bg-[#AA0000] translate-x-[-101%] group-hover:translate-x-0 transition-transform duration-500 ease-in-out" />
