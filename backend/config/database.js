@@ -1,7 +1,9 @@
 const path = require('path');
 
 module.exports = ({ env }) => {
-  const client = env('DATABASE_CLIENT', 'sqlite');
+  // If DATABASE_URL is set (cloud/Neon), always use postgres regardless of DATABASE_CLIENT.
+  // This prevents falling back to sqlite when DATABASE_CLIENT env var isn't injected correctly.
+  const client = env('DATABASE_URL') ? 'postgres' : env('DATABASE_CLIENT', 'sqlite');
 
   const connections = {
     mysql: {
