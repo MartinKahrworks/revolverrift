@@ -3,39 +3,36 @@ import React, { useEffect, useRef } from "react";
 // ─── Theme config for each tier ────────────────────────────────────────────────
 const TIER_THEMES = [
     {
-        // Creator — Red
         accent: "#AA0000",
         accentLight: "#cc0000",
         accentMuted: "rgba(170,0,0,0.12)",
         accentBorder: "rgba(170,0,0,0.35)",
         accentGlow: "rgba(170,0,0,0.25)",
-        badgeText: "TIER 1",
+        badgeText: "",
         badgeBg: "rgba(170,0,0,0.15)",
         badgeBorder: "rgba(170,0,0,0.4)",
         isFeatured: false,
         featuredLabel: null,
     },
     {
-        // Partner — Silver
         accent: "#C0C0C0",
         accentLight: "#e8e8e8",
         accentMuted: "rgba(192,192,192,0.10)",
         accentBorder: "rgba(192,192,192,0.35)",
         accentGlow: "rgba(192,192,192,0.20)",
-        badgeText: "TIER 2",
+        badgeText: "",
         badgeBg: "rgba(192,192,192,0.12)",
         badgeBorder: "rgba(192,192,192,0.40)",
         isFeatured: true,
         featuredLabel: "MOST POPULAR",
     },
     {
-        // Ambassador — Gold
         accent: "#c9a84c",
         accentLight: "#e8c96a",
         accentMuted: "rgba(201,168,76,0.12)",
         accentBorder: "rgba(201,168,76,0.35)",
         accentGlow: "rgba(201,168,76,0.25)",
-        badgeText: "TIER 3",
+        badgeText: "",
         badgeBg: "rgba(201,168,76,0.12)",
         badgeBorder: "rgba(201,168,76,0.40)",
         isFeatured: false,
@@ -46,7 +43,6 @@ const TIER_THEMES = [
 // ─── Perk Item ─────────────────────────────────────────────────────────────────
 const PerkItem = ({ perk, theme }) => (
     <div className="flex items-start gap-3 py-3 border-b border-white/[0.05] last:border-0 group">
-        {/* Check / icon bubble */}
         <div
             className="flex-shrink-0 w-6 h-6 flex items-center justify-center rounded-full mt-0.5 text-xs"
             style={{
@@ -61,7 +57,6 @@ const PerkItem = ({ perk, theme }) => (
             }
         </div>
 
-        {/* Text */}
         <div className="flex-1 min-w-0">
             <p
                 className="font-custom text-[12px] md:text-[13px] uppercase tracking-[0.15em] mb-1 transition-colors"
@@ -81,7 +76,6 @@ const TierCard = ({ tier, index, wrapperClass = "" }) => {
     const cardRef = useRef(null);
     const theme = TIER_THEMES[index] ?? TIER_THEMES[0];
 
-    // Scroll-fade-in animation
     useEffect(() => {
         const el = cardRef.current;
         if (!el) return;
@@ -106,7 +100,6 @@ const TierCard = ({ tier, index, wrapperClass = "" }) => {
         return () => observer.disconnect();
     }, [index, theme.isFeatured]);
 
-    // Hover glow handlers
     const handleMouseEnter = (e) => {
         e.currentTarget.style.boxShadow = `0 0 40px ${theme.accentGlow}, 0 20px 60px rgba(0,0,0,0.5)`;
     };
@@ -149,7 +142,7 @@ const TierCard = ({ tier, index, wrapperClass = "" }) => {
                 </div>
             )}
 
-            {/* ── Card Header ── */}
+            {/* Card Header */}
             <div
                 className="px-7 pt-8 pb-6"
                 style={{
@@ -157,7 +150,6 @@ const TierCard = ({ tier, index, wrapperClass = "" }) => {
                     borderBottom: `1px solid ${theme.accentBorder}`,
                 }}
             >
-                {/* Stage badge */}
                 <div
                     className="inline-flex items-center gap-2 mb-4 px-3 py-1.5 rounded-full"
                     style={{
@@ -165,25 +157,11 @@ const TierCard = ({ tier, index, wrapperClass = "" }) => {
                         border: `1px solid ${theme.badgeBorder}`,
                     }}
                 >
-                    <span
-                        className="font-custom text-[10px] tracking-[0.3em] uppercase"
-                        style={{ color: theme.accent }}
-                    >
+                    <span className="font-custom text-[10px] tracking-[0.3em] uppercase" style={{ color: theme.accent }}>
                         Stage {tier.stageNumber}
-                    </span>
-                    <span
-                        className="w-1 h-1 rounded-full"
-                        style={{ background: theme.accent }}
-                    />
-                    <span
-                        className="font-custom text-[10px] tracking-[0.25em] uppercase"
-                        style={{ color: theme.accent }}
-                    >
-                        {theme.badgeText}
                     </span>
                 </div>
 
-                {/* Tier name */}
                 <h3
                     className="font-custom text-3xl md:text-3xl lg:text-4xl uppercase tracking-wide mb-3"
                     style={{ color: theme.accent }}
@@ -191,7 +169,6 @@ const TierCard = ({ tier, index, wrapperClass = "" }) => {
                     {tier.title}
                 </h3>
 
-                {/* Requirement / subtitle */}
                 {tier.requirement && (
                     <p className="text-white text-sm font-custom leading-relaxed mt-1">
                         {tier.requirement}
@@ -199,7 +176,7 @@ const TierCard = ({ tier, index, wrapperClass = "" }) => {
                 )}
             </div>
 
-            {/* ── Perks List ── */}
+            {/* Perks List */}
             <div className="flex-1 px-7 py-5">
                 <p
                     className="font-custom text-[11px] tracking-[0.3em] uppercase mb-4"
@@ -212,7 +189,7 @@ const TierCard = ({ tier, index, wrapperClass = "" }) => {
                 ))}
             </div>
 
-            {/* ── CTA Button ── */}
+            {/* CTA Button */}
             <div className="px-7 pb-8 pt-4">
                 <a
                     href="#apply"
@@ -238,17 +215,14 @@ const TierCard = ({ tier, index, wrapperClass = "" }) => {
     );
 };
 
-/**
- * HeroSection — Cinematic split-layout hero for the Partnership page.
- * CMS fields: heroTitle, heroSubtitle, primaryButtonText, secondaryButtonText
- */
+// ─── HeroSection ──────────────────────────────────────────────────────────────
 const HeroSection = ({ heroTitle, heroSubtitle, primaryButtonText, secondaryButtonText, tiers = [] }) => {
     const titleRef = useRef(null);
-    const contentRef = useRef(null);
+    const subRef = useRef(null);
+    const ctaRef = useRef(null);
 
     useEffect(() => {
-        // Staggered fade-in on mount
-        const els = [titleRef.current, contentRef.current];
+        const els = [titleRef.current, subRef.current, ctaRef.current];
         els.forEach((el, i) => {
             if (!el) return;
             el.style.opacity = "0";
@@ -257,14 +231,14 @@ const HeroSection = ({ heroTitle, heroSubtitle, primaryButtonText, secondaryButt
                 el.style.transition = "opacity 0.8s ease, transform 0.8s ease";
                 el.style.opacity = "1";
                 el.style.transform = "translateY(0)";
-            }, 150 + i * 180);
+            }, 120 + i * 160);
         });
     }, []);
 
     return (
         <section
             id="hero"
-            className="relative min-h-screen py-32 flex items-center overflow-hidden bg-[#060606]"
+            className="relative bg-[#060606] overflow-hidden pt-32 pb-24"
         >
             {/* Grain overlay */}
             <div
@@ -276,82 +250,56 @@ const HeroSection = ({ heroTitle, heroSubtitle, primaryButtonText, secondaryButt
                 }}
             />
 
-            {/* Red radial glow — left */}
+            {/* Ambient red glow — top center */}
             <div
-                className="pointer-events-none absolute -left-32 top-1/2 -translate-y-1/2 w-[55vw] h-[55vw] rounded-full opacity-20"
+                className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-[70vw] h-[40vh] opacity-20"
                 style={{
-                    background:
-                        "radial-gradient(ellipse at center, rgba(170,0,0,0.45) 0%, transparent 70%)",
+                    background: "radial-gradient(ellipse at center top, rgba(170,0,0,0.55) 0%, transparent 70%)",
                     filter: "blur(60px)",
                 }}
             />
 
-            {/* Thin vertical red rule — decorative */}
-            {/* <div className="absolute left-[50%] top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-[#AA0000]/30 to-transparent hidden lg:block" /> */}
+            <div className="relative z-10 w-full max-w-[1800px] mx-auto px-6 md:px-16 flex flex-col items-center gap-14">
 
-            <div className="relative z-10 w-full max-w-[1900px] mx-auto px-6 md:px-12 grid xl:grid-cols-[360px_1fr] 2xl:grid-cols-[400px_1fr] gap-10 xl:gap-24 items-center">
-
-                {/* LEFT — Text content */}
-                <div ref={contentRef} className="xl:sticky xl:top-40 self-start pt-16 xl:pt-0">
-                    {/* Eyebrow label */}
-                    <div className="flex items-center gap-3 mb-8">
+                {/* 1. HEADING */}
+                <div ref={titleRef} className="text-center">
+                    <div className="flex items-center justify-center gap-3 mb-5">
                         <span className="h-px w-10 bg-[#AA0000]" />
-                        <span className="font-custom text-[10px] tracking-[0.35em] text-[#AA0000] uppercase">
+                        <span className="font-custom text-[10px] tracking-[0.4em] text-[#AA0000] uppercase">
                             Partnerships
                         </span>
+                        <span className="h-px w-10 bg-[#AA0000]" />
                     </div>
-
-                    {/* Title */}
                     <h1
-                        ref={titleRef}
-                        className="font-custom text-5xl md:text-6xl xl:text-7xl text-white leading-[1.05] tracking-tight mb-6 mt-4"
-                        style={{ textShadow: "0 0 60px rgba(170,0,0,0.15)" }}
+                        className="font-custom text-6xl md:text-7xl xl:text-8xl text-white leading-[1.05] tracking-tight"
+                        style={{ textShadow: "0 0 80px rgba(170,0,0,0.18)" }}
                     >
                         {heroTitle}
                     </h1>
-
-                    {/* Subtitle */}
-                    <p className="text-gray-400 font-custom text-base md:text-lg leading-relaxed max-w-[480px] mb-10 tracking-wide">
-                        {heroSubtitle}
-                    </p>
-
-                    {/* CTA buttons */}
-                    <div className="flex flex-wrap gap-4">
-                        <button
-                            className="group relative inline-flex items-center gap-3 bg-[#AA0000] text-white font-custom text-xs tracking-[0.25em] uppercase px-8 py-4 overflow-hidden transition-all duration-300 hover:shadow-[0_0_30px_rgba(170,0,0,0.5)] hover:scale-[1.02]"
-                        >
-                            <span className="relative z-10">{primaryButtonText}</span>
-                            {/* Sweep hover effect */}
-                            <span className="absolute inset-0 bg-white/10 translate-x-[-110%] group-hover:translate-x-[110%] transition-transform duration-500 ease-in-out skew-x-12" />
-                        </button>
-
-                        <a
-                            href="#tiers"
-                            className="inline-flex items-center gap-3 border border-white/20 text-white/70 font-custom text-xs tracking-[0.25em] uppercase px-8 py-4 transition-all duration-300 hover:border-[#AA0000] hover:text-white"
-                        >
-                            {secondaryButtonText}
-                            <svg className="w-3.5 h-3.5 rotate-90 opacity-60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                            </svg>
-                        </a>
-                    </div>
                 </div>
 
-                {/* RIGHT — Tiers panel */}
-                <div id="tiers" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-start mt-10 xl:mt-0 xl:self-center">
-                    {tiers.map((tier, i) => {
-                        // Gold card (index 2) gets a negative margin on desktop to continue 
-                        // the upward staircase effect started by the Silver card's scale(1.05).
-                        const staggerClass = i === 2 ? "lg:-mt-12 xl:-mt-14" : "";
-                        return (
-                            <TierCard key={tier.stageNumber || i} tier={tier} index={i} wrapperClass={staggerClass} />
-                        );
-                    })}
+                {/* 2. TIER CARDS */}
+                <div
+                    id="tiers"
+                    className="w-full grid grid-cols-1 md:grid-cols-3 gap-8 items-start"
+                >
+                    {tiers.map((tier, i) => (
+                        <TierCard key={tier.stageNumber || i} tier={tier} index={i} wrapperClass="" />
+                    ))}
                 </div>
+
+                {/* 3. SUBTITLE */}
+                <p
+                    ref={subRef}
+                    className="text-white/70 font-custom text-base md:text-lg leading-relaxed text-center max-w-[600px] tracking-wide"
+                >
+                    {heroSubtitle}
+                </p>
+
             </div>
 
-            {/* Bottom edge fade */}
-            <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#060606] to-transparent pointer-events-none" />
+            {/* Bottom fade */}
+            <div className="absolute bottom-0 left-0 right-0 h-28 bg-gradient-to-t from-[#060606] to-transparent pointer-events-none" />
         </section>
     );
 };
