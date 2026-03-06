@@ -113,6 +113,9 @@ yarn-error.log
 
 ############################
 # Tests
+
+.agents
+.claude
 ############################
 
 coverage

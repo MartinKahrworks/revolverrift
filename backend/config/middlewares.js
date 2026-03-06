@@ -34,8 +34,25 @@ module.exports = [
             '*.cloudinary.com',
             'market-assets.strapi.io',
           ],
+          // Required for Strapi admin panel to function properly
+          'script-src': [
+            "'self'",
+            "'unsafe-inline'",
+            "'unsafe-eval'",
+            'cdn.jsdelivr.net',
+          ],
           upgradeInsecureRequests: null,
         },
+      },
+      // Disable deprecated/experimental Permissions-Policy features to remove console warnings
+      permissionsPolicy: {
+        'attribution-reporting': [],
+        'private-aggregation': [],
+        'private-state-token-issuance': [],
+        'private-state-token-redemption': [],
+        'join-ad-interest-group': [],
+        'run-ad-auction': [],
+        'browsing-topics': [],
       },
     },
   },

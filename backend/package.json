@@ -5,6 +5,8 @@
   "description": "A Strapi application",
   "scripts": {
     "build": "npx rimraf .cache build dist .strapi && strapi build",
+    "clean": "npx rimraf .cache build dist .strapi node_modules/.cache",
+    "rebuild": "npm run clean && npm install && npm run build",
     "console": "strapi console",
     "deploy": "strapi deploy",
     "dev": "strapi develop",
