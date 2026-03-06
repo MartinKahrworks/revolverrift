@@ -51,7 +51,7 @@ const StepNode = ({ step, index, total }) => {
 
 // ─── ApplicationTimeline ──────────────────────────────────────────────────────
 const ApplicationTimeline = ({ applicationHeading, applicationSteps = [], applicationNote }) => (
-    <section className="bg-[#060606] py-24 border-t border-white/[0.04]">
+    <section className="bg-[#060606] py-16 md:py-24 border-t border-white/[0.04]">
         <div className="max-w-[1200px] mx-auto px-6 md:px-12">
 
             {/* Section header */}
@@ -61,7 +61,7 @@ const ApplicationTimeline = ({ applicationHeading, applicationSteps = [], applic
                     Process
                 </span>
             </div>
-            <h2 className="font-custom text-4xl md:text-5xl text-white tracking-wide uppercase mb-16">
+            <h2 className="font-custom text-3xl sm:text-4xl md:text-5xl text-white tracking-wide uppercase mb-12 md:mb-16">
                 {applicationHeading}
             </h2>
 
@@ -78,7 +78,7 @@ const ApplicationTimeline = ({ applicationHeading, applicationSteps = [], applic
             </div>
 
             {/* Steps — Mobile vertical */}
-            <div className="flex flex-col gap-8 md:hidden">
+            <div className="flex flex-col gap-6 md:hidden px-4 sm:px-8">
                 {applicationSteps.map((step, i) => (
                     <div key={step.stepNumber || i} className="flex gap-5 items-start group">
                         {/* Vertical line segment */}

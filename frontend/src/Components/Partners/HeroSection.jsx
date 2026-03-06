@@ -238,7 +238,7 @@ const HeroSection = ({ heroTitle, heroSubtitle, primaryButtonText, secondaryButt
     return (
         <section
             id="hero"
-            className="relative bg-[#060606] overflow-hidden pt-32 pb-24"
+            className="relative bg-[#060606] overflow-hidden pt-24 md:pt-32 pb-16 md:pb-24"
         >
             {/* Grain overlay */}
             <div
@@ -271,7 +271,7 @@ const HeroSection = ({ heroTitle, heroSubtitle, primaryButtonText, secondaryButt
                         <span className="h-px w-10 bg-[#AA0000]" />
                     </div>
                     <h1
-                        className="font-custom text-6xl md:text-7xl xl:text-8xl text-white leading-[1.05] tracking-tight"
+                        className="font-custom text-4xl sm:text-6xl md:text-7xl xl:text-8xl text-white leading-[1.05] tracking-tight"
                         style={{ textShadow: "0 0 80px rgba(170,0,0,0.18)" }}
                     >
                         {heroTitle}
@@ -281,7 +281,7 @@ const HeroSection = ({ heroTitle, heroSubtitle, primaryButtonText, secondaryButt
                 {/* 2. TIER CARDS */}
                 <div
                     id="tiers"
-                    className="w-full grid grid-cols-1 md:grid-cols-3 gap-8 items-start"
+                    className="w-full grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 items-start"
                 >
                     {tiers.map((tier, i) => (
                         <TierCard key={tier.stageNumber || i} tier={tier} index={i} wrapperClass="" />

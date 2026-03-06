@@ -23,7 +23,7 @@ const Trailer = () => {
     const thumbnailSrc = trailerData.thumbnailUrl || poster;
 
     return (
-        <section className="relative w-full bg-black overflow-hidden flex items-center justify-center py-16 border-t border-white/5">
+        <section className="relative w-full bg-black overflow-hidden flex items-center justify-center py-10 md:py-16 px-4 md:px-8 border-t border-white/5">
             {/* Animated Embers Background */}
             <div
                 className="absolute inset-0 opacity-30 pointer-events-none z-0"
@@ -50,7 +50,7 @@ const Trailer = () => {
                     >
                         <FaPlay className="w-8 h-8 md:w-10 md:h-10 ml-1" />
                     </button>
-                    <h2 className="mt-8 text-3xl md:text-5xl font-godlike uppercase tracking-wider text-white drop-shadow-lg">
+                    <h2 className="mt-6 md:mt-8 text-2xl md:text-5xl font-godlike uppercase tracking-wider text-white drop-shadow-lg">
                         Watch Trailer
                     </h2>
                 </div>
@@ -61,7 +61,7 @@ const Trailer = () => {
                         <div className="relative w-full max-w-4xl aspect-video bg-black shadow-2xl border border-white/10">
                             <button
                                 onClick={() => setIsPlaying(false)}
-                                className="absolute -top-12 right-0 text-white hover:text-[#ff3333] font-bold text-xl uppercase tracking-widest"
+                                className="absolute top-2 right-0 md:-top-12 md:right-0 text-white hover:text-[#ff3333] font-bold text-sm uppercase tracking-widest bg-black/70 md:bg-transparent px-3 py-1"
                             >
                                 Close [X]
                             </button>

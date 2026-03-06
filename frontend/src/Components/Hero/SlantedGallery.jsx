@@ -79,11 +79,11 @@ const SlantedGallery = () => {
     };
 
     return (
-        <section className="relative w-full h-[100dvh] md:h-[60vh] overflow-hidden bg-black flex flex-col md:flex-row">
+        <section className="relative w-full overflow-hidden bg-black flex flex-col md:flex-row" style={{ height: 'min(100dvh, 600px)' }}>
             {panels.map((panel, index) => {
                 const isHovered = hoveredIndex === index;
                 const isOtherHovered = hoveredIndex !== null && !isHovered;
-                const slotLabel = String(panel.slot).padStart(2, '0'); // "01" "02" "03" "04"
+                const slotLabel = String(panel.slot).padStart(2, '0');
 
                 return (
                     <div
@@ -92,10 +92,10 @@ const SlantedGallery = () => {
                             relative flex-1 min-h-0 md:h-full
                             transition-[flex-grow,opacity] duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]
                             group
-                            border-b-[4px] md:border-b-0 md:border-r-[15px] border-black
+                            border-b-[3px] md:border-b-0 md:border-r-[15px] border-black
                             overflow-hidden md:skew-x-[-15deg]
                             ${isHovered ? 'flex-[3] md:flex-[4]' : 'flex-[1]'}
-                            ${isOtherHovered ? 'opacity-50' : 'opacity-100'}
+                            ${isOtherHovered ? 'opacity-60' : 'opacity-100'}
                         `}
                         onMouseEnter={() => setHoveredIndex(index)}
                         onMouseLeave={() => setHoveredIndex(null)}
@@ -112,18 +112,18 @@ const SlantedGallery = () => {
                                     backgroundPosition: panel.position || 'center',
                                 }}
                             >
-                                <div className="absolute inset-0 bg-black/40 group-hover:bg-black/10 transition-colors duration-500" />
+                                <div className="absolute inset-0 bg-black/50 group-hover:bg-black/20 transition-colors duration-500" />
                             </div>
                         </div>
 
                         {/* Content — counter-skewed */}
                         <div className="absolute inset-0 flex flex-col items-center justify-center z-20 pointer-events-none md:skew-x-[15deg] px-2 text-center">
 
-                            {/* Slot number — always visible, dims on other-hover */}
+                            {/* Slot number */}
                             <span className={`
                                 font-vintage text-white/20 font-black
                                 transition-all duration-500
-                                ${isHovered ? 'text-5xl md:text-7xl mb-1 text-white/10' : 'text-3xl md:text-5xl mb-0'}
+                                ${isHovered ? 'text-4xl md:text-7xl mb-1 text-white/10' : 'text-2xl md:text-5xl mb-0'}
                             `}>
                                 {slotLabel}
                             </span>
@@ -134,21 +134,21 @@ const SlantedGallery = () => {
                                 drop-shadow-[0_4px_4px_rgba(0,0,0,0.8)] text-white select-none
                                 transition-all duration-500 transform
                                 ${isHovered
-                                    ? 'text-3xl md:text-4xl scale-110 mb-4'
+                                    ? 'text-xl md:text-4xl scale-110 mb-3'
                                     : hoveredIndex === null
-                                        ? 'text-lg md:text-2xl'
-                                        : 'text-sm md:text-lg'}
+                                        ? 'text-sm md:text-2xl'
+                                        : 'text-xs md:text-lg'}
                             `}>
                                 {panel.title}
                             </h2>
 
-                            {/* Explore button — only on hover, not shown for # links */}
+                            {/* Explore button */}
                             {panel.link !== '#' && (
                                 <button
                                     onClick={(e) => handleExplore(e, panel)}
                                     className={`
-                                        px-6 py-2 md:px-8 md:py-3 bg-white text-black
-                                        font-black text-xs md:text-sm uppercase tracking-[0.2em]
+                                        px-5 py-2 md:px-8 md:py-3 bg-white text-black
+                                        font-black text-[10px] md:text-sm uppercase tracking-[0.2em]
                                         hover:bg-[#ff3333] hover:text-white transition-all duration-300
                                         pointer-events-auto shadow-lg
                                         ${isHovered

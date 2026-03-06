@@ -26,11 +26,11 @@ const CharactersPage = () => {
     return (
         <div className="relative min-h-[500vh] bg-black">
             {/* Header / Selector - Fixed to stay on top */}
-            <div className="fixed top-0 left-0 w-full z-50 px-6 pt-12 md:pt-20 md:px-12 flex flex-col md:flex-row justify-between items-start md:items-end pointer-events-none">
+            <div className="fixed top-0 left-0 w-full z-50 px-4 pt-20 md:pt-24 md:px-12 flex flex-col md:flex-row justify-between items-start md:items-end pointer-events-none">
 
                 {/* Title Section */}
                 <div className="pointer-events-auto mb-6 md:mb-0">
-                    <h1 className="text-5xl md:text-7xl font-black uppercase tracking-tighter text-white drop-shadow-2xl font-vintage">
+                    <h1 className="text-4xl sm:text-5xl md:text-7xl font-black uppercase tracking-tighter text-white drop-shadow-2xl font-vintage">
                         CHARACTERS
                     </h1>
                     <p className="text-sm md:text-lg text-gray-400 mt-2 tracking-[0.3em] font-mono ml-1"></p>

@@ -155,12 +155,12 @@ const NewsLanding = () => {
 
             <div className="container mx-auto px-6 z-10">
                 {/* Header */}
-                <div className="mb-20 text-center relative">
+                <div className="mb-12 md:mb-20 text-center relative">
                     <div className="inline-block relative">
-                        <h1 className="text-[clamp(3rem,8vw,7rem)] font-custom text-transparent bg-clip-text bg-gradient-to-b from-[#e4d6c3] to-[#8d7f6d] leading-none tracking-tighter uppercase relative z-10">
+                        <h1 className="text-[clamp(2.5rem,8vw,7rem)] font-custom text-transparent bg-clip-text bg-gradient-to-b from-[#e4d6c3] to-[#8d7f6d] leading-none tracking-tighter uppercase relative z-10">
                             LATEST FROM THE RIFT
                         </h1>
-                        <h1 className="text-[clamp(3rem,8vw,7rem)] font-custom text-red-600/20 absolute top-1 left-1 leading-none tracking-tighter uppercase z-0 blur-sm">
+                        <h1 className="text-[clamp(2.5rem,8vw,7rem)] font-custom text-red-600/20 absolute top-1 left-1 leading-none tracking-tighter uppercase z-0 blur-sm">
                             LATEST FROM THE RIFT
                         </h1>
                     </div>
@@ -173,12 +173,12 @@ const NewsLanding = () => {
                     {/* Main Featured Article (Left - Large) */}
                     {main && (
                         <div
-                            className="lg:col-span-8 group relative aspect-[16/10] lg:aspect-auto border border-white/10 bg-black/40 overflow-hidden cursor-pointer shadow-2xl"
+                            className="lg:col-span-8 group relative aspect-[4/3] sm:aspect-[16/10] lg:aspect-auto border border-white/10 bg-black/40 overflow-hidden cursor-pointer shadow-2xl"
                             onClick={() => setOpenFeature(true)}
                         >
                             <ImgFill src={resolveImage(main, 1)} alt={main.title} />
 
-                            <div className="absolute inset-0 p-8 md:p-12 flex flex-col justify-end bg-gradient-to-t from-black via-black/50 to-transparent">
+                            <div className="absolute inset-0 p-6 sm:p-8 md:p-12 flex flex-col justify-end bg-gradient-to-t from-black via-black/50 to-transparent">
                                 <div className="transform transition-transform duration-500 group-hover:-translate-y-2">
                                     <Badge color={main.badge_color === 'beige' ? 'bg-[#e4d6c3]' : 'bg-red-600'}>
                                         {main.badge_label}
@@ -204,12 +204,12 @@ const NewsLanding = () => {
                     {/* Secondary Article (Right - Vertical) */}
                     {side && (
                         <div
-                            className="lg:col-span-4 group relative aspect-[4/5] lg:aspect-auto border border-white/10 bg-black/40 overflow-hidden cursor-pointer"
+                            className="lg:col-span-4 group relative aspect-[4/3] sm:aspect-[4/5] lg:aspect-auto border border-white/10 bg-black/40 overflow-hidden cursor-pointer"
                             onClick={() => setOpenRight(true)}
                         >
                             <ImgFill src={resolveImage(side, 2)} alt={side.title} />
 
-                            <div className="absolute inset-0 p-8 flex flex-col justify-end bg-gradient-to-t from-black via-black/20 to-transparent">
+                            <div className="absolute inset-0 p-6 sm:p-8 flex flex-col justify-end bg-gradient-to-t from-black via-black/40 to-transparent">
                                 <div className="transform transition-transform duration-500 group-hover:-translate-y-2">
                                     <Badge color={side.badge_color === 'beige' ? 'bg-[#e4d6c3]' : 'bg-red-600'}>
                                         {side.badge_label}

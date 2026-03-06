@@ -64,7 +64,7 @@ const CinematicSlider = () => {
     return (
         <section
             ref={sectionRef}
-            className="relative w-full min-h-[60vh] bg-transparent flex flex-col justify-center pb-16 -mt-[150px] z-30 pointer-events-none"
+            className="relative w-full min-h-[50vh] bg-transparent flex flex-col justify-center pb-10 md:pb-16 -mt-[60px] sm:-mt-[100px] md:-mt-[150px] z-30 pointer-events-none"
         >
             {/* Embers GIF Background */}
             <img
@@ -131,7 +131,7 @@ const CinematicSlider = () => {
                     {slides.map((slide, index) => (
                         <SwiperSlide
                             key={slide.id ?? index}
-                            className="w-[80vw] h-[55vw] sm:w-[60vw] sm:h-[40vw] md:w-[50vw] md:h-[30vw] lg:w-[45vw] lg:h-[25vw] xl:w-[45vw] xl:h-[25vw] relative transition-all duration-700 ease-out shrink-0"
+                            className="w-[88vw] h-[60vw] sm:w-[70vw] sm:h-[45vw] md:w-[55vw] md:h-[35vw] lg:w-[45vw] lg:h-[28vw] xl:w-[45vw] xl:h-[25vw] relative transition-all duration-700 ease-out shrink-0"
                             style={{ background: 'transparent' }}
                         >
                             <div

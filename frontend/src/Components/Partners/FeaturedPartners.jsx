@@ -8,14 +8,14 @@ const FeaturedPartners = ({ featuredPartners = [] }) => {
     if (!featuredPartners || featuredPartners.length === 0) return null;
 
     return (
-        <section className="bg-[#060606] py-20 border-t border-white/[0.04]">
+        <section className="bg-[#060606] py-12 md:py-20 border-t border-white/[0.04]">
             <div className="max-w-[1200px] mx-auto px-6 md:px-12">
 
                 <p className="text-center font-custom text-[10px] tracking-[0.35em] text-gray-600 uppercase mb-12">
                     Current Partners
                 </p>
 
-                <div className="flex flex-wrap justify-center items-center gap-10 md:gap-16">
+                <div className="flex flex-wrap justify-center items-center gap-6 sm:gap-10 md:gap-16">
                     {featuredPartners.map((partner, i) => (
                         <div key={i} className="group relative">
                             <img

@@ -44,7 +44,7 @@ const Lightbox = ({ images, index, onClose, onNav }) => {
       />
 
       {/* Close */}
-      <button onClick={onClose} className="absolute top-5 right-6 text-white/50 hover:text-red-500 font-mono text-sm tracking-widest uppercase transition-colors z-10">
+      <button onClick={onClose} className="absolute top-4 right-4 md:top-5 md:right-6 text-white hover:text-red-500 font-mono text-xs md:text-sm tracking-widest uppercase transition-colors z-20 bg-black/50 md:bg-transparent px-3 py-2 md:p-0 rounded-sm shadow-xl md:shadow-none">
         ✕ ESC
       </button>
 
@@ -223,7 +223,7 @@ const Showcase = () => {
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/80 pointer-events-none" />
 
-        <div className="relative z-10 max-w-[1500px] mx-auto px-4 md:px-8 pt-16 pb-24">
+        <div className="relative z-10 max-w-[1500px] mx-auto px-4 md:px-8 pt-24 md:pt-32 pb-16 md:pb-24">
 
           {/* ── Page Header ── */}
           <div className="mb-14 flex flex-col md:flex-row md:items-end md:justify-between gap-4">
@@ -231,7 +231,7 @@ const Showcase = () => {
               <p className="text-red-500 font-mono tracking-[0.3em] uppercase text-xs mb-3">
                 {pageData.subtitle}
               </p>
-              <h1 className="text-4xl md:text-6xl lg:text-7xl font-custom uppercase tracking-tight text-white leading-none">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-custom uppercase tracking-tight text-white leading-none">
                 {pageData.page_title}
               </h1>
             </div>
@@ -261,12 +261,12 @@ const Showcase = () => {
               <div className="absolute bottom-4 left-4 w-6 h-6 border-b-2 border-l-2 border-white/30" />
               <div className="absolute bottom-4 right-4 w-6 h-6 border-b-2 border-r-2 border-white/30" />
 
-              <div className="absolute bottom-0 left-0 right-0 p-6 md:p-10 flex items-end justify-between">
+              <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6 md:p-10 flex items-end justify-between">
                 <div>
-                  <div className="inline-block bg-red-600 px-2 py-0.5 text-[9px] font-bold uppercase tracking-widest text-black mb-3">
+                  <div className="inline-block bg-red-600 px-2 py-0.5 text-[9px] font-bold uppercase tracking-widest text-black mb-2 md:mb-3">
                     Featured
                   </div>
-                  <h2 className="text-2xl md:text-4xl font-custom uppercase text-white leading-none group-hover:text-red-400 transition-colors duration-300">
+                  <h2 className="text-2xl sm:text-3xl md:text-4xl font-custom uppercase text-white leading-none group-hover:text-red-400 transition-colors duration-300">
                     {featuredImage.title || "Featured Shot"}
                   </h2>
                 </div>

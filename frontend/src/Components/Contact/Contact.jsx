@@ -71,7 +71,7 @@ function Contact() {
             </div>
 
             {/* Main Content */}
-            <div className="relative z-10 flex-grow flex items-center justify-center pt-40 pb-24 px-4">
+            <div className="relative z-10 flex-grow flex items-center justify-center pt-24 md:pt-40 pb-16 md:pb-24 px-4">
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}

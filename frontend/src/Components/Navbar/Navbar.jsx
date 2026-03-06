@@ -62,26 +62,15 @@ const Navbar = () => {
         {/* ─────────────────────────────────────────────────────────────
             TOP BAR (USA ... PRIVACY CONTACT | Social Icons)
         ────────────────────────────────────────────────────────────── */}
-        <div className={`w-full border-b border-white/10 transition-all duration-300 ${isScrolled ? "py-1" : "py-1.5"}`}>
-          <div className="container mx-auto px-6 md:px-12 flex justify-between items-center text-[9px] md:text-[10px] tracking-[0.2em] font-vintage text-white/70">
-
-            {/* Left: Text Links */}
-            <div className="flex items-center gap-4 md:gap-6">
-              {/* <span className="hover:text-white cursor-pointer transition-colors flex items-center gap-2">
-                USA <span className="text-[8px] align-middle">●●●</span>
-              </span>
-              <Link to="/privacy" className="hover:text-white transition-colors">PAPYACY</Link>
-              <Link to="/contact" className="hover:text-white transition-colors">CONTACT</Link> */}
+        <div className={`w-full border-b border-white/10 transition-all duration-300 ${isScrolled ? "py-0.5" : "py-1"}`}>
+          <div className="container mx-auto px-4 md:px-12 flex justify-end items-center text-[9px] md:text-[10px] tracking-[0.2em] font-vintage text-white/70">
+            {/* Right: Social Icons — hidden on very small screens */}
+            <div className="hidden xs:flex items-center gap-3 md:gap-5">
+              <a href="#" className="hover:text-white transition-colors"><FaTwitter size={10} /></a>
+              <a href="#" className="hover:text-white transition-colors"><FaDribbble size={10} /></a>
+              <a href="#" className="hover:text-white transition-colors"><FaInstagram size={10} /></a>
+              <a href="#" className="hover:text-white transition-colors"><FaPinterest size={10} /></a>
             </div>
-
-            {/* Right: Social Icons */}
-            <div className="flex items-center gap-4 md:gap-5">
-              <a href="#" className="hover:text-white transition-colors"><FaTwitter size={11} /></a>
-              <a href="#" className="hover:text-white transition-colors"><FaDribbble size={11} /></a>
-              <a href="#" className="hover:text-white transition-colors"><FaInstagram size={11} /></a>
-              <a href="#" className="hover:text-white transition-colors"><FaPinterest size={11} /></a>
-            </div>
-
           </div>
         </div>
 
@@ -89,15 +78,15 @@ const Navbar = () => {
         {/* ─────────────────────────────────────────────────────────────
             MAIN NAVBAR (Logo | Links | Action Icons)
         ────────────────────────────────────────────────────────────── */}
-        <div className={`w-full transition-all duration-300 ${isScrolled ? "py-2 md:py-2.5" : "py-3 md:py-4"}`}>
-          <div className="container mx-auto px-6 md:px-12 flex justify-between items-center relative">
+        <div className={`w-full transition-all duration-300 ${isScrolled ? "py-2 md:py-2.5" : "py-2.5 md:py-4"}`}>
+          <div className="container mx-auto px-4 md:px-12 flex justify-between items-center relative">
 
             {/* 1. LOGO (Left) */}
-            <Link to="/" className="flex-shrink-0 z-20 group ml-8 md:ml-12">
+            <Link to="/" className="flex-shrink-0 z-20 group">
               <img
                 src={logo}
                 alt="Godlike Logo"
-                className={`w-auto object-contain transition-all duration-300 ${isScrolled ? "h-7 md:h-8" : "h-8 md:h-10"} opacity-90 group-hover:opacity-100 group-hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.4)]`}
+                className={`w-auto object-contain transition-all duration-300 ${isScrolled ? "h-6 md:h-8" : "h-7 md:h-10"} opacity-90 group-hover:opacity-100 group-hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.4)]`}
               />
             </Link>
 
@@ -155,8 +144,8 @@ const Navbar = () => {
 
             {/* 📱 Mobile Menu Toggle (Right) */}
             <div className="lg:hidden flex items-center z-50">
-              <button onClick={toggleMenu} className="text-white hover:text-[#ffb700] transition-colors">
-                {showMenu ? <HiMenuAlt1 size={24} /> : <HiMenuAlt3 size={24} />}
+              <button onClick={toggleMenu} className="text-white hover:text-[#ffb700] transition-colors p-1">
+                {showMenu ? <HiMenuAlt1 size={22} /> : <HiMenuAlt3 size={22} />}
               </button>
             </div>
 
@@ -166,28 +155,26 @@ const Navbar = () => {
 
       {/* 📱 Mobile Dropdown Menu (Overlay) */}
       <div
-        className={`fixed inset-0 bg-black/95 z-40 flex flex-col items-center justify-center transition-all duration-500 backdrop-blur-sm ${showMenu ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
-          }`}
+        className={`fixed inset-0 bg-black/95 z-40 flex flex-col items-center justify-center transition-all duration-500 backdrop-blur-sm ${showMenu ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
       >
-        <div className="flex flex-col items-center gap-8">
+        <div className="flex flex-col items-center gap-6 w-full px-8">
           {NavLinks.map(({ id, name, link }) => (
             <Link
               key={id}
               to={link}
               onClick={() => handleLinkClick(link)}
-              className={`text-2xl uppercase font-bold tracking-widest transition-all duration-300 font-vintage ${activeLink === link ? "text-[#ffb700] scale-110" : "text-white/70 hover:text-white"
-                }`}
+              className={`text-xl uppercase font-bold tracking-widest transition-all duration-300 font-vintage border-b border-white/5 w-full text-center pb-4 ${activeLink === link ? "text-[#ffb700]" : "text-white/70 hover:text-white"}`}
             >
               {name}
             </Link>
           ))}
 
-          <div className="w-12 h-[1px] bg-white/20 my-4"></div>
+          <div className="w-12 h-[1px] bg-white/20 my-2"></div>
 
           <div className="flex gap-8 text-white/50">
-            <FaTwitter size={20} className="hover:text-white transition-colors" />
-            <FaInstagram size={20} className="hover:text-white transition-colors" />
-            <FaDribbble size={20} className="hover:text-white transition-colors" />
+            <a href="#"><FaTwitter size={18} className="hover:text-white transition-colors" /></a>
+            <a href="#"><FaInstagram size={18} className="hover:text-white transition-colors" /></a>
+            <a href="#"><FaDribbble size={18} className="hover:text-white transition-colors" /></a>
           </div>
         </div>
       </div>

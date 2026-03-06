@@ -5,7 +5,7 @@ import React from "react";
  * CMS fields: ctaTitle, ctaButtonText, ctaLink
  */
 const CTASection = ({ ctaTitle, ctaButtonText, ctaLink = "" }) => (
-    <section className="relative bg-[#060606] py-32 overflow-hidden border-t border-white/[0.04]">
+    <section className="relative bg-[#060606] py-20 md:py-32 overflow-hidden border-t border-white/[0.04]">
         {/* Red glow edges */}
         <div
             className="pointer-events-none absolute inset-0"
@@ -45,7 +45,7 @@ const CTASection = ({ ctaTitle, ctaButtonText, ctaLink = "" }) => (
 
             {/* Title */}
             <h2
-                className="font-custom text-4xl md:text-5xl lg:text-6xl text-white tracking-tight leading-tight mb-10"
+                className="font-custom text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-white tracking-tight leading-tight mb-8 md:mb-10"
                 style={{ textShadow: "0 0 80px rgba(170,0,0,0.12)" }}
             >
                 {ctaTitle}
@@ -53,7 +53,7 @@ const CTASection = ({ ctaTitle, ctaButtonText, ctaLink = "" }) => (
 
             {/* Button */}
             <button
-                className="group relative inline-flex items-center justify-center gap-3 border border-[#AA0000] text-white font-custom text-xs tracking-[0.3em] uppercase px-12 py-5 overflow-hidden transition-all duration-300 hover:shadow-[0_0_40px_rgba(170,0,0,0.4)] hover:scale-[1.02]"
+                className="group relative inline-flex items-center justify-center gap-3 border border-[#AA0000] text-white font-custom text-[10px] sm:text-xs tracking-[0.3em] uppercase px-8 md:px-12 py-4 md:py-5 overflow-hidden transition-all duration-300 hover:shadow-[0_0_40px_rgba(170,0,0,0.4)] hover:scale-[1.02]"
             >
                 {/* Fill sweep — left to right on hover */}
                 <span className="absolute inset-0 bg-[#AA0000] translate-x-[-101%] group-hover:translate-x-0 transition-transform duration-500 ease-in-out" />

@@ -147,7 +147,7 @@ const CharacterScroll = () => {
                         style={{ opacity: textOpacity1, textShadow: "0 0 20px rgba(0,0,0,0.8)" }}
                         className="absolute text-center px-6 w-full max-w-5xl md:top-1/2 md:-translate-y-1/2 top-1/3"
                     >
-                        <h2 className="text-6xl md:text-8xl lg:text-9xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white to-gray-500 uppercase tracking-tighter font-vintage mb-4">
+                        <h2 className="text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white to-gray-500 uppercase tracking-tighter font-vintage mb-4">
                             THOMAS
                         </h2>
                         <h3 className="text-xl md:text-3xl text-red-500 tracking-[0.5em] font-mono mb-6 uppercase">The Leader</h3>
@@ -161,7 +161,7 @@ const CharacterScroll = () => {
                         style={{ opacity: textOpacity2, textShadow: "0 0 20px rgba(0,0,0,0.8)" }}
                         className="absolute text-center px-6 w-full max-w-5xl md:top-1/2 md:-translate-y-1/2 top-1/3"
                     >
-                        <h2 className="text-5xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white to-gray-400 uppercase tracking-tighter font-vintage mb-6 drop-shadow-2xl">
+                        <h2 className="text-3xl sm:text-5xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white to-gray-400 uppercase tracking-tighter font-vintage mb-6 drop-shadow-2xl">
                             THE FRACTURE
                         </h2>
                         <p className="text-gray-300 text-sm md:text-lg lg:text-xl font-light tracking-wide leading-relaxed max-w-3xl mx-auto mb-4">
@@ -177,7 +177,7 @@ const CharacterScroll = () => {
                         style={{ opacity: textOpacity3, textShadow: "0 0 20px rgba(0,0,0,0.8)" }}
                         className="absolute text-center px-6 w-full max-w-5xl md:top-1/2 md:-translate-y-1/2 top-1/3"
                     >
-                        <h2 className="text-5xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white to-gray-400 uppercase tracking-tighter font-vintage mb-6 drop-shadow-2xl">
+                        <h2 className="text-3xl sm:text-5xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white to-gray-400 uppercase tracking-tighter font-vintage mb-6 drop-shadow-2xl">
                             ORDER IN CHAOS
                         </h2>
                         <p className="text-gray-300 text-sm md:text-lg lg:text-xl font-light tracking-wide leading-relaxed max-w-3xl mx-auto mb-6">

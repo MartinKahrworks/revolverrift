@@ -44,36 +44,19 @@ module.exports = [
     config: {
       // Allow any localhost port — covers Vite's auto-incrementing ports (5173, 5174, 5175...)
       // Also allows the deployed Vercel frontend in production
-      origin: (ctx) => {
-        const origin = ctx.request.header.origin;
-        if (!origin) return false;
-
-        // ✅ Local development — any localhost or 127.0.0.1 port
-        if (origin.startsWith('http://localhost:') || origin.startsWith('http://127.0.0.1:')) {
-          return origin;
-        }
-
-        // ✅ LAN development — any 192.168.x.x device on the same network (colleagues)
-        if (/^http:\/\/192\.168\.\d+\.\d+:\d+$/.test(origin)) {
-          return origin;
-        }
-
-        // ✅ ngrok tunnels (for remote access / sharing)
-        if (origin.endsWith('.ngrok-free.app') || origin.endsWith('.ngrok.io')) {
-          return origin;
-        }
-
-        // ✅ Production — deployed Vercel frontend
-        const allowedProduction = [
-          'https://revolver2.vercel.app',
-          'https://revolverrift.vercel.app',  // add any other production domains here
-        ];
-        if (allowedProduction.includes(origin)) {
-          return origin;
-        }
-
-        return false;
-      },
+      origin: [
+        // Local development
+        'http://localhost:5173',
+        'http://localhost:5174',
+        'http://127.0.0.1:5173',
+        // ngrok/local IP (add your current if needed, though they rotate)
+        // Production Vercel apps
+        'https://revolver2.vercel.app',
+        'https://revolverrift.vercel.app',
+        'https://revolverrift-development.vercel.app',
+        // Railway backend itself
+        'https://revolverriftyash-production.up.railway.app'
+      ],
       methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS', 'HEAD'],
       headers: ['Content-Type', 'Authorization', 'Origin', 'Accept'],
       keepHeaderOnError: true,
