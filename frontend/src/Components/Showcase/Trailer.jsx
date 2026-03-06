@@ -61,7 +61,7 @@ const Trailer = () => {
                         <div className="relative w-full max-w-4xl aspect-video bg-black shadow-2xl border border-white/10">
                             <button
                                 onClick={() => setIsPlaying(false)}
-                                className="absolute top-2 right-0 md:-top-12 md:right-0 text-white hover:text-[#ff3333] font-bold text-sm uppercase tracking-widest bg-black/70 md:bg-transparent px-3 py-1"
+                                className="absolute -top-10 right-0 md:-top-12 text-white hover:text-[#ff3333] font-bold text-sm uppercase tracking-widest bg-transparent py-1"
                             >
                                 Close [X]
                             </button>

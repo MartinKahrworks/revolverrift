@@ -2,43 +2,31 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from "react";
 import { Routes, Route, useLocation, Navigate } from "react-router-dom"; // BrowserRouter is removed
 import { AnimatePresence } from "framer-motion";
 import Navbar from "./Components/Navbar/Navbar";
-import Hero from "./Components/Hero/Hero";
-import GodLikeHero from "./Components/Hero/GodLikeHero";
-import Quotes from "./Components/Quotes/Quotes";
-import Banner from "./Components/Banner/Banner";
-import Banner2 from "./Components/Banner/Banner2";
-// import Banner3 from "./Components/Banner/Banner3"; // Removed
-
-import AppStore from "./Components/AppStore/AppStore";
 import Footer from "./Components/Footer/Footer";
 import PopupPlayer from "./Components/PopupPlayer/PopupPlayer";
-import Testimonials from "./Components/Testimonials/Testimonials";
 import { CartProvider } from "./context/CartContext";
-import Banner5 from "./Components/Banner/Banner5";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import Banner6 from "./Components/Banner/Banner6";
-import Banner7 from "./Components/Banner/Banner7";
-import Banner8 from "./Components/Banner/Banner8";
-import Banner9 from "./Components/Banner/Banner9";
-import Banner10 from "./Components/Banner/Banner10";
-import ContentPage from "./Components/ContentPage/ContentPage";
-import { NewsCardGrid, AllBlogsPage, BlogPostPage } from "./Components/Features/NewsCardGrid";
-import NewsPage from "./Components/News/NewsPage";
-import Showcase from "./Components/Showcase/Showcase";
-import GunsShowcase from "./Components/Showcase/GunsShowcase";
-import Partners from "./Components/Partners/partners";
-import Contact from "./Components/Contact/Contact";
-import Shop from "./Components/Shop/Shop";
-import Cart from "./Components/Shop/Cart";
 import Loader from "./Components/Loader/Loader";
 import HeroCountdown from "./Components/Hero/Hero";
 import Features from "./Components/Features/Features";
 import AboutGame from "./Components/Showcase/AboutGame";
 import Trailer from "./Components/Showcase/Trailer";
-import ReleaseCountdown from "./Components/Showcase/ReleaseCountdown";
-import CharactersPage from "./Components/Characters/CharactersPage";
-import CharactersPageTest from "./Components/Characters/CharactersPageTest";
+
+// Lazy Loaded Components
+const Testimonials = React.lazy(() => import("./Components/Testimonials/Testimonials"));
+const ContentPage = React.lazy(() => import("./Components/ContentPage/ContentPage"));
+const NewsPage = React.lazy(() => import("./Components/News/NewsPage"));
+const Showcase = React.lazy(() => import("./Components/Showcase/Showcase"));
+const GunsShowcase = React.lazy(() => import("./Components/Showcase/GunsShowcase"));
+const Partners = React.lazy(() => import("./Components/Partners/partners"));
+const Contact = React.lazy(() => import("./Components/Contact/Contact"));
+const Shop = React.lazy(() => import("./Components/Shop/Shop"));
+const Cart = React.lazy(() => import("./Components/Shop/Cart"));
+const CharactersPage = React.lazy(() => import("./Components/Characters/CharactersPage"));
+const CharactersPageTest = React.lazy(() => import("./Components/Characters/CharactersPageTest"));
+const AllBlogsPage = React.lazy(() => import("./Components/Features/NewsCardGrid").then(module => ({ default: module.AllBlogsPage })));
+const BlogPostPage = React.lazy(() => import("./Components/Features/NewsCardGrid").then(module => ({ default: module.BlogPostPage })));
 
 // This component handles scrolling to the top of the page on route changes.
 const ScrollToTop = () => {
@@ -66,41 +54,19 @@ const App = () => {
 
   useLayoutEffect(() => {
     if (isFirstLoad.current) {
-      // Initial load: Wait for BOTH minimum time AND window.load
+      // Initial load: minimal timer to allow UI to mount, no window.load blocking
       setIsLoading(true);
-
-      const handleLoadCompletion = () => {
+      const timer = setTimeout(() => {
         setIsLoading(false);
         isFirstLoad.current = false;
-      };
-
-      const minTime = 2000;
-      const startTime = Date.now();
-
-      const onWindowLoad = () => {
-        const elapsed = Date.now() - startTime;
-        const remaining = minTime - elapsed;
-
-        if (remaining > 0) {
-          setTimeout(handleLoadCompletion, remaining);
-        } else {
-          handleLoadCompletion();
-        }
-      };
-
-      if (document.readyState === "complete") {
-        onWindowLoad();
-      } else {
-        window.addEventListener("load", onWindowLoad);
-      }
-
-      return () => window.removeEventListener("load", onWindowLoad);
+      }, 800);
+      return () => clearTimeout(timer);
     } else {
       // Subsequent navigations: Use fixed timer
       setIsLoading(true);
       const timer = setTimeout(() => {
         setIsLoading(false);
-      }, 2000);
+      }, 500);
 
       return () => clearTimeout(timer);
     }
@@ -136,56 +102,57 @@ const App = () => {
         <ViewportFrame />
 
         {/* Main Scrollable Content */}
-        <main className="relative z-10 overflow-x-hidden bg-white dark:bg-black text-black dark:text-white duration-300">
-          <Routes>
-            {/* Home Page Route */}
-            <Route
-              path="/"
-              element={
-                <>
-                  <HeroCountdown />
-                  <Features />
-                  <AboutGame />
-                  <Trailer />
+        <main className="relative z-10 overflow-x-hidden bg-black text-white duration-300">
+          <React.Suspense fallback={<div className="min-h-screen bg-black" />}>
+            <Routes>
+              {/* Home Page Route */}
+              <Route
+                path="/"
+                element={
+                  <>
+                    <HeroCountdown />
+                    <Features />
+                    <AboutGame />
+                    <Trailer />
 
+                    <Footer />
+                  </>
+                }
+              />
+              {/* Blog Routes */}
+              <Route path="/news" element={<NewsPage />} />
+              <Route path="/credits" element={
+                <>
+                  <Testimonials />
+                  {/* <Banner7 /> */}
+                </>
+              } />
+              <Route path="/showcase" element={
+                <>
+                  <Showcase />
+                  <GunsShowcase />
                   <Footer />
                 </>
-              }
-            />
-            {/* Blog Routes */}
-            <Route path="/news" element={<NewsPage />} />
-            <Route path="/credits" element={
-              <>
-                <Testimonials />
-                {/* <Banner7 /> */}
-              </>
-            } />
-            <Route path="/showcase" element={
-              <>
-                <Showcase />
-                <GunsShowcase />
-                <Footer />
-              </>
-            } />
-            <Route path="/shop" element={<Shop />} />
-            <Route path="/cart" element={<Cart />} />
-            {/* Character Routes */}
-            <Route path="/characters" element={<Navigate to="/characters/leader" replace />} />
-            <Route path="/characters/:id" element={<CharactersPage />} />
+              } />
+              <Route path="/shop" element={<Shop />} />
+              <Route path="/cart" element={<Cart />} />
+              {/* Character Routes */}
+              <Route path="/characters" element={<Navigate to="/characters/leader" replace />} />
+              <Route path="/characters/:id" element={<CharactersPage />} />
 
-            {/* Character Test Routes */}
-            <Route path="/characterstest" element={<Navigate to="/characterstest/leader" replace />} />
-            <Route path="/characterstest/:id" element={<CharactersPageTest />} />
+              {/* Character Test Routes */}
+              <Route path="/characterstest" element={<Navigate to="/characterstest/leader" replace />} />
+              <Route path="/characterstest/:id" element={<CharactersPageTest />} />
 
+              <Route path="/partners" element={<Partners />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/content" element={<ContentPage />} />
 
-            <Route path="/partners" element={<Partners />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/content" element={<ContentPage />} />
-
-            {/* Blog Routes — powered by Strapi CMS */}
-            <Route path="/blogs" element={<AllBlogsPage />} />
-            <Route path="/blog/:link" element={<BlogPostPage />} />
-          </Routes>
+              {/* Blog Routes — powered by Strapi CMS */}
+              <Route path="/blogs" element={<AllBlogsPage />} />
+              <Route path="/blog/:link" element={<BlogPostPage />} />
+            </Routes>
+          </React.Suspense>
           <PopupPlayer isPlay={isPlay} togglePlay={togglePlay} />
         </main>
 

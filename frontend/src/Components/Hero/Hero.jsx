@@ -14,13 +14,19 @@ const HeroCountdown = () => {
 
     useEffect(() => {
         getHomePage().then((data) => {
+            let imgSrc = skull;
             if (data?.hero?.backgroundImage) {
-                // CMS image available — use it
-                setBgImage(data.hero.backgroundImage);
-            } else {
-                // CMS returned no image — fall back to local skull
-                setBgImage(skull);
+                imgSrc = data.hero.backgroundImage;
             }
+
+            const img = new Image();
+            img.src = imgSrc;
+            img.onload = () => {
+                setBgImage(imgSrc);
+            };
+            img.onerror = () => {
+                setBgImage(skull);
+            };
         }).catch(() => {
             // Strapi unavailable — fall back to local skull
             setBgImage(skull);
@@ -40,6 +46,7 @@ const HeroCountdown = () => {
                             className="w-full h-full object-cover object-[65%_center] md:object-center"
                             style={{ animation: 'fadeInBg 0.6s ease-in-out forwards' }}
                             loading="eager"
+                            fetchPriority="high"
                             decoding="async"
                         />
                     )}

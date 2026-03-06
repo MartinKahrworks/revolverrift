@@ -7,7 +7,23 @@ const STRAPI_URL = import.meta.env.VITE_STRAPI_URL || "http://localhost:1337";
 let _homePagePromise = null;
 
 // ─── Image URL resolver ────────────────────────────────────────────────────────
-const resolveImageUrl = (url) => {
+const resolveImageUrl = (imageObj) => {
+    if (!imageObj) return null;
+
+    // If a string (url) was passed directly by accident, handle it
+    if (typeof imageObj === "string") {
+        if (imageObj.startsWith("http")) return imageObj;
+        return `${STRAPI_URL}${imageObj}`;
+    }
+
+    let url = imageObj.url;
+
+    // Prefer compressed formats over the original uncompressed image size
+    if (imageObj.formats) {
+        if (imageObj.formats.large) url = imageObj.formats.large.url;
+        else if (imageObj.formats.medium) url = imageObj.formats.medium.url;
+    }
+
     if (!url) return null;
     if (url.startsWith("http")) return url;   // Cloudinary or external CDN
     return `${STRAPI_URL}${url}`;             // Local Strapi upload
@@ -159,11 +175,11 @@ const _fetchHomePageData = async () => {
                 subtitle: data.hero.subtitle || "",
                 buttonText: data.hero.button_text || "",
                 buttonLink: data.hero.button_link || "",
-                backgroundImage: resolveImageUrl(data.hero.background_image?.url) || null,
+                backgroundImage: resolveImageUrl(data.hero.background_image) || null,
                 cinematicSlides: Array.isArray(data.hero.cinematic_slider)
                     ? data.hero.cinematic_slider.map((img) => ({
                         id: img.id,
-                        url: resolveImageUrl(img.url),
+                        url: resolveImageUrl(img),
                         title: img.name || "",
                     }))
                     : [],
@@ -203,7 +219,7 @@ const _fetchHomePageData = async () => {
         if (rawTrailer) {
             trailer = {
                 videoUrl: rawTrailer.video_url || null,
-                thumbnailUrl: resolveImageUrl(rawTrailer.thumbnail?.url) || null,
+                thumbnailUrl: resolveImageUrl(rawTrailer.thumbnail) || null,
             };
         }
 
@@ -218,7 +234,7 @@ const _fetchHomePageData = async () => {
             link: item.link || '#',
             openInNewTab: item.open_in_new_tab === true,
             buttonText: item.button_text || 'Explore',
-            imageUrl: resolveImageUrl(item.image?.url) || null,
+            imageUrl: resolveImageUrl(item.image) || null,
         }));
         // galleryItems may be [] — SlantedGallery falls back per-slot in that case
 
@@ -230,7 +246,7 @@ const _fetchHomePageData = async () => {
             link: item.slug,
             description: item.excerpt,
             fullDescription: item.content,
-            image: resolveImageUrl(item.cover_image?.url),
+            image: resolveImageUrl(item.cover_image),
             date: item.publish_date,
             category: item.category || (index === 0 ? "FEATURE ANALYSIS" : index === 1 ? "LORE DEEP DIVE" : "DEVELOPMENT LOG")
         })) : FALLBACK_NEWS;
