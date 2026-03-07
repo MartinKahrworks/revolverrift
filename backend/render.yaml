@@ -3,7 +3,7 @@ services:
     name: revolverrift-backend
     runtime: node
     rootDir: backend
-    buildCommand: npm install && npm run build
+    buildCommand: rm -rf .cache dist build .strapi node_modules/.cache && npm install && npm run build
     startCommand: npm run start
     envVars:
       - key: NODE_ENV
