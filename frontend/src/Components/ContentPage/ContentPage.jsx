@@ -15,7 +15,9 @@ const ContentPage = () => {
                 const data = await getContentSectionsFromStrapi();
                 setSections(data);
             } catch (err) {
-                console.error("Failed to load sections", err);
+                if (import.meta.env.DEV) {
+                    console.error("Failed to load sections", err);
+                }
             } finally {
                 setIsLoading(false);
             }

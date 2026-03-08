@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import logo from "../../assets/IMG_0983.png";
 import { HiMenuAlt1, HiMenuAlt3 } from "react-icons/hi";
-import { FaTwitter, FaDribbble, FaInstagram, FaPinterest, FaSearch, FaShoppingCart, FaSignInAlt, FaTh, FaGlobe } from "react-icons/fa";
+import { FaTwitter, FaDribbble, FaInstagram, FaPinterest, FaSearch, FaShoppingCart, FaTh, FaGlobe } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
 import "./cutting-animation.css";
@@ -133,7 +133,7 @@ const Navbar = () => {
                   </span>
                 )}
               </Link>
-              <Link to="/login" aria-label="Login" className="hover:text-[#ffb700] hover:scale-110 transition-all duration-300"><FaSignInAlt size={13} /></Link>
+              {/* Login removed - no auth system implemented yet */}
 
               {/* Menu Grid Icon (Desktop) - can trigger sidebar or just be decorative */}
               <button onClick={toggleMenu} aria-label="More" className="hover:text-[#ffb700] hover:scale-110 transition-all duration-300">

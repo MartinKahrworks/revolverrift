@@ -119,12 +119,14 @@ const Cart = () => {
                                     <span className="font-mono text-2xl md:text-3xl font-bold tracking-wider text-amber-500">€{total.toFixed(2)}</span>
                                 </div>
 
-                                <button className="w-full bg-gradient-to-r from-red-600 to-red-800 text-white font-mono text-[10px] md:text-xs tracking-[0.25em] uppercase px-4 md:px-6 py-4 md:py-5 rounded-xl font-bold border border-red-500/50 hover:shadow-[0_0_30px_rgba(220,38,38,0.5)] transition-all duration-300 relative overflow-hidden group">
+                                <button 
+                                    disabled
+                                    title="Checkout coming soon"
+                                    className="w-full bg-gradient-to-r from-red-600 to-red-800 text-white font-mono text-[10px] md:text-xs tracking-[0.25em] uppercase px-4 md:px-6 py-4 md:py-5 rounded-xl font-bold border border-red-500/50 opacity-50 cursor-not-allowed relative overflow-hidden"
+                                >
                                     <span className="relative z-10 flex items-center justify-center gap-2 md:gap-3">
-                                        Proceed to Checkout <FaArrowLeft className="rotate-180" />
+                                        Checkout Coming Soon
                                     </span>
-                                    {/* Hover sweep effect */}
-                                    <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-in-out" />
                                 </button>
 
                                 <div className="mt-5 md:mt-6 flex justify-center gap-4 text-gray-500">

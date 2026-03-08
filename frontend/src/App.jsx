@@ -22,7 +22,7 @@ const GunsShowcase = React.lazy(() => import("./Components/Showcase/GunsShowcase
 const Partners = React.lazy(() => import("./Components/Partners/partners"));
 const Contact = React.lazy(() => import("./Components/Contact/Contact"));
 const Shop = React.lazy(() => import("./Components/Shop/Shop"));
-const Cart = React.lazy(() => import("./Components/Shop/Cart"));
+const Cart = React.lazy(() => import("./Components/Cart/Cart"));
 const CharactersPage = React.lazy(() => import("./Components/Characters/CharactersPage"));
 const CharactersPageTest = React.lazy(() => import("./Components/Characters/CharactersPageTest"));
 const AllBlogsPage = React.lazy(() => import("./Components/Features/NewsCardGrid").then(module => ({ default: module.AllBlogsPage })));

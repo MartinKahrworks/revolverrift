@@ -5,14 +5,14 @@
   "description": "A Strapi application",
   "scripts": {
     "build": "strapi build",
-    "clean": "npx rimraf .cache build dist .strapi node_modules/.cache",
+    "clean": "rimraf .cache build dist .strapi node_modules/.cache",
     "clean:build": "npm run clean && npm run build",
     "rebuild": "npm run clean && npm install && npm run build",
     "console": "strapi console",
     "deploy": "strapi deploy",
     "dev": "strapi develop",
     "develop": "strapi develop",
-    "start": "NODE_ENV=production strapi start",
+    "start": "strapi start",
     "strapi": "strapi",
     "upgrade": "npx @strapi/upgrade latest",
     "upgrade:dry": "npx @strapi/upgrade latest --dry"
@@ -23,10 +23,7 @@
     "@strapi/provider-upload-cloudinary": "^5.36.1",
     "@strapi/strapi": "5.36.1",
     "pg": "8.8.0",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0",
-    "react-router-dom": "^6.0.0",
-    "styled-components": "^6.0.0"
+    "rimraf": "^5.0.5"
   },
   "engines": {
     "node": ">=20.0.0 <=24.x.x",

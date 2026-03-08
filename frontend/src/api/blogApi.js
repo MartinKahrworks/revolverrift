@@ -20,7 +20,9 @@ export const getBlogs = async () => {
     const res = await fetch(`${STRAPI_URL}/api/blogs?populate=*`);
 
     if (!res.ok) {
-        console.error(`Strapi API error: ${res.status} ${res.statusText}`);
+        if (import.meta.env.DEV) {
+            console.error(`Strapi API error: ${res.status} ${res.statusText}`);
+        }
         return [];
     }
 
@@ -84,7 +86,9 @@ export const getNewsPageData = async () => {
             seoDescription: data.seo_description
         };
     } catch (err) {
-        console.error("[blogApi] getNewsPageData error:", err);
+        if (import.meta.env.DEV) {
+            console.error("[blogApi] getNewsPageData error:", err);
+        }
         return null;
     }
 };

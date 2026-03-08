@@ -155,7 +155,9 @@ const _fetchHomePageData = async () => {
         ]);
 
         if (!homeRes.ok) {
-            console.error(`[homeApi] home-page fetch failed: ${homeRes.status} ${homeRes.statusText}`);
+            if (import.meta.env.DEV) {
+                console.error(`[homeApi] home-page fetch failed: ${homeRes.status} ${homeRes.statusText}`);
+            }
             return null;
         }
 

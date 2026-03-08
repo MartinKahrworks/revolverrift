@@ -63,7 +63,9 @@ export const getFooterData = async () => {
         };
 
     } catch (e) {
-        console.error("Failed fetching footer:", e);
+        if (import.meta.env.DEV) {
+            console.error("Failed fetching footer:", e);
+        }
         return FALLBACK_FOOTER_DATA;
     }
 };

@@ -30,7 +30,9 @@ export const getCreditsPage = async () => {
         // 1️⃣  Credits page single type — page title & subtitle only
         const pageRes = await fetch(`${STRAPI_URL}/api/credits-page`);
         if (!pageRes.ok) {
-            console.error(`credits-page fetch failed: ${pageRes.status}`);
+            if (import.meta.env.DEV) {
+                console.error(`credits-page fetch failed: ${pageRes.status}`);
+            }
             return null;
         }
         const pageJson = await pageRes.json();

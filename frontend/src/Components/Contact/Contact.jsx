@@ -25,7 +25,11 @@ function Contact() {
     }, []);
 
     const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+        const { name, value } = e.target;
+        // Basic input sanitization: trim leading/trailing whitespace
+        // and limit length to prevent abuse
+        const sanitizedValue = value.slice(0, 5000);
+        setFormData({ ...formData, [name]: sanitizedValue });
     };
 
     // Form is valid if all required CMS fields are filled
@@ -52,8 +56,10 @@ function Contact() {
             });
             setFormData(resetForm);
         } catch (error) {
-            console.error("Error sending email:", error);
-            alert(cmsData.errorMessage);
+            if (import.meta.env.DEV) {
+                console.error("Error sending email:", error);
+            }
+            alert(cmsData.errorMessage || "Failed to send message. Please try again.");
         }
     };
 

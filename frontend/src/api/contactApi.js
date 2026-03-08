@@ -43,7 +43,9 @@ export const getContactPageData = async () => {
         };
 
     } catch (e) {
-        console.error("Failed fetching contact page data:", e);
+        if (import.meta.env.DEV) {
+            console.error("Failed fetching contact page data:", e);
+        }
         return FALLBACK_CONTACT_DATA;
     }
 };
