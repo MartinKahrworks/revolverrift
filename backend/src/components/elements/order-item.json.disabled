@@ -1,0 +1,51 @@
+{
+  "collectionName": "components_elements_order_items",
+  "info": {
+    "displayName": "Order Item",
+    "description": "Individual product item within an order"
+  },
+  "options": {},
+  "attributes": {
+    "product": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::product.product"
+    },
+    "productName": {
+      "type": "string",
+      "required": true
+    },
+    "productSlug": {
+      "type": "string",
+      "required": true
+    },
+    "variantSize": {
+      "type": "string"
+    },
+    "variantColor": {
+      "type": "string"
+    },
+    "variantEdition": {
+      "type": "string"
+    },
+    "quantity": {
+      "type": "integer",
+      "required": true,
+      "min": 1,
+      "default": 1
+    },
+    "unitPrice": {
+      "type": "decimal",
+      "required": true,
+      "min": 0
+    },
+    "totalPrice": {
+      "type": "decimal",
+      "required": true,
+      "min": 0
+    },
+    "productImage": {
+      "type": "string"
+    }
+  }
+}

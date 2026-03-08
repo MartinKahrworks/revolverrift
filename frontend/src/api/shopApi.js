@@ -56,6 +56,7 @@ const mapProduct = (item) => ({
     name: item.name || item.title || '',
     slug: item.slug || '',
     tagline: item.tagline || '',
+    description: item.description || null,
     price: item.price ?? 0,
     compare_at_price: item.compare_at_price ?? null,
     status: item.status || 'available',
@@ -63,17 +64,23 @@ const mapProduct = (item) => ({
     is_new: item.is_new ?? false,
     product_type: item.product_type || '',
     order: item.order ?? 99,
+    sku: item.sku || '',
+    stock_quantity: item.stock_quantity ?? 0,
     thumbnail: resolveUrl(item.thumbnail?.url),
     hover_image: resolveUrl(item.hover_image?.url),
     gallery: (item.gallery || []).map(g => resolveUrl(g.url)).filter(Boolean),
     badges: item.badges || [],
-    category: item.category ? { id: item.category.id, name: item.category.name, slug: item.category.slug } : null
+    variants: item.variants || [],
+    category: item.category ? { id: item.category.id, name: item.category.name, slug: item.category.slug } : null,
+    related_products: item.related_products || [],
+    seo_title: item.seo_title || '',
+    seo_description: item.seo_description || ''
 });
 
 export const getProducts = async () => {
     try {
         const res = await fetch(
-            `${STRAPI_URL}/api/products?populate[0]=thumbnail&populate[1]=hover_image&populate[2]=badges&populate[3]=category&sort=order:asc&pagination[limit]=100`
+            `${STRAPI_URL}/api/products?populate[0]=thumbnail&populate[1]=hover_image&populate[2]=badges&populate[3]=category&populate[4]=variants&populate[5]=gallery&populate[6]=related_products&sort=order:asc&pagination[limit]=100`
         );
         if (!res.ok) throw new Error('Failed');
         const json = await res.json();
@@ -81,6 +88,20 @@ export const getProducts = async () => {
         return items.map(mapProduct);
     } catch {
         return [];
+    }
+};
+
+export const getProductBySlug = async (slug) => {
+    try {
+        const res = await fetch(
+            `${STRAPI_URL}/api/products?filters[slug][$eq]=${slug}&populate[0]=thumbnail&populate[1]=hover_image&populate[2]=badges&populate[3]=category&populate[4]=variants&populate[5]=gallery&populate[6]=related_products.thumbnail`
+        );
+        if (!res.ok) throw new Error('Failed');
+        const json = await res.json();
+        const items = json.data || [];
+        return items.length > 0 ? mapProduct(items[0]) : null;
+    } catch {
+        return null;
     }
 };
 

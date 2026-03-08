@@ -22,6 +22,7 @@ const GunsShowcase = React.lazy(() => import("./Components/Showcase/GunsShowcase
 const Partners = React.lazy(() => import("./Components/Partners/partners"));
 const Contact = React.lazy(() => import("./Components/Contact/Contact"));
 const Shop = React.lazy(() => import("./Components/Shop/Shop"));
+const ProductDetail = React.lazy(() => import("./Components/Shop/ProductDetail"));
 const Cart = React.lazy(() => import("./Components/Cart/Cart"));
 const CharactersPage = React.lazy(() => import("./Components/Characters/CharactersPage"));
 const CharactersPageTest = React.lazy(() => import("./Components/Characters/CharactersPageTest"));
@@ -135,6 +136,7 @@ const App = () => {
                 </>
               } />
               <Route path="/shop" element={<Shop />} />
+              <Route path="/shop/:slug" element={<ProductDetail />} />
               <Route path="/cart" element={<Cart />} />
               {/* Character Routes */}
               <Route path="/characters" element={<Navigate to="/characters/leader" replace />} />

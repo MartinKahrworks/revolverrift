@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { useCart } from '../../context/CartContext';
 
 const BADGE_COLORS = {
@@ -29,8 +30,8 @@ const ProductCard = ({ product, ctaText = 'ADD TO LOADOUT', soldOutLabel = 'SOLD
             viewport={{ once: true }}
             transition={{ duration: 0.4 }}
         >
-            {/* Image */}
-            <div className="relative aspect-[3/4] overflow-hidden bg-black/50">
+            {/* Image - Clickable to product detail */}
+            <Link to={`/shop/${product.slug}`} className="relative aspect-[3/4] overflow-hidden bg-black/50">
                 <img
                     src={product.thumbnail || product.image || 'https://via.placeholder.com/600x800?text=No+Image'}
                     alt={product.name || product.title}
@@ -75,10 +76,10 @@ const ProductCard = ({ product, ctaText = 'ADD TO LOADOUT', soldOutLabel = 'SOLD
                         </span>
                     </div>
                 )}
-            </div>
+            </Link>
 
-            {/* Info */}
-            <div className="p-4 flex flex-col flex-1 text-center space-y-1">
+            {/* Info - Clickable to product detail */}
+            <Link to={`/shop/${product.slug}`} className="p-4 flex flex-col flex-1 text-center space-y-1">
                 <h3 className="font-custom text-base tracking-wider text-white uppercase leading-tight">
                     {product.name || product.title}
                 </h3>
@@ -93,7 +94,7 @@ const ProductCard = ({ product, ctaText = 'ADD TO LOADOUT', soldOutLabel = 'SOLD
                         €{(product.price ?? 0).toFixed(2)}
                     </span>
                 </div>
-            </div>
+            </Link>
 
             {/* CTA */}
             {!unavailable && (
