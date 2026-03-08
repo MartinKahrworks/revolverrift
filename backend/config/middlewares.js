@@ -83,6 +83,18 @@ module.exports = [
     },
   },
   'strapi::poweredBy',
+  {
+    name: 'strapi::cache',
+    config: {
+      // Disable caching for admin panel
+      headers: {
+        'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+        'Pragma': 'no-cache',
+        'Expires': '0',
+        'Surrogate-Control': 'no-store',
+      },
+    },
+  },
   'strapi::query',
   {
     name: 'strapi::body',
