@@ -1,7 +1,6 @@
 import { shopData } from '../Components/Shop/shopData';
 
 const STRAPI_URL = import.meta.env.VITE_STRAPI_URL || 'http://localhost:1337';
-const STRAPI_TOKEN = import.meta.env.VITE_STRAPI_API_TOKEN;
 
 /**
  * Validates if the Strapi connection is configured.
@@ -16,7 +15,6 @@ const isStrapiConfigured = () => {
 export const getProducts = async () => {
     // If not configured, immediately return mock data
     if (!isStrapiConfigured()) {
-        console.log('Strapi not configured, using mock data.');
         return shopData;
     }
 
@@ -24,10 +22,6 @@ export const getProducts = async () => {
         const headers = {
             'Content-Type': 'application/json',
         };
-
-        if (STRAPI_TOKEN) {
-            headers['Authorization'] = `Bearer ${STRAPI_TOKEN}`;
-        }
 
         const response = await fetch(`${STRAPI_URL}/api/products?populate=*`, {
             method: 'GET',
@@ -56,7 +50,7 @@ export const getProducts = async () => {
         }));
 
     } catch (error) {
-        console.warn('Failed to fetch from Strapi, falling back to mock data:', error);
+        // Silently fall back to mock data in production
         return shopData;
     }
 };
