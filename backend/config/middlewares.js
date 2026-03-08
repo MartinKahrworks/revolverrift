@@ -59,6 +59,7 @@ module.exports = [
   {
     name: 'strapi::cors',
     config: {
+      enabled: true,
       // Allow any localhost port — covers Vite's auto-incrementing ports (5173, 5174, 5175...)
       // Also allows the deployed Vercel frontend in production
       origin: [
@@ -66,13 +67,15 @@ module.exports = [
         'http://localhost:5173',
         'http://localhost:5174',
         'http://127.0.0.1:5173',
-        // ngrok/local IP (add your current if needed, though they rotate)
-        // Production Vercel apps
-        'https://revolver2.vercel.app',
+        // Production Vercel apps (wildcard pattern)
         'https://revolverrift.vercel.app',
         'https://revolverrift-development.vercel.app',
+        'https://revolver2.vercel.app',
+        // Allow all Vercel preview deployments
+        /^https:\/\/revolverrift.*\.vercel\.app$/,
         // Railway backend itself
-        'https://revolverriftyash-production.up.railway.app'
+        'https://revolverriftyash-production.up.railway.app',
+        'https://revolverrift-production.up.railway.app'
       ],
       methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS', 'HEAD'],
       headers: ['Content-Type', 'Authorization', 'Origin', 'Accept'],
