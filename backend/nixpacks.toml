@@ -5,7 +5,7 @@ nixPkgs = ["nodejs_20"]
 cmds = ["npm ci"]
 
 [phases.build]
-cmds = ["npx rimraf .cache build dist .strapi", "NODE_OPTIONS='--max-old-space-size=2048' npm run build"]
+cmds = ["export NODE_OPTIONS='--max-old-space-size=2048'", "npx rimraf .cache build dist .strapi", "npm run build"]
 
 [start]
 cmd = "npm start"
