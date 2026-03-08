@@ -23,7 +23,8 @@
     "@strapi/provider-upload-cloudinary": "^5.36.1",
     "@strapi/strapi": "5.36.1",
     "pg": "8.8.0",
-    "rimraf": "^5.0.5"
+    "rimraf": "^5.0.5",
+    "esbuild": "^0.21.5"
   },
   "engines": {
     "node": ">=20.0.0 <=24.x.x",
