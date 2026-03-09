@@ -19,6 +19,11 @@ export default {
       light: {},
       dark: {},
     },
+    
+    // Disable external scripts that might cause issues
+    head: {
+      script: [],
+    },
   },
   
   bootstrap() {},

@@ -4,7 +4,7 @@
   "private": true,
   "description": "A Strapi application",
   "scripts": {
-    "build": "cross-env NODE_OPTIONS='--max-old-space-size=2048' strapi build",
+    "build": "cross-env NODE_OPTIONS='--max-old-space-size=4096' strapi build",
     "clean": "rimraf .cache build dist .strapi node_modules/.cache",
     "clean:build": "npm run clean && npm run build",
     "rebuild": "npm run clean && npm install && npm run build",
@@ -18,10 +18,10 @@
     "upgrade:dry": "npx @strapi/upgrade latest --dry"
   },
   "dependencies": {
-    "@strapi/plugin-cloud": "5.36.1",
-    "@strapi/plugin-users-permissions": "5.36.1",
-    "@strapi/provider-upload-cloudinary": "^5.36.1",
-    "@strapi/strapi": "5.36.1",
+    "@strapi/plugin-cloud": "^5.38.0",
+    "@strapi/plugin-users-permissions": "^5.38.0",
+    "@strapi/provider-upload-cloudinary": "^5.38.0",
+    "@strapi/strapi": "^5.38.0",
     "cross-env": "^7.0.3",
     "esbuild": "^0.21.5",
     "pg": "8.8.0",

@@ -59,7 +59,6 @@ module.exports = [
   {
     name: 'strapi::cors',
     config: {
-      enabled: true,
       // Allow any localhost port — covers Vite's auto-incrementing ports (5173, 5174, 5175...)
       // Also allows the deployed Vercel frontend in production
       origin: [
@@ -83,18 +82,6 @@ module.exports = [
     },
   },
   'strapi::poweredBy',
-  {
-    name: 'strapi::cache',
-    config: {
-      // Disable caching for admin panel
-      headers: {
-        'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
-        'Pragma': 'no-cache',
-        'Expires': '0',
-        'Surrogate-Control': 'no-store',
-      },
-    },
-  },
   'strapi::query',
   {
     name: 'strapi::body',
