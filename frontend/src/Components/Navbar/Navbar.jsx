@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
-import logo from "../../assets/IMG_0983.png";
+import logo from "../../assets/logo/navbar-logo.webp";
+import titleImage from "../../assets/logo/revolver-rift-title.webp";
 import { HiMenuAlt1, HiMenuAlt3 } from "react-icons/hi";
 import { FaTwitter, FaDribbble, FaInstagram, FaPinterest, FaSearch, FaShoppingCart, FaTh, FaGlobe } from "react-icons/fa";
 import { Link } from "react-router-dom";
@@ -34,21 +35,9 @@ const Navbar = () => {
     document.body.style.overflow = "auto";
   };
 
-  const [isVisible, setIsVisible] = useState(true);
-  const lastScrollY = useRef(0);
-
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-
-      // Logic to hide/show navbar
-      if (currentScrollY > lastScrollY.current && currentScrollY > 50) {
-        setIsVisible(false); // Scrolling down & past threshold
-      } else {
-        setIsVisible(true); // Scrolling up
-      }
-
-      lastScrollY.current = currentScrollY;
       setIsScrolled(currentScrollY > 50);
     };
 
@@ -57,7 +46,7 @@ const Navbar = () => {
   }, []);
   return (
     <>
-      <header className={`fixed top-0 w-full z-50 transition-transform duration-300 ${isVisible ? "translate-y-0" : "-translate-y-full"} bg-gray-950 ${isScrolled ? "shadow-lg" : ""}`}>
+      <header className={`fixed top-0 w-full z-[70] transition-all duration-300 bg-black/10 backdrop-blur-md border-b border-white/10 ${isScrolled ? "shadow-lg" : ""}`}>
 
         {/* ─────────────────────────────────────────────────────────────
             TOP BAR (USA ... PRIVACY CONTACT | Social Icons)
@@ -78,29 +67,36 @@ const Navbar = () => {
         {/* ─────────────────────────────────────────────────────────────
             MAIN NAVBAR (Logo | Links | Action Icons)
         ────────────────────────────────────────────────────────────── */}
-        <div className={`w-full transition-all duration-300 ${isScrolled ? "py-2 md:py-2.5" : "py-2.5 md:py-4"}`}>
+        <div className={`w-full transition-all duration-300 ${isScrolled ? "py-3 md:py-3.5" : "py-4 md:py-5"}`}>
           <div className="container mx-auto px-4 md:px-12 flex justify-between items-center relative">
 
-            {/* 1. LOGO (Left) */}
-            <Link to="/" className="flex-shrink-0 z-20 group">
-              <img
-                src={logo}
-                alt="Godlike Logo"
-                className={`w-auto object-contain transition-all duration-300 ${isScrolled ? "h-6 md:h-8" : "h-7 md:h-10"} opacity-90 group-hover:opacity-100 group-hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.4)]`}
-              />
+            {/* 1. LOGO BLOCK (Left) - Logo Icon + Brand Text */}
+            <Link to="/" className="flex-shrink-0 z-[70] group mr-8 relative">
+              <div className="flex items-center gap-4">
+                <img
+                  src={logo}
+                  alt="Revolver Rift Logo"
+                  className={`w-auto object-contain transition-all duration-300 drop-shadow-lg ${isScrolled ? "h-10 md:h-12" : "h-12 md:h-14"} group-hover:drop-shadow-[0_0_20px_rgba(255,255,255,0.5)]`}
+                />
+                <img
+                  src={titleImage}
+                  alt="Revolver Rift"
+                  className={`w-auto object-contain transition-all duration-300 drop-shadow-lg hidden sm:block ${isScrolled ? "h-5 md:h-6" : "h-6 md:h-7"} group-hover:drop-shadow-[0_0_20px_rgba(255,255,255,0.5)]`}
+                />
+              </div>
             </Link>
 
 
             {/* 2. NAVIGATION LINKS (Center - Standard Layout) */}
             {/* Hidden on mobile, flex on desktop */}
-            <nav className="hidden lg:flex absolute left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2">
+            <nav className="hidden lg:flex absolute left-[54%] top-1/2 -translate-y-1/2 -translate-x-1/2 px-6">
               <ul className="flex items-center gap-8 xl:gap-10">
                 {NavLinks.map(({ id, name, link }) => (
                   <li key={id} className="relative group">
                     <Link
                       to={link}
                       onClick={() => handleLinkClick(link)}
-                      className={`relative block text-[11px] font-bold tracking-[0.12em] py-1.5 transition-colors duration-300 font-vintage ${activeLink === link ? "text-[#ffb700]" : "text-white/85 hover:text-white"}`}
+                      className={`relative block text-[13px] xl:text-[14px] font-bold tracking-[0.12em] py-1.5 transition-colors duration-300 font-vintage ${activeLink === link ? "text-[#ffb700]" : "text-white/85 hover:text-white"}`}
                     >
                       <span className={`cut-text ${activeLink === link ? "active" : ""}`} data-text={name}>
                         {name}
@@ -123,7 +119,7 @@ const Navbar = () => {
 
 
             {/* 3. RIGHT ICONS (Search, Cart, Login, Menu) */}
-            <div className="hidden md:flex items-center gap-5 text-white/70">
+            <div className="hidden md:flex items-center gap-6 text-white/70">
               <button aria-label="Search" className="hover:text-[#ffb700] hover:scale-110 transition-all duration-300"><FaSearch size={13} /></button>
               <Link to="/cart" aria-label="Cart" className="hover:text-[#ffb700] hover:scale-110 transition-all duration-300 relative">
                 <FaShoppingCart size={13} />

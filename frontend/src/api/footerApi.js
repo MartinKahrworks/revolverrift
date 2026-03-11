@@ -1,7 +1,7 @@
-import logo1 from "../assets/logo/Logo1.png";
-import logo2 from "../assets/logo/Logo2.png";
-import logo3 from "../assets/logo/Logo3.png";
-import logo4 from "../assets/logo/Logo4.png";
+import logo1 from "../assets/logo/Logo1.webp";
+import logo2 from "../assets/logo/Logo2.webp";
+import logo3 from "../assets/logo/Logo3.webp";
+import logo4 from "../assets/logo/Logo4.webp";
 
 const STRAPI_URL = import.meta.env.VITE_STRAPI_URL || "http://127.0.0.1:1337";
 

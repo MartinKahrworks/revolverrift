@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import logo from "../../assets/IMG_0983.png";
+import logo from "../../assets/logo/navbar-logo.webp";
 
 const Loader = ({ isLoading }) => {
     if (!isLoading) return null;

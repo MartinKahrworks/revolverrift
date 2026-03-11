@@ -27,7 +27,7 @@ const AboutGame = () => {
                     {about.title}
                 </h2>
 
-                <p className="text-gray-400 text-base md:text-xl font-body leading-relaxed mb-10 md:mb-16 max-w-3xl mx-auto">
+                <p className="text-gray-400 text-base md:text-xl leading-relaxed mb-10 md:mb-16 max-w-3xl mx-auto" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
                     {about.description}
                 </p>
 

@@ -163,7 +163,7 @@ export const AllBlogsPage = () => {
               <h2 className="text-3xl md:text-6xl font-bold uppercase leading-none mb-6 font-custom group-hover:text-red-500 transition-colors duration-300">
                 {featuredBlog.title}
               </h2>
-              <p className="text-gray-300 font-serif text-lg md:text-xl line-clamp-3 mb-6">
+              <p className="text-gray-300 text-lg md:text-xl line-clamp-3 mb-6" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
                 {featuredBlog.description}
               </p>
               <div className="flex items-center gap-4 text-sm text-white font-mono uppercase">
@@ -208,7 +208,7 @@ export const AllBlogsPage = () => {
                   <h3 className="text-2xl font-bold uppercase mb-4 leading-tight font-custom group-hover:text-red-500 transition-colors duration-300">
                     {news.title}
                   </h3>
-                  <p className="text-gray-400 font-serif line-clamp-3 leading-relaxed">
+                  <p className="text-gray-400 line-clamp-3 leading-relaxed" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
                     {news.description}
                   </p>
                 </div>

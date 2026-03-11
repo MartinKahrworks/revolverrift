@@ -23,10 +23,19 @@ const Trailer = () => {
     const thumbnailSrc = trailerData.thumbnailUrl || poster;
 
     return (
-        <section className="relative w-full bg-black overflow-hidden flex items-center justify-center py-10 md:py-16 px-4 md:px-8 border-t border-white/5">
-            {/* Animated Embers Background */}
+        <section className="relative w-full bg-gradient-to-b from-[#070707] to-black overflow-hidden flex items-center justify-center py-10 md:py-16 px-4 md:px-8 border-y border-white/5">
+            
+            {/* Radial Gradient Spotlight */}
+            <div 
+                className="absolute inset-0 pointer-events-none z-0"
+                style={{
+                    background: 'radial-gradient(ellipse at center, rgba(255,255,255,0.03) 0%, rgba(0,0,0,0.9) 60%, rgba(0,0,0,1) 100%)'
+                }}
+            />
+
+            {/* Animated Embers Background - More Subtle */}
             <div
-                className="absolute inset-0 opacity-30 pointer-events-none z-0"
+                className="absolute inset-0 opacity-20 pointer-events-none z-0 mix-blend-screen"
                 style={{
                     backgroundImage: `url(${embersBackground})`,
                     backgroundSize: 'cover',
@@ -34,8 +43,8 @@ const Trailer = () => {
                 }}
             />
 
-            {/* Centered Container with 16:9 aspect ratio */}
-            <div className="relative w-full max-w-4xl aspect-video group z-20 bg-black">
+            {/* Centered Container with 16:9 aspect ratio + Cinematic Frame */}
+            <div className="relative w-full max-w-4xl aspect-video group z-20 bg-black border border-white/10 shadow-[0_20px_60px_rgba(0,0,0,0.6)] overflow-hidden">
                 {/* Thumbnail — CMS image if uploaded, else local poster2.png */}
                 <div
                     className="absolute inset-0 bg-cover bg-center transition-transform duration-1000 group-hover:scale-105 opacity-60 group-hover:opacity-40"
@@ -57,11 +66,11 @@ const Trailer = () => {
 
                 {/* Video Modal Player */}
                 {isPlaying && (
-                    <div className="fixed inset-0 z-[100] bg-black/95 flex items-center justify-center p-4">
+                    <div className="fixed inset-0 z-[100] bg-black/95 flex items-center justify-center p-8 md:p-12">
                         <div className="relative w-full max-w-4xl aspect-video bg-black shadow-2xl border border-white/10">
                             <button
                                 onClick={() => setIsPlaying(false)}
-                                className="absolute -top-10 right-0 md:-top-12 text-white hover:text-[#ff3333] font-bold text-sm uppercase tracking-widest bg-transparent py-1"
+                                className="absolute top-2 right-2 md:top-4 md:right-4 z-50 text-white hover:text-[#ff3333] font-bold text-xs md:text-sm uppercase tracking-widest bg-black/80 backdrop-blur-sm px-3 py-2 rounded border border-white/20 hover:border-[#ff3333] transition-all"
                             >
                                 Close [X]
                             </button>

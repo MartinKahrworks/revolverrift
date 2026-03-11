@@ -108,7 +108,7 @@ const NewsSection = () => {
 
                                 {/* Description */}
                                 <p
-                                    className="font-serif text-base leading-relaxed text-gray-400 line-clamp-3"
+                                    className="text-base leading-relaxed text-gray-400 line-clamp-3"
                                     style={{ fontFamily: "'EB Garamond', serif" }}
                                 >
                                     {news.description}

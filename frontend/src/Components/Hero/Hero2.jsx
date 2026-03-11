@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import bgImage from '../../assets/COMINGSOONHERO.png'; // Replace with your background image
 
-import revolverTitle from '../../assets/Rift.png';
+import revolverTitle from '../../assets/logo/revolver-rift-title.webp';
 
 const HeroLanding = () => {
   return (

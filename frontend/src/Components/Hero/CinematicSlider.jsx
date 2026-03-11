@@ -64,7 +64,7 @@ const CinematicSlider = () => {
     return (
         <section
             ref={sectionRef}
-            className="relative w-full min-h-[50vh] bg-transparent flex flex-col justify-center pb-10 md:pb-16 -mt-[60px] sm:-mt-[100px] md:-mt-[150px] z-30 pointer-events-none"
+            className="relative w-full min-h-[50vh] bg-transparent flex flex-col justify-center pb-10 md:pb-16 -mt-[50px] sm:-mt-[60px] md:-mt-[70px] z-30 pointer-events-none"
         >
             {/* Embers GIF Background */}
             <img

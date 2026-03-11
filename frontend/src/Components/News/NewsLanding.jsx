@@ -106,7 +106,7 @@ const Modal = ({ open, onClose, title, image, children }) => {
                 </div>
                 <div className="md:w-1/2 p-8 md:p-12 overflow-y-auto">
                     <h3 className="font-custom text-3xl md:text-4xl text-[#e4d6c3] mb-6 uppercase leading-none">{title}</h3>
-                    <div className="space-y-4 text-gray-400 font-serif text-lg leading-relaxed">
+                    <div className="space-y-4 text-gray-400 text-lg leading-relaxed" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
                         {children}
                     </div>
                 </div>
@@ -186,7 +186,7 @@ const NewsLanding = () => {
                                     <h2 className="mt-4 font-custom text-3xl md:text-5xl text-white uppercase leading-none group-hover:text-red-500 transition-colors duration-300">
                                         {main.title}
                                     </h2>
-                                    <p className="mt-4 text-gray-300 font-serif text-lg md:text-xl line-clamp-2 max-w-2xl group-hover:text-white transition-colors">
+                                    <p className="mt-4 text-gray-300 text-lg md:text-xl line-clamp-2 max-w-2xl group-hover:text-white transition-colors" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
                                         {main.excerpt}
                                     </p>
                                     <div className="mt-6 flex items-center gap-3 text-sm font-mono text-red-500 uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
@@ -217,7 +217,7 @@ const NewsLanding = () => {
                                     <h3 className="mt-4 font-custom text-2xl md:text-4xl text-white uppercase leading-none group-hover:text-[#e4d6c3] transition-colors">
                                         {side.title}
                                     </h3>
-                                    <p className="mt-3 text-gray-400 font-serif text-base line-clamp-3 group-hover:text-gray-200">
+                                    <p className="mt-3 text-gray-400 text-base line-clamp-3 group-hover:text-gray-200" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
                                         {side.excerpt}
                                     </p>
                                     <div className="mt-6 flex items-center gap-3 text-sm font-mono text-[#e4d6c3] uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
