@@ -122,109 +122,142 @@ function Shop() {
                     </p>
                 </motion.div>
 
-                {/* ── Tools / Cart & Category Filter ── */}
-                <div className="flex flex-col lg:flex-row justify-between items-center gap-6 mb-12 bg-white/5 backdrop-blur-md border border-white/10 p-3 sm:p-4 rounded-2xl relative z-20">
+                {/* ── Tools / Cart & Category Filter & Grid (HIDDEN FOR WIP) ── */}
+                {false && (
+                    <>
+                        <div className="flex flex-col lg:flex-row justify-between items-center gap-6 mb-12 bg-white/5 backdrop-blur-md border border-white/10 p-3 sm:p-4 rounded-2xl relative z-20">
 
-                    {/* Categories */}
-                    <div className="flex-1 w-full overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-                        {shopPage.show_category_filter !== false && categories.length > 0 && (
-                            <div className="flex items-center gap-2 sm:gap-4 min-w-max px-2">
-                                <button
-                                    onClick={() => setCategory('all')}
-                                    className={`relative font-mono text-[10px] sm:text-xs md:text-[11px] font-bold tracking-[0.15em] uppercase px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg transition-all duration-300 overflow-hidden
+                            {/* Categories */}
+                            <div className="flex-1 w-full overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+                                {shopPage.show_category_filter !== false && categories.length > 0 && (
+                                    <div className="flex items-center gap-2 sm:gap-4 min-w-max px-2">
+                                        <button
+                                            onClick={() => setCategory('all')}
+                                            className={`relative font-mono text-[10px] sm:text-xs md:text-[11px] font-bold tracking-[0.15em] uppercase px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg transition-all duration-300 overflow-hidden
                                         ${activeCategory === 'all'
-                                            ? 'text-white'
-                                            : 'text-gray-400 hover:text-white'
-                                        }`}
-                                >
-                                    {activeCategory === 'all' && (
-                                        <motion.div layoutId="activeCatBg" className="absolute inset-0 bg-gradient-to-r from-red-600 to-red-700 rounded-lg shadow-[0_0_20px_rgba(220,38,38,0.4)] z-0" />
-                                    )}
-                                    <span className="relative z-10 flex items-center gap-2">
-                                        All Items
-                                    </span>
-                                </button>
-                                {categories.map(cat => (
-                                    <button
-                                        key={cat.id}
-                                        onClick={() => setCategory(cat.slug)}
-                                        className={`relative font-mono text-[10px] sm:text-xs md:text-[11px] font-bold tracking-[0.15em] uppercase px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg transition-all duration-300 overflow-hidden
+                                                    ? 'text-white'
+                                                    : 'text-gray-400 hover:text-white'
+                                                }`}
+                                        >
+                                            {activeCategory === 'all' && (
+                                                <motion.div layoutId="activeCatBg" className="absolute inset-0 bg-gradient-to-r from-red-600 to-red-700 rounded-lg shadow-[0_0_20px_rgba(220,38,38,0.4)] z-0" />
+                                            )}
+                                            <span className="relative z-10 flex items-center gap-2">
+                                                All Items
+                                            </span>
+                                        </button>
+                                        {categories.map(cat => (
+                                            <button
+                                                key={cat.id}
+                                                onClick={() => setCategory(cat.slug)}
+                                                className={`relative font-mono text-[10px] sm:text-xs md:text-[11px] font-bold tracking-[0.15em] uppercase px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg transition-all duration-300 overflow-hidden
                                             ${activeCategory === cat.slug
-                                                ? 'text-white'
-                                                : 'text-gray-400 hover:text-white hover:bg-white/5'
-                                            }`}
-                                    >
-                                        {activeCategory === cat.slug && (
-                                            <motion.div layoutId="activeCatBg" className="absolute inset-0 bg-gradient-to-r from-red-600 to-red-700 rounded-lg shadow-[0_0_20px_rgba(220,38,38,0.4)] z-0" />
-                                        )}
-                                        <span className="relative z-10">{cat.name}</span>
-                                    </button>
-                                ))}
-                            </div>
-                        )}
-                    </div>
-
-                    {/* Cart Tool */}
-                    <div className="flex items-center justify-end gap-6 border-t lg:border-t-0 lg:border-l border-white/10 pt-4 lg:pt-0 lg:pl-8 w-full lg:w-auto px-2 sm:px-4 mt-2 lg:mt-0">
-                        <Link to="/cart" className="group flex items-center gap-3 bg-white/5 px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl hover:bg-white/10 transition-all duration-300 border border-white/10 hover:border-red-500/50 hover:shadow-[0_0_20px_rgba(220,38,38,0.2)] w-full sm:w-auto justify-center">
-                            <div className="relative">
-                                <FaShoppingCart className="text-gray-300 group-hover:text-red-500 transition-colors text-base sm:text-lg" />
-                                {cartCount > 0 && (
-                                    <span className="absolute -top-2 -right-2 bg-red-600 text-white text-[8px] sm:text-[9px] font-bold h-3.5 sm:h-4 w-3.5 sm:w-4 flex items-center justify-center rounded-full shadow-[0_0_10px_rgba(220,38,38,0.8)]">
-                                        {cartCount > 9 ? '9+' : cartCount}
-                                    </span>
+                                                        ? 'text-white'
+                                                        : 'text-gray-400 hover:text-white hover:bg-white/5'
+                                                    }`}
+                                            >
+                                                {activeCategory === cat.slug && (
+                                                    <motion.div layoutId="activeCatBg" className="absolute inset-0 bg-gradient-to-r from-red-600 to-red-700 rounded-lg shadow-[0_0_20px_rgba(220,38,38,0.4)] z-0" />
+                                                )}
+                                                <span className="relative z-10">{cat.name}</span>
+                                            </button>
+                                        ))}
+                                    </div>
                                 )}
                             </div>
-                            <span className="font-mono text-[10px] sm:text-xs font-bold tracking-widest text-white group-hover:text-amber-400 transition-colors">VIEW CART</span>
-                        </Link>
-                    </div>
-                </div>
 
-                {/* ── Grid ── */}
-                {loading ? (
-                    <div className="flex justify-center items-center h-64 mt-20">
-                        <div className="relative">
-                            <div className="animate-spin rounded-full h-12 sm:h-16 w-12 sm:w-16 border-t-2 border-b-2 border-red-600 absolute inset-0"></div>
-                            <div className="animate-spin rounded-full h-12 sm:h-16 w-12 sm:w-16 border-l-2 border-r-2 border-amber-500 absolute inset-0 rotate-45 select-none animation-delay-150"></div>
+                            {/* Cart Tool */}
+                            <div className="flex items-center justify-end gap-6 border-t lg:border-t-0 lg:border-l border-white/10 pt-4 lg:pt-0 lg:pl-8 w-full lg:w-auto px-2 sm:px-4 mt-2 lg:mt-0">
+                                <Link to="/cart" className="group flex items-center gap-3 bg-white/5 px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl hover:bg-white/10 transition-all duration-300 border border-white/10 hover:border-red-500/50 hover:shadow-[0_0_20px_rgba(220,38,38,0.2)] w-full sm:w-auto justify-center">
+                                    <div className="relative">
+                                        <FaShoppingCart className="text-gray-300 group-hover:text-red-500 transition-colors text-base sm:text-lg" />
+                                        {cartCount > 0 && (
+                                            <span className="absolute -top-2 -right-2 bg-red-600 text-white text-[8px] sm:text-[9px] font-bold h-3.5 sm:h-4 w-3.5 sm:w-4 flex items-center justify-center rounded-full shadow-[0_0_10px_rgba(220,38,38,0.8)]">
+                                                {cartCount > 9 ? '9+' : cartCount}
+                                            </span>
+                                        )}
+                                    </div>
+                                    <span className="font-mono text-[10px] sm:text-xs font-bold tracking-widest text-white group-hover:text-amber-400 transition-colors">VIEW CART</span>
+                                </Link>
+                            </div>
+                        </div>
+
+                        {/* ── Grid ── */}
+                        {loading ? (
+                            <div className="flex justify-center items-center h-64 mt-20">
+                                <div className="relative">
+                                    <div className="animate-spin rounded-full h-12 sm:h-16 w-12 sm:w-16 border-t-2 border-b-2 border-red-600 absolute inset-0"></div>
+                                    <div className="animate-spin rounded-full h-12 sm:h-16 w-12 sm:w-16 border-l-2 border-r-2 border-amber-500 absolute inset-0 rotate-45 select-none animation-delay-150"></div>
+                                </div>
+                            </div>
+                        ) : filtered.length === 0 ? (
+                            <motion.div
+                                initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+                                className="flex flex-col items-center justify-center py-20 sm:py-32 px-4 space-y-6 bg-white/5 border border-white/10 rounded-2xl backdrop-blur-sm mx-2"
+                            >
+                                <div className="h-16 w-16 sm:h-20 sm:w-20 rounded-full bg-white/5 flex items-center justify-center">
+                                    <FaSearch className="text-gray-500 text-2xl sm:text-3xl" />
+                                </div>
+                                <p className="text-center font-mono text-gray-400 text-xs sm:text-sm md:text-base tracking-[0.2em] uppercase max-w-sm">
+                                    {shopPage.empty_state_message || '// No intel found for this category. Return to base.'}
+                                </p>
+                                <button onClick={() => setCategory('all')} className="mt-4 border border-red-500 text-red-500 hover:bg-red-500 hover:text-white px-6 sm:px-8 py-2.5 sm:py-3 font-mono text-[10px] sm:text-xs tracking-widest uppercase transition-all duration-300">
+                                    View All Gear
+                                </button>
+                            </motion.div>
+                        ) : (
+                            <AnimatePresence mode="wait">
+                                <motion.div
+                                    key={activeCategory}
+                                    initial={{ opacity: 0, scale: 0.98 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    exit={{ opacity: 0, y: -20 }}
+                                    transition={{ duration: 0.4, staggerChildren: 0.1 }}
+                                    className={`grid gap-4 sm:gap-6 md:gap-8 ${gridClass}`}
+                                >
+                                    {filtered.map(product => (
+                                        <ProductCard
+                                            key={product.id}
+                                            product={product}
+                                            ctaText={shopPage.cart_cta_text}
+                                            soldOutLabel={shopPage.sold_out_label}
+                                            comingSoonLabel={shopPage.coming_soon_label}
+                                        />
+                                    ))}
+                                </motion.div>
+                            </AnimatePresence>
+                        )}
+                    </>
+                )}
+
+                {/* WORK IN PROGRESS CARD */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6 }}
+                    className="flex flex-col items-center justify-center py-24 px-6 mt-8 mb-20 bg-amber-500/10 border-2 border-amber-500/50 rounded-2xl backdrop-blur-md relative overflow-hidden"
+                >
+                    <div className="absolute inset-0 bg-[repeating-linear-gradient(45deg,transparent,transparent_10px,rgba(245,158,11,0.05)_10px,rgba(245,158,11,0.05)_20px)]" />
+                    <div className="relative z-10 flex flex-col items-center text-center">
+                        <div className="h-20 w-20 rounded-full bg-amber-500/20 flex items-center justify-center mb-6 shadow-[0_0_30px_rgba(245,158,11,0.3)]">
+                            <FaGamepad className="text-amber-500 text-4xl" />
+                        </div>
+                        <h2 className="font-custom text-3xl md:text-5xl text-amber-500 tracking-widest uppercase mb-4 drop-shadow-[0_0_10px_rgba(245,158,11,0.5)]">
+                            Work In Progress
+                        </h2>
+                        <div className="h-[1px] w-32 bg-amber-500/50 mb-6" />
+                        <p className="font-mono text-gray-300 text-sm md:text-base tracking-[0.2em] uppercase max-w-lg leading-relaxed">
+                            The shop is currently being reconfigured. New gear and physical drops will be out soon.
+                        </p>
+                        <div className="mt-8 px-6 py-2 border border-amber-500/30 rounded-full bg-amber-500/5 text-amber-400 font-mono text-xs tracking-widest uppercase flex items-center gap-3">
+                            <span className="relative flex h-2 w-2">
+                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+                                <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
+                            </span>
+                            Stand By
                         </div>
                     </div>
-                ) : filtered.length === 0 ? (
-                    <motion.div
-                        initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-                        className="flex flex-col items-center justify-center py-20 sm:py-32 px-4 space-y-6 bg-white/5 border border-white/10 rounded-2xl backdrop-blur-sm mx-2"
-                    >
-                        <div className="h-16 w-16 sm:h-20 sm:w-20 rounded-full bg-white/5 flex items-center justify-center">
-                            <FaSearch className="text-gray-500 text-2xl sm:text-3xl" />
-                        </div>
-                        <p className="text-center font-mono text-gray-400 text-xs sm:text-sm md:text-base tracking-[0.2em] uppercase max-w-sm">
-                            {shopPage.empty_state_message || '// No intel found for this category. Return to base.'}
-                        </p>
-                        <button onClick={() => setCategory('all')} className="mt-4 border border-red-500 text-red-500 hover:bg-red-500 hover:text-white px-6 sm:px-8 py-2.5 sm:py-3 font-mono text-[10px] sm:text-xs tracking-widest uppercase transition-all duration-300">
-                            View All Gear
-                        </button>
-                    </motion.div>
-                ) : (
-                    <AnimatePresence mode="wait">
-                        <motion.div
-                            key={activeCategory}
-                            initial={{ opacity: 0, scale: 0.98 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            exit={{ opacity: 0, y: -20 }}
-                            transition={{ duration: 0.4, staggerChildren: 0.1 }}
-                            className={`grid gap-4 sm:gap-6 md:gap-8 ${gridClass}`}
-                        >
-                            {filtered.map(product => (
-                                <ProductCard
-                                    key={product.id}
-                                    product={product}
-                                    ctaText={shopPage.cart_cta_text}
-                                    soldOutLabel={shopPage.sold_out_label}
-                                    comingSoonLabel={shopPage.coming_soon_label}
-                                />
-                            ))}
-                        </motion.div>
-                    </AnimatePresence>
-                )}
+                </motion.div>
             </div>
         </section>
     );

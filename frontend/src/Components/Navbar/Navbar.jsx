@@ -121,14 +121,14 @@ const Navbar = () => {
             {/* 3. RIGHT ICONS (Search, Cart, Login, Menu) */}
             <div className="hidden md:flex items-center gap-6 text-white/70">
               <button aria-label="Search" className="hover:text-[#ffb700] hover:scale-110 transition-all duration-300"><FaSearch size={13} /></button>
-              <Link to="/cart" aria-label="Cart" className="hover:text-[#ffb700] hover:scale-110 transition-all duration-300 relative">
+              {/* <Link to="/cart" aria-label="Cart" className="hover:text-[#ffb700] hover:scale-110 transition-all duration-300 relative">
                 <FaShoppingCart size={13} />
                 {cartCount > 0 && (
                   <span className="absolute -top-2 -right-2 bg-red-600 text-white text-[8px] font-bold h-3.5 w-3.5 flex items-center justify-center rounded-full shadow-[0_0_10px_rgba(220,38,38,0.8)]">
                     {cartCount > 9 ? '9+' : cartCount}
                   </span>
                 )}
-              </Link>
+              </Link> */}
               {/* Login removed - no auth system implemented yet */}
 
               {/* Menu Grid Icon (Desktop) - can trigger sidebar or just be decorative */}

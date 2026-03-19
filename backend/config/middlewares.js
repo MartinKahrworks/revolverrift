@@ -71,7 +71,9 @@ module.exports = [
         'https://revolverrift-development.vercel.app',
         'https://revolver2.vercel.app',
         // Allow all Vercel preview deployments
-        /^https:\/\/revolverrift.*\.vercel\.app$/,
+        // Note: Strapi does not support regex like `/^https.../` inside the CORS string array natively!
+        // To support dynamic Vercel previews, either add '*' to the list (allow all origins), or write a function for `origin`.
+        // /^https:\/\/revolverrift.*\.vercel\.app$/,
         // Railway backend itself
         'https://revolverriftyash-production.up.railway.app',
         'https://revolverrift-production.up.railway.app'
