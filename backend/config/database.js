@@ -1,9 +1,12 @@
 const path = require('path');
 
 module.exports = ({ env }) => {
-  // If DATABASE_URL is set (cloud/Neon), always use postgres regardless of DATABASE_CLIENT.
-  // This prevents falling back to sqlite when DATABASE_CLIENT env var isn't injected correctly.
-  const client = env('DATABASE_URL') ? 'postgres' : env('DATABASE_CLIENT', 'sqlite');
+  // SUPABASE_DATABASE_URL takes priority over DATABASE_URL.
+  // This is needed because Railway's Neon plugin injects and locks DATABASE_URL,
+  // making it impossible to override through the Railway UI. We use a separate
+  // variable name that the plugin doesn't touch.
+  const dbUrl = env('SUPABASE_DATABASE_URL') || env('DATABASE_URL');
+  const client = dbUrl ? 'postgres' : env('DATABASE_CLIENT', 'sqlite');
 
   const connections = {
     mysql: {
@@ -26,16 +29,16 @@ module.exports = ({ env }) => {
     },
     postgres: {
       connection: {
-        connectionString: env('DATABASE_URL'),
+        connectionString: dbUrl,
         host: env('DATABASE_HOST', 'localhost'),
         port: env.int('DATABASE_PORT', 5432),
         database: env('DATABASE_NAME', 'strapi'),
         user: env('DATABASE_USERNAME', 'strapi'),
         password: env('DATABASE_PASSWORD', 'strapi'),
-        // When DATABASE_URL is set (Neon/cloud), we need rejectUnauthorized: false
+        // When a cloud DB URL is set, we need rejectUnauthorized: false
         // because cloud providers use certificate chains Node.js rejects by default.
         // For local postgres (no DATABASE_SSL), this block is skipped entirely.
-        ssl: env('DATABASE_URL')
+        ssl: dbUrl
           ? { rejectUnauthorized: false }
           : env.bool('DATABASE_SSL', false) && {
             key: env('DATABASE_SSL_KEY', undefined),
