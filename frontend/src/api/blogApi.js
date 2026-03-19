@@ -6,13 +6,13 @@ const STRAPI_URL = import.meta.env.VITE_STRAPI_URL || "http://localhost:1337";
 // v4: item.attributes.cover_image.data.attributes.url  →  v5: item.cover_image.url
 //
 // ─── Image URL Note ──────────────────────────────────────────────────────────
-// When using Cloudinary, Strapi returns a full absolute URL (https://res.cloudinary.com/...)
-// When using local storage, Strapi returns a relative path (/uploads/...)
-// We check for 'http' prefix to avoid double-prefixing Cloudinary URLs.
+// Strapi may return either an absolute URL (external storage/CDN)
+// or a relative path (/uploads/...).
+// We check for 'http' prefix to avoid double-prefixing absolute URLs.
 
 const resolveImageUrl = (url) => {
     if (!url) return null;
-    if (url.startsWith("http")) return url;           // Cloudinary / external — already absolute
+    if (url.startsWith("http")) return url;           // External URL — already absolute
     return `${STRAPI_URL}${url}`;                     // Local upload — prepend Strapi base URL
 };
 

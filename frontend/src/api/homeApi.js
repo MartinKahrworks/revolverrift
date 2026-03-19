@@ -25,7 +25,7 @@ const resolveImageUrl = (imageObj) => {
     }
 
     if (!url) return null;
-    if (url.startsWith("http")) return url;   // Cloudinary or external CDN
+    if (url.startsWith("http")) return url;   // External URL/CDN
     return `${STRAPI_URL}${url}`;             // Local Strapi upload
 };
 

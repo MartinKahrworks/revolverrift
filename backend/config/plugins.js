@@ -3,23 +3,19 @@
 module.exports = ({ env }) => ({
     upload: {
         config: {
-            provider: '@strapi/provider-upload-cloudinary',
+            provider: 'strapi-provider-upload-supabase',
             providerOptions: {
-                cloud_name: env('CLOUDINARY_NAME'),
-                api_key: env('CLOUDINARY_KEY'),
-                api_secret: env('CLOUDINARY_SECRET'),
-                actionOptions: {
-                    upload: {},
-                    uploadStream: {},
-                    delete: {},
-                },
+                apiUrl: env('SUPABASE_API_URL'),
+                apiKey: env('SUPABASE_API_KEY'),
+                bucket: env('SUPABASE_BUCKET', 'strapi-media'),
+                directory: env('SUPABASE_DIRECTORY', ''),
+                options: {},
             },
-            // Controls how many responsive image sizes Strapi generates per upload.
-            // By default Strapi creates 5 versions: thumbnail, small, medium, large, original.
-            // These are useful for srcset / responsive images on the frontend.
-            //
-            // OPTION B — Disable ALL extra formats (only original stored):
-            // Delete the breakpoints block above and uncomment this instead:
+            actionOptions: {
+                upload: {},
+                uploadStream: {},
+                delete: {},
+            },
             breakpoints: {},
         },
     },

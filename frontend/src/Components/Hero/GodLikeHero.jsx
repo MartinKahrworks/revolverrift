@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { FaFacebook, FaTwitter, FaPinterest } from 'react-icons/fa';
 import heroBackground from '../../assets/poster1.png';
-
-const GodLikeHero = () => {
+import steamLogo from '../../assets/logo/steam-logo.png';
+import epicGamesLogo from '../../assets/logo/epic-games-logo.png'; const GodLikeHero = () => {
     useEffect(() => {
         // Add fade-in animation class to body
         document.body.classList.add('hero-loaded');
@@ -74,12 +74,12 @@ const GodLikeHero = () => {
                 {/* Store Logos */}
                 <div className="hero-stores flex items-center justify-center gap-4 md:gap-6 mt-10 md:mt-14">
                     <img
-                        src="https://res.cloudinary.com/df7s2xmz1/image/upload/v1765701093/24babc47-9fc8-4b0a-a09f-74e7e51b09a6.png"
+                        src={steamLogo}
                         alt="Steam"
                         className="h-12 md:h-16 lg:h-20 w-auto object-contain opacity-80 hover:opacity-100 transition-opacity duration-300"
                     />
                     <img
-                        src="https://res.cloudinary.com/df7s2xmz1/image/upload/v1765705048/image-removebg-preview_su2ttv.png"
+                        src={epicGamesLogo}
                         alt="Epic Games"
                         className="h-12 md:h-16 lg:h-20 w-auto object-contain opacity-80 hover:opacity-100 transition-opacity duration-300"
                     />
