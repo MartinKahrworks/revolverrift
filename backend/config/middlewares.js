@@ -49,6 +49,7 @@ module.exports = [
                 'https://revolverrift.vercel.app',
                 'https://revolverrift-development.vercel.app',
                 'https://revolver2.vercel.app',
+                /^https:\/\/.*\.vercel\.app$/,
                 'https://revolverriftyash-production.up.railway.app',
                 'https://revolverrift-production.up.railway.app'
             ],
