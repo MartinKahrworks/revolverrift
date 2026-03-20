@@ -4,7 +4,7 @@
   "private": true,
   "description": "A Strapi application",
   "scripts": {
-    "build": "cross-env NODE_OPTIONS='--max-old-space-size=4096' strapi build --no-optimization",
+    "build": "cross-env NODE_OPTIONS='--max-old-space-size=4096' strapi build",
     "clean": "rimraf .cache build dist .strapi node_modules/.cache",
     "clean:build": "npm run clean && npm run build",
     "rebuild": "npm run clean && npm install && npm run build",
