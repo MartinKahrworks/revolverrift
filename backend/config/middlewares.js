@@ -37,15 +37,6 @@ module.exports = [
                     upgradeInsecureRequests: null,
                 },
             },
-            permissionsPolicy: {
-                'attribution-reporting': [],
-                'private-aggregation': [],
-                'private-state-token-issuance': [],
-                'private-state-token-redemption': [],
-                'join-ad-interest-group': [],
-                'run-ad-auction': [],
-                'browsing-topics': [],
-            },
         },
     },
     {
