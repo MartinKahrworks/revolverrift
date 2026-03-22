@@ -22,12 +22,12 @@ import { getHomePage } from '../../api/homeApi';
 
 // Fallback slides — shown when Strapi cinematic_slider is empty
 const FALLBACK_SLIDES = [
-    { id: 1, image: colt, title: 'Standard Issue', subtitle: 'Reliable Power' },
-    { id: 2, image: icePick, title: 'Silent Killer', subtitle: 'Cold Steel' },
-    { id: 3, image: p08, title: 'The Luger', subtitle: 'Precision Engineering' },
-    { id: 4, image: trench, title: 'Trench Gun', subtitle: 'Close Quarters' },
-    { id: 5, image: mosin, title: 'The Sniper', subtitle: 'Long Range Death' },
-    { id: 6, image: winchester, title: 'The Classic', subtitle: 'Wild West Legend' },
+    { id: 1, mediaType: 'image', mediaSrc: colt, title: 'Standard Issue', subtitle: 'Reliable Power' },
+    { id: 2, mediaType: 'image', mediaSrc: icePick, title: 'Silent Killer', subtitle: 'Cold Steel' },
+    { id: 3, mediaType: 'image', mediaSrc: p08, title: 'The Luger', subtitle: 'Precision Engineering' },
+    { id: 4, mediaType: 'image', mediaSrc: trench, title: 'Trench Gun', subtitle: 'Close Quarters' },
+    { id: 5, mediaType: 'image', mediaSrc: mosin, title: 'The Sniper', subtitle: 'Long Range Death' },
+    { id: 6, mediaType: 'image', mediaSrc: winchester, title: 'The Classic', subtitle: 'Wild West Legend' },
 ];
 
 const CinematicSlider = () => {
@@ -43,7 +43,9 @@ const CinematicSlider = () => {
                 setSlides(
                     data.hero.cinematicSlides.map((img) => ({
                         id: img.id,
-                        image: img.url,
+                        mediaType: img.type === 'video' ? 'video' : 'image',
+                        mediaSrc: img.url,
+                        mime: img.mime,
                         title: img.title || '',
                         subtitle: '',
                     }))
@@ -143,13 +145,27 @@ const CinematicSlider = () => {
                                     transform: 'translateZ(0)'
                                 }}
                             >
-                                <img
-                                    src={slide.image}
-                                    alt={slide.title}
-                                    className="w-full h-full object-fill transform transition-all duration-700 group-hover:scale-110 group-hover:brightness-110"
-                                    draggable="false"
-                                    loading={index === 0 ? "eager" : "lazy"}
-                                />
+                                {slide.mediaType === 'video' ? (
+                                    <video
+                                        src={slide.mediaSrc}
+                                        className="w-full h-full object-fill transform transition-all duration-700 group-hover:scale-110 group-hover:brightness-110"
+                                        autoPlay
+                                        muted
+                                        loop
+                                        playsInline
+                                        preload="metadata"
+                                    >
+                                        <source src={slide.mediaSrc} type={slide.mime || 'video/mp4'} />
+                                    </video>
+                                ) : (
+                                    <img
+                                        src={slide.mediaSrc}
+                                        alt={slide.title}
+                                        className="w-full h-full object-fill transform transition-all duration-700 group-hover:scale-110 group-hover:brightness-110"
+                                        draggable="false"
+                                        loading={index === 0 ? "eager" : "lazy"}
+                                    />
+                                )}
                             </div>
                         </SwiperSlide>
                     ))}

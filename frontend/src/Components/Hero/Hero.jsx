@@ -9,27 +9,40 @@ import { getHomePage } from '../../api/homeApi';
 const HeroCountdown = () => {
     const sectionRef = useRef(null);
 
-    // null = no image yet; CMS image applied after Promise resolves; skull only as last resort
-    const [bgImage, setBgImage] = useState(null);
+    // null = no media yet; CMS media applied after Promise resolves; skull as last resort
+    const [bgMedia, setBgMedia] = useState(null);
 
     useEffect(() => {
         getHomePage().then((data) => {
-            let imgSrc = skull;
-            if (data?.hero?.backgroundImage) {
-                imgSrc = data.hero.backgroundImage;
+            const media = data?.hero?.backgroundMedia;
+
+            // If hero media is a video, render immediately.
+            if (media?.type === 'video' && media?.url) {
+                setBgMedia({
+                    type: 'video',
+                    url: media.url,
+                    mime: media.mime,
+                    poster: data?.hero?.backgroundImage || skull,
+                });
+                return;
             }
+
+            // Otherwise, preload image before rendering to avoid flash.
+            let imgSrc = skull;
+            if (media?.url) imgSrc = media.url;
+            else if (data?.hero?.backgroundImage) imgSrc = data.hero.backgroundImage;
 
             const img = new Image();
             img.src = imgSrc;
             img.onload = () => {
-                setBgImage(imgSrc);
+                setBgMedia({ type: 'image', url: imgSrc });
             };
             img.onerror = () => {
-                setBgImage(skull);
+                setBgMedia({ type: 'image', url: skull });
             };
         }).catch(() => {
             // Strapi unavailable — fall back to local skull
-            setBgImage(skull);
+            setBgMedia({ type: 'image', url: skull });
         });
     }, []);
 
@@ -39,9 +52,25 @@ const HeroCountdown = () => {
 
                 {/* Background — hidden until CMS or fallback resolves; black base prevents white flash */}
                 <div className="absolute inset-0 w-full h-full z-0 bg-black">
-                    {bgImage && (
+                    {bgMedia?.type === 'video' && (
+                        <video
+                            className="w-full h-full object-cover object-[65%_center] md:object-center"
+                            style={{ animation: 'fadeInBg 0.6s ease-in-out forwards' }}
+                            autoPlay
+                            muted
+                            loop
+                            playsInline
+                            preload="metadata"
+                            poster={bgMedia.poster || skull}
+                            onError={() => setBgMedia({ type: 'image', url: skull })}
+                        >
+                            <source src={bgMedia.url} type={bgMedia.mime || 'video/mp4'} />
+                        </video>
+                    )}
+
+                    {bgMedia?.type !== 'video' && bgMedia?.url && (
                         <img
-                            src={bgImage}
+                            src={bgMedia.url}
                             alt="Hero Background"
                             className="w-full h-full object-cover object-[65%_center] md:object-center"
                             style={{ animation: 'fadeInBg 0.6s ease-in-out forwards' }}

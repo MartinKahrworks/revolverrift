@@ -31,6 +31,29 @@ const resolveImageUrl = (imageObj, fallback = fallbackImage) => {
     return `${STRAPI_URL}${url}`;             // Local Strapi upload
 };
 
+// ─── Generic media resolver (image/video/audio/file) ───────────────────────
+const resolveMedia = (mediaObj, fallback = fallbackImage) => {
+    if (!mediaObj) {
+        return {
+            url: fallback,
+            type: "image",
+            mime: "image/webp",
+            name: "",
+        };
+    }
+
+    const url = resolveImageUrl(mediaObj, fallback);
+    const mime = mediaObj?.mime || "";
+    const kind = mime.split("/")[0] || "";
+
+    return {
+        url,
+        type: kind === "video" ? "video" : kind === "audio" ? "audio" : "image",
+        mime: mime || undefined,
+        name: mediaObj?.name || "",
+    };
+};
+
 // ─── Rich Text (blocks) → plain string ────────────────────────────────────────
 const extractPlainText = (blocks) => {
     if (!blocks) return "";
@@ -179,13 +202,19 @@ const _fetchHomePageData = async () => {
                 subtitle: data.hero.subtitle || "",
                 buttonText: data.hero.button_text || "",
                 buttonLink: data.hero.button_link || "",
+                backgroundMedia: resolveMedia(data.hero.background_image, FALLBACK_HERO.backgroundImage),
                 backgroundImage: resolveImageUrl(data.hero.background_image, FALLBACK_HERO.backgroundImage),
                 cinematicSlides: Array.isArray(data.hero.cinematic_slider)
-                    ? data.hero.cinematic_slider.map((img) => ({
-                        id: img.id,
-                        url: resolveImageUrl(img, FALLBACK_HERO.backgroundImage),
-                        title: img.name || "",
-                    }))
+                    ? data.hero.cinematic_slider.map((img) => {
+                        const media = resolveMedia(img, FALLBACK_HERO.backgroundImage);
+                        return {
+                            id: img.id,
+                            type: media.type,
+                            mime: media.mime,
+                            url: media.url,
+                            title: img.name || "",
+                        };
+                    })
                     : [],
             }
             : FALLBACK_HERO;
