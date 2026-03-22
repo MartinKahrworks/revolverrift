@@ -43,44 +43,6 @@ const Banner = () => {
           0% { background-position: 0% 0%; }
           100% { background-position: 100% 100%; }
         }
-        @keyframes glitch-anim-1 {
-          0% { clip-path: inset(20% 0 80% 0); transform: translate(-2px, 1px); }
-          20% { clip-path: inset(60% 0 10% 0); transform: translate(2px, -1px); }
-          40% { clip-path: inset(40% 0 50% 0); transform: translate(-2px, 2px); }
-          60% { clip-path: inset(80% 0 5% 0); transform: translate(2px, -2px); }
-          80% { clip-path: inset(10% 0 70% 0); transform: translate(-1px, 1px); }
-          100% { clip-path: inset(30% 0 50% 0); transform: translate(1px, -1px); }
-        }
-        @keyframes glitch-anim-2 {
-          0% { clip-path: inset(10% 0 60% 0); transform: translate(2px, -1px); }
-          20% { clip-path: inset(80% 0 5% 0); transform: translate(-2px, 2px); }
-          40% { clip-path: inset(30% 0 20% 0); transform: translate(2px, 1px); }
-          60% { clip-path: inset(15% 0 80% 0); transform: translate(-1px, -2px); }
-          80% { clip-path: inset(55% 0 10% 0); transform: translate(1px, 2px); }
-          100% { clip-path: inset(40% 0 30% 0); transform: translate(-2px, 1px); }
-        }
-        .glitch-text::before,
-        .glitch-text::after {
-          content: attr(data-text);
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          background: transparent; 
-        }
-        .glitch-text::before {
-          left: 2px;
-          text-shadow: -1px 0 #ff0000;
-          animation: glitch-anim-1 2.5s infinite linear alternate-reverse;
-          clip-path: inset(0 0 0 0);
-        }
-        .glitch-text::after {
-          left: -2px;
-          text-shadow: -1px 0 #00ffff;
-          animation: glitch-anim-2 3s infinite linear alternate-reverse;
-          clip-path: inset(0 0 0 0);
-        }
         .scanline {
           width: 100%;
           height: 2px;
@@ -110,8 +72,7 @@ const Banner = () => {
               {/* Header with Glitch Effect */}
               <div className="relative inline-block mb-4">
                 <h1
-                  data-text={data.title}
-                  className="glitch-text text-3xl md:text-4xl lg:text-5xl font-custom tracking-widest text-[#e4d6c3] uppercase relative z-10 drop-shadow-lg"
+                  className="text-3xl md:text-4xl lg:text-5xl font-custom tracking-widest text-[#e4d6c3] uppercase relative z-10 drop-shadow-lg"
                   data-aos="fade-right"
                   data-aos-delay="200"
                 >
