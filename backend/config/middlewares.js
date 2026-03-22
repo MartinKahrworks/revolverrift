@@ -52,6 +52,9 @@ module.exports = [
                 'https://revolverrift-development.vercel.app',
                 'https://revolver2.vercel.app',
                 /^https:\/\/.*\.vercel\.app$/,
+                'https://revolver-rift.com',
+                'https://www.revolver-rift.com',
+                /^https:\/\/.*\.revolver-rift\.com$/,
                 'https://revolverriftyash-production.up.railway.app',
                 'https://revolverrift-production.up.railway.app'
             ],
@@ -77,5 +80,3 @@ module.exports = [
     'strapi::favicon',
     'strapi::public',
 ];
-
-//test

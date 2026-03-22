@@ -1,8 +1,10 @@
+import fallbackImage from '../assets/content1.webp';
+
 const STRAPI_URL = import.meta.env.VITE_STRAPI_URL || 'http://127.0.0.1:1337';
 
 // ─── Utilities ─────────────────────────────────────────────────────────────
 const resolveUrl = (url) => {
-    if (!url) return null;
+    if (!url) return fallbackImage;
     return url.startsWith('http') ? url : `${STRAPI_URL}${url}`;
 };
 
@@ -19,8 +21,8 @@ export const FALLBACK_SHOP_PAGE = {
     cart_cta_text: "ADD TO LOADOUT",
     sold_out_label: "SOLD OUT",
     coming_soon_label: "// COMING SOON",
-    hero_image: null,
-    promo_banner: null
+    hero_image: fallbackImage,
+    promo_banner: fallbackImage
 };
 
 export const getShopPage = async () => {

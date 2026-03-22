@@ -1,8 +1,10 @@
+import fallbackLogo from "../assets/logo/Logo1.webp";
+
 const STRAPI_URL = import.meta.env.VITE_STRAPI_URL || "http://localhost:1337";
 
 // ─── URL helper ───────────────────────────────────────────────────────────────
 const resolveImageUrl = (url) => {
-    if (!url) return null;
+    if (!url) return fallbackLogo;
     if (url.startsWith("http")) return url;
     return `${STRAPI_URL}${url}`;
 };

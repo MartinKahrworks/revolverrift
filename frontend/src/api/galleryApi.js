@@ -61,12 +61,14 @@ export const getGalleryMediaFromStrapi = async () => {
         // Sort items by user-defined order to keep album curation intact
         const sortedItems = [...data.gallery_items].sort((a, b) => (a.order ?? 99) - (b.order ?? 99));
 
-        return sortedItems.map((item) => {
+        return sortedItems.map((item, index) => {
             const imgUrl = item.image?.url;
             return {
                 id: item.documentId ?? item.id,
                 title: item.title ?? "",
-                image: imgUrl ? (imgUrl.startsWith("http") ? imgUrl : `${STRAPI_URL}${imgUrl}`) : null,
+                image: imgUrl
+                    ? (imgUrl.startsWith("http") ? imgUrl : `${STRAPI_URL}${imgUrl}`)
+                    : (FALLBACK_GALLERY[index % FALLBACK_GALLERY.length]?.image ?? FALLBACK_GALLERY[0].image),
                 category: item.category ?? "screenshot",
                 orientation: item.orientation ?? "landscape",
                 featured: item.featured ?? false,

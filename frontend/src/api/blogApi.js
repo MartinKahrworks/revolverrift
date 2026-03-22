@@ -1,3 +1,5 @@
+import fallbackImage from "../assets/content1.webp";
+
 const STRAPI_URL = import.meta.env.VITE_STRAPI_URL || "http://localhost:1337";
 
 // ─── Strapi v5 Response Format ────────────────────────────────────────────────
@@ -11,7 +13,7 @@ const STRAPI_URL = import.meta.env.VITE_STRAPI_URL || "http://localhost:1337";
 // We check for 'http' prefix to avoid double-prefixing absolute URLs.
 
 const resolveImageUrl = (url) => {
-    if (!url) return null;
+    if (!url) return fallbackImage;
     if (url.startsWith("http")) return url;           // External URL — already absolute
     return `${STRAPI_URL}${url}`;                     // Local upload — prepend Strapi base URL
 };

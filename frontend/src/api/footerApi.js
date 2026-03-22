@@ -2,6 +2,7 @@ import logo1 from "../assets/logo/Logo1.webp";
 import logo2 from "../assets/logo/Logo2.webp";
 import logo3 from "../assets/logo/Logo3.webp";
 import logo4 from "../assets/logo/Logo4.webp";
+import fallbackImage from "../assets/content1.webp";
 
 const STRAPI_URL = import.meta.env.VITE_STRAPI_URL || "http://127.0.0.1:1337";
 
@@ -35,22 +36,26 @@ export const getFooterData = async () => {
 
         let parsedSocialLinks = FALLBACK_SOCIAL_LINKS;
         if (data.socialLinks && data.socialLinks.length > 0) {
-            parsedSocialLinks = data.socialLinks.map(s => {
+            parsedSocialLinks = data.socialLinks.map((s, index) => {
                 const imgUrl = s.icon?.url;
                 return {
                     href: s.href,
                     label: s.label,
                     isImprintModal: s.isImprintModal,
-                    img: imgUrl ? (imgUrl.startsWith("http") ? imgUrl : `${STRAPI_URL}${imgUrl}`) : null
+                    img: imgUrl
+                        ? (imgUrl.startsWith("http") ? imgUrl : `${STRAPI_URL}${imgUrl}`)
+                        : (FALLBACK_SOCIAL_LINKS[index % FALLBACK_SOCIAL_LINKS.length]?.img || fallbackImage)
                 };
             });
         }
 
         let parsedLogos = FALLBACK_FOOTER_DATA.bottomLogos;
         if (data.bottomLogos && data.bottomLogos.length > 0) {
-            parsedLogos = data.bottomLogos.map(logo => {
+            parsedLogos = data.bottomLogos.map((logo, index) => {
                 const imgUrl = logo.url;
-                return imgUrl ? (imgUrl.startsWith("http") ? imgUrl : `${STRAPI_URL}${imgUrl}`) : null;
+                return imgUrl
+                    ? (imgUrl.startsWith("http") ? imgUrl : `${STRAPI_URL}${imgUrl}`)
+                    : (FALLBACK_FOOTER_DATA.bottomLogos[index % FALLBACK_FOOTER_DATA.bottomLogos.length] || fallbackImage);
             }).filter(Boolean);
         }
 

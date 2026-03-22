@@ -1,3 +1,5 @@
+import fallbackImage from "../assets/content1.webp";
+
 const STRAPI_URL = import.meta.env.VITE_STRAPI_URL || "http://localhost:1337";
 
 // ─── Promise cache — stores the in-flight/resolved Promise, not just the result ─
@@ -7,8 +9,8 @@ const STRAPI_URL = import.meta.env.VITE_STRAPI_URL || "http://localhost:1337";
 let _homePagePromise = null;
 
 // ─── Image URL resolver ────────────────────────────────────────────────────────
-const resolveImageUrl = (imageObj) => {
-    if (!imageObj) return null;
+const resolveImageUrl = (imageObj, fallback = fallbackImage) => {
+    if (!imageObj) return fallback;
 
     // If a string (url) was passed directly by accident, handle it
     if (typeof imageObj === "string") {
@@ -24,7 +26,7 @@ const resolveImageUrl = (imageObj) => {
         else if (imageObj.formats.medium) url = imageObj.formats.medium.url;
     }
 
-    if (!url) return null;
+    if (!url) return fallback;
     if (url.startsWith("http")) return url;   // External URL/CDN
     return `${STRAPI_URL}${url}`;             // Local Strapi upload
 };
@@ -51,7 +53,7 @@ export const FALLBACK_HERO = {
     subtitle: "",
     buttonText: "",
     buttonLink: "",
-    backgroundImage: null,   // null → Hero.jsx falls back to local skull.png
+    backgroundImage: fallbackImage,
     cinematicSlides: [],     // [] → CinematicSlider uses local gun images
 };
 
@@ -92,8 +94,8 @@ export const FALLBACK_ABOUT = {
 };
 
 export const FALLBACK_TRAILER = {
-    videoUrl: null,       // null → Trailer.jsx falls back to local 1.mp4
-    thumbnailUrl: null,   // null → Trailer.jsx falls back to local poster2.png
+    videoUrl: null,
+    thumbnailUrl: fallbackImage,
 };
 
 // imageKey maps to local imports inside SlantedGallery.jsx
@@ -108,7 +110,7 @@ export const FALLBACK_NEWS = [
     {
         id: "the-art-of-building-immersion",
         title: "The Art of Building Immersion",
-        image: null,
+        image: fallbackImage,
         description: "Creating a truly immersive experience isn’t just about visuals—it’s about the small details that pull players into another world.",
         fullDescription: "Creating a truly immersive experience isn’t just about visuals—it’s about the small details that pull players into another world. From ambient sounds to the way light filters through a room, these subtle touches invite players to feel like they’re not just playing a game, but living in it.",
         date: "2025-08-26",
@@ -118,7 +120,7 @@ export const FALLBACK_NEWS = [
     {
         id: "the-power-of-uncertainty",
         title: "The Power of Uncertainty: Creating Suspense",
-        image: null,
+        image: fallbackImage,
         description: "Suspense is the art of leaving players uncertain about what comes next. It’s not just the big moments that make players tense it’s the quiet ones too.",
         fullDescription: "Suspense is the art of leaving players uncertain about what comes next. It’s not just the big moments that make players tense it’s the quiet ones too. The moments of silence, slow pacing, and what players don’t see, often have the greatest impact.",
         date: "2025-08-20",
@@ -128,7 +130,7 @@ export const FALLBACK_NEWS = [
     {
         id: "the-invisible-work",
         title: "The Invisible Work: Making the Game Feel Real",
-        image: null,
+        image: fallbackImage,
         description: "Some of the most important work in game design is invisible. It’s the subtle things.",
         fullDescription: "Some of the most important work in game design is invisible. It’s the subtle animations, ambient sounds, and interaction feedback that make the world feel real. Whether it’s a hand movement or the soft rustle of leaves, these small details are what create a living, breathing world.",
         date: "2025-08-15",
@@ -177,11 +179,11 @@ const _fetchHomePageData = async () => {
                 subtitle: data.hero.subtitle || "",
                 buttonText: data.hero.button_text || "",
                 buttonLink: data.hero.button_link || "",
-                backgroundImage: resolveImageUrl(data.hero.background_image) || null,
+                backgroundImage: resolveImageUrl(data.hero.background_image, FALLBACK_HERO.backgroundImage),
                 cinematicSlides: Array.isArray(data.hero.cinematic_slider)
                     ? data.hero.cinematic_slider.map((img) => ({
                         id: img.id,
-                        url: resolveImageUrl(img),
+                        url: resolveImageUrl(img, FALLBACK_HERO.backgroundImage),
                         title: img.name || "",
                     }))
                     : [],
@@ -221,7 +223,7 @@ const _fetchHomePageData = async () => {
         if (rawTrailer) {
             trailer = {
                 videoUrl: rawTrailer.video_url || null,
-                thumbnailUrl: resolveImageUrl(rawTrailer.thumbnail) || null,
+                thumbnailUrl: resolveImageUrl(rawTrailer.thumbnail, FALLBACK_TRAILER.thumbnailUrl),
             };
         }
 
@@ -229,14 +231,14 @@ const _fetchHomePageData = async () => {
         // This reliably returns each item's image since it's a flat populate on
         // the collection directly (no nested bracket syntax needed)
         const rawGallery = Array.isArray(galleryJson?.data) ? galleryJson.data : [];
-        const galleryItems = rawGallery.map((item) => ({
+        const galleryItems = rawGallery.map((item, index) => ({
             id: item.id,
             order: typeof item.order === 'number' ? item.order : null,
             title: item.title || '',
             link: item.link || '#',
             openInNewTab: item.open_in_new_tab === true,
             buttonText: item.button_text || 'Explore',
-            imageUrl: resolveImageUrl(item.image) || null,
+            imageUrl: resolveImageUrl(item.image, FALLBACK_HERO.backgroundImage),
         }));
         // galleryItems may be [] — SlantedGallery falls back per-slot in that case
 
@@ -248,7 +250,7 @@ const _fetchHomePageData = async () => {
             link: item.slug,
             description: item.excerpt,
             fullDescription: item.content,
-            image: resolveImageUrl(item.cover_image),
+            image: resolveImageUrl(item.cover_image, FALLBACK_NEWS[index % FALLBACK_NEWS.length].image),
             date: item.publish_date,
             category: item.category || (index === 0 ? "FEATURE ANALYSIS" : index === 1 ? "LORE DEEP DIVE" : "DEVELOPMENT LOG")
         })) : FALLBACK_NEWS;

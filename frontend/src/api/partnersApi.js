@@ -1,4 +1,5 @@
 import bgImage from '../assets/Texturelabs_Grunge_353M.webp';
+import fallbackLogo from '../assets/logo/Logo1.webp';
 
 const STRAPI_URL = import.meta.env.VITE_STRAPI_URL || "http://127.0.0.1:1337";
 
@@ -103,8 +104,8 @@ export const getPartnersPageData = async () => {
         const featuredPartners = Array.isArray(d.featuredPartners)
             ? d.featuredPartners.map(p => ({
                 name: p.name || "",
-                url: resolveUrl(p.logo?.url)
-            })).filter(p => p.url)
+                url: resolveUrl(p.logo?.url) || fallbackLogo
+            }))
             : [];
 
         return {

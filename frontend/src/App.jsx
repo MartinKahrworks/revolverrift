@@ -28,6 +28,7 @@ const CharactersPage = React.lazy(() => import("./Components/Characters/Characte
 const CharactersPageTest = React.lazy(() => import("./Components/Characters/CharactersPageTest"));
 const AllBlogsPage = React.lazy(() => import("./Components/Features/NewsCardGrid").then(module => ({ default: module.AllBlogsPage })));
 const BlogPostPage = React.lazy(() => import("./Components/Features/NewsCardGrid").then(module => ({ default: module.BlogPostPage })));
+const NotFound = React.lazy(() => import("./Components/NotFound/NotFound"));
 
 // This component handles scrolling to the top of the page on route changes.
 const ScrollToTop = () => {
@@ -153,6 +154,9 @@ const App = () => {
               {/* Blog Routes — powered by Strapi CMS */}
               <Route path="/blogs" element={<AllBlogsPage />} />
               <Route path="/blog/:link" element={<BlogPostPage />} />
+
+              {/* Fallback Route */}
+              <Route path="*" element={<NotFound />} />
             </Routes>
           </React.Suspense>
           <PopupPlayer isPlay={isPlay} togglePlay={togglePlay} />
