@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 /**
  * CTASection — Full-width dark CTA with red edge glow and sweep-fill button.
@@ -52,21 +53,41 @@ const CTASection = ({ ctaTitle, ctaButtonText, ctaLink = "" }) => (
             </h2>
 
             {/* Button */}
-            <button
-                className="group relative inline-flex items-center justify-center gap-3 border border-[#AA0000] text-white font-custom text-[10px] sm:text-xs tracking-[0.3em] uppercase px-8 md:px-12 py-4 md:py-5 overflow-hidden transition-all duration-300 hover:shadow-[0_0_40px_rgba(170,0,0,0.4)] hover:scale-[1.02]"
-            >
-                {/* Fill sweep — left to right on hover */}
-                <span className="absolute inset-0 bg-[#AA0000] translate-x-[-101%] group-hover:translate-x-0 transition-transform duration-500 ease-in-out" />
-                <span className="relative z-10">{ctaButtonText}</span>
-                <svg
-                    className="relative z-10 w-3.5 h-3.5 -rotate-90 opacity-60 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
+            {/^https?:\/\//i.test(ctaLink || "") ? (
+                <a
+                    href={ctaLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group relative inline-flex items-center justify-center gap-3 border border-[#AA0000] text-white font-custom text-[10px] sm:text-xs tracking-[0.3em] uppercase px-8 md:px-12 py-4 md:py-5 overflow-hidden transition-all duration-300 hover:shadow-[0_0_40px_rgba(170,0,0,0.4)] hover:scale-[1.02]"
                 >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-            </button>
+                    <span className="absolute inset-0 bg-[#AA0000] translate-x-[-101%] group-hover:translate-x-0 transition-transform duration-500 ease-in-out" />
+                    <span className="relative z-10">{ctaButtonText}</span>
+                    <svg
+                        className="relative z-10 w-3.5 h-3.5 -rotate-90 opacity-60 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                    >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                </a>
+            ) : (
+                <Link
+                    to={ctaLink || "/contact"}
+                    className="group relative inline-flex items-center justify-center gap-3 border border-[#AA0000] text-white font-custom text-[10px] sm:text-xs tracking-[0.3em] uppercase px-8 md:px-12 py-4 md:py-5 overflow-hidden transition-all duration-300 hover:shadow-[0_0_40px_rgba(170,0,0,0.4)] hover:scale-[1.02]"
+                >
+                    <span className="absolute inset-0 bg-[#AA0000] translate-x-[-101%] group-hover:translate-x-0 transition-transform duration-500 ease-in-out" />
+                    <span className="relative z-10">{ctaButtonText}</span>
+                    <svg
+                        className="relative z-10 w-3.5 h-3.5 -rotate-90 opacity-60 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                    >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                </Link>
+            )}
         </div>
     </section>
 );

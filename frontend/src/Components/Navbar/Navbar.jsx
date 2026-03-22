@@ -81,7 +81,7 @@ const Navbar = () => {
                 <img
                   src={titleImage}
                   alt="Revolver Rift"
-                  className={`w-auto object-contain transition-all duration-300 drop-shadow-lg hidden sm:block ${isScrolled ? "h-5 md:h-6" : "h-6 md:h-7"} group-hover:drop-shadow-[0_0_20px_rgba(255,255,255,0.5)]`}
+                  className={`w-auto object-contain transition-all duration-300 drop-shadow-lg hidden sm:block ${isScrolled ? "h-[18px] md:h-[22px]" : "h-[22px] md:h-[26px]"} group-hover:drop-shadow-[0_0_20px_rgba(255,255,255,0.5)]`}
                 />
               </div>
             </Link>

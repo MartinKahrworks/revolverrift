@@ -101,7 +101,7 @@ const Banner = () => {
       <div className="absolute inset-0 pointer-events-none z-10 bg-[radial-gradient(circle_at_center,transparent_50%,rgba(0,0,0,0.8)_100%)]" />
 
       {/* Content Wrapper */}
-      <div className="relative z-20 w-full max-w-screen-xl mx-auto px-6 md:px-4 h-full flex items-start pt-24">
+      <div className="relative z-20 w-full max-w-screen-xl mx-auto px-6 md:px-4 h-full flex items-start pt-[104px]">
         <div className="grid grid-cols-1 lg:grid-cols-2 w-full">
           {/* Main Text Section */}
           <div className="lg:pr-10">

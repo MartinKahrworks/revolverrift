@@ -4,10 +4,12 @@ import { FaPaperPlane } from "react-icons/fa";
 import Footer from "../Footer/Footer";
 import fireVideo from '../../assets/embers_background.gif';
 import { getContactPageData, FALLBACK_CONTACT_DATA } from "../../api/contactApi";
+import { submitContactForm } from "../../api/contactSubmitApi";
 
 function Contact() {
     const [formData, setFormData] = useState({});
     const [cmsData, setCmsData] = useState(FALLBACK_CONTACT_DATA);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     useEffect(() => {
         const fetchCMS = async () => {
@@ -40,14 +42,13 @@ function Contact() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (isSubmitting) return;
+
         try {
-            const response = await fetch("/api/contact", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(formData),
-            });
-            const result = await response.json();
-            alert(result.message || cmsData.successMessage);
+            setIsSubmitting(true);
+
+            const result = await submitContactForm(formData);
+            alert(result?.message || cmsData.successMessage);
 
             // Reset form based on dynamic fields
             const resetForm = {};
@@ -59,7 +60,9 @@ function Contact() {
             if (import.meta.env.DEV) {
                 console.error("Error sending email:", error);
             }
-            alert(cmsData.errorMessage || "Failed to send message. Please try again.");
+            alert(error?.message || cmsData.errorMessage || "Failed to send message. Please try again.");
+        } finally {
+            setIsSubmitting(false);
         }
     };
 
@@ -128,16 +131,16 @@ function Contact() {
                         {/* Submit Button */}
                         <button
                             type="submit"
-                            disabled={!isFormValid}
+                            disabled={!isFormValid || isSubmitting}
                             className={`
                                 mt-4 w-full py-4 uppercase tracking-[0.2em] font-bold text-xs transition-all duration-300 border border-transparent
-                                ${isFormValid
+                                ${isFormValid && !isSubmitting
                                     ? "bg-[#ff3333] text-white hover:bg-transparent hover:border-[#ff3333] hover:text-[#ff3333] cursor-pointer shadow-[0_0_15px_rgba(255,51,51,0.3)]"
                                     : "bg-white/10 text-white/30 cursor-not-allowed"
                                 }
                             `}
                         >
-                            {cmsData.submitButtonText}
+                            {isSubmitting ? "SENDING..." : cmsData.submitButtonText}
                         </button>
                     </form>
                 </motion.div>

@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 
 // ─── Theme config for each tier ────────────────────────────────────────────────
 const TIER_THEMES = [
@@ -191,8 +192,8 @@ const TierCard = ({ tier, index, wrapperClass = "" }) => {
 
             {/* CTA Button */}
             <div className="px-7 pb-8 pt-4">
-                <a
-                    href="#apply"
+                <Link
+                    to="/contact"
                     className="block w-full text-center font-custom text-xs tracking-[0.2em] uppercase py-3 rounded-lg transition-all duration-300"
                     style={{
                         background: theme.accentMuted,
@@ -209,7 +210,7 @@ const TierCard = ({ tier, index, wrapperClass = "" }) => {
                     }}
                 >
                     Apply Now
-                </a>
+                </Link>
             </div>
         </div>
     );
