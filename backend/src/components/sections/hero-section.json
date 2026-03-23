@@ -36,6 +36,11 @@
         "videos",
         "audios"
       ]
+    },
+    "action_buttons": {
+      "type": "component",
+      "repeatable": true,
+      "component": "elements.action-button"
     }
   },
   "config": {}

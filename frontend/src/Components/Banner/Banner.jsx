@@ -15,10 +15,7 @@ const Banner = () => {
 
   return (
     <div
-      className="relative w-full bg-black overflow-hidden"
-      style={{
-        height: `calc(100vh - ${navbarHeight}px)`,
-      }}
+      className="relative w-full bg-black overflow-hidden flex items-center min-h-[60vh] md:min-h-[calc(100dvh-80px)] py-16 md:py-0"
     >
       {/* Dynamic Background Layer */}
       <div
@@ -62,8 +59,7 @@ const Banner = () => {
       <div className="absolute inset-0 pointer-events-none z-10 bg-gradient-to-r from-black/80 via-black/40 to-transparent" />
       <div className="absolute inset-0 pointer-events-none z-10 bg-[radial-gradient(circle_at_center,transparent_50%,rgba(0,0,0,0.8)_100%)]" />
 
-      {/* Content Wrapper */}
-      <div className="relative z-20 w-full max-w-screen-xl mx-auto px-6 md:px-4 h-full flex items-start pt-[104px]">
+      <div className="relative z-20 w-full max-w-screen-xl mx-auto px-4 sm:px-6 md:px-8 h-full flex items-center pt-28 pb-12 md:pb-0 md:pt-[104px]">
         <div className="grid grid-cols-1 lg:grid-cols-2 w-full">
           {/* Main Text Section */}
           <div className="lg:pr-10">
@@ -72,7 +68,7 @@ const Banner = () => {
               {/* Header with Glitch Effect */}
               <div className="relative inline-block mb-4">
                 <h1
-                  className="text-3xl md:text-4xl lg:text-5xl font-custom tracking-widest text-[#e4d6c3] uppercase relative z-10 drop-shadow-lg"
+                  className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-custom tracking-widest text-[#e4d6c3] uppercase relative z-10 drop-shadow-lg"
                   data-aos="fade-right"
                   data-aos-delay="200"
                 >
@@ -83,7 +79,7 @@ const Banner = () => {
 
               {/* Description Block with HUD Styling */}
               <div
-                className="relative p-6 border-l-2 border-red-600/50 bg-black/40 backdrop-blur-sm group hover:bg-black/60 transition-colors duration-500 rounded-r-sm"
+                className="relative p-4 sm:p-6 border-l-2 border-red-600/50 bg-black/40 backdrop-blur-sm group hover:bg-black/60 transition-colors duration-500 rounded-r-sm"
                 data-aos="fade-up"
                 data-aos-delay="500"
               >
@@ -92,24 +88,23 @@ const Banner = () => {
                 <div className="absolute -bottom-1 -left-1 w-3 h-3 border-b-2 border-l-2 border-red-600" />
                 <div className="absolute top-0 right-0 w-1 h-full bg-gradient-to-b from-transparent via-red-600/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
 
-                <div className="space-y-6 text-lg md:text-xl text-gray-300 font-serif leading-relaxed">
+                <div className="space-y-4 sm:space-y-6 text-base sm:text-lg md:text-xl text-gray-300 font-serif leading-relaxed">
                   <p className="max-w-2xl">
                     {data.description1}
                   </p>
 
-                  <p className="max-w-2xl text-base md:text-lg text-gray-400">
+                  <p className="max-w-2xl text-sm sm:text-base md:text-lg text-gray-400">
                     {data.description2}
                   </p>
 
                   <div className="relative overflow-hidden py-2">
-                    <p className="text-sm font-mono tracking-widest uppercase text-red-500/80">
+                    <p className="text-xs sm:text-sm font-mono tracking-widest uppercase text-red-500/80">
                       {data.hud_text}
                     </p>
-                    {/* Scanning Line Animation for this specific alert */}
                     <div className="scanline" style={{ height: '1px', background: 'rgba(220, 38, 38, 0.5)' }}></div>
                   </div>
 
-                  <p className="border-t border-white/10 pt-4 text-base md:text-lg">
+                  <p className="border-t border-white/10 pt-4 text-sm sm:text-base md:text-lg">
                     {data.warning_text}
                   </p>
                 </div>

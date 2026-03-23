@@ -78,6 +78,7 @@ export const FALLBACK_HERO = {
     buttonLink: "",
     backgroundImage: fallbackImage,
     cinematicSlides: [],     // [] → CinematicSlider uses local gun images
+    actionButtons: [],       // Dynamic links like Steam, Epic
 };
 
 export const FALLBACK_FEATURES = {
@@ -171,7 +172,8 @@ const _fetchHomePageData = async () => {
                 `${STRAPI_URL}/api/home-page` +
                 `?populate[hero][populate][background_image]=true` +
                 `&populate[hero][populate][cinematic_slider]=true` +
-                `&populate[features][populate][features]=true` +
+                `&populate[hero][populate][action_buttons][populate][icon]=true` +
+                `&populate[features][populate][features][populate][icon]=true` +
                 `&populate[about][populate][statistics]=true` +
                 `&populate[trailer][populate][thumbnail]=true`
             ),
@@ -216,6 +218,14 @@ const _fetchHomePageData = async () => {
                         };
                     })
                     : [],
+                actionButtons: Array.isArray(data.hero.action_buttons)
+                    ? data.hero.action_buttons.map((btn) => ({
+                        id: btn.id,
+                        text: btn.text || "",
+                        url: btn.url || "",
+                        iconUrl: btn.icon ? resolveImageUrl(btn.icon) : null,
+                    }))
+                    : [],
             }
             : FALLBACK_HERO;
 
@@ -226,7 +236,11 @@ const _fetchHomePageData = async () => {
             features = {
                 sectionTitle: data.features.section_title || FALLBACK_FEATURES.sectionTitle,
                 items: rawItems.length > 0
-                    ? rawItems.map((f) => ({ title: f.title || "", description: f.description || "" }))
+                    ? rawItems.map((f) => ({
+                        title: f.title || "",
+                        description: f.description || "",
+                        iconUrl: f.icon ? resolveImageUrl(f.icon) : null,
+                    }))
                     : FALLBACK_FEATURES.items,
             };
         }

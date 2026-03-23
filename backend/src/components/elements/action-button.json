@@ -1,0 +1,24 @@
+{
+    "collectionName": "components_elements_action_buttons",
+    "info": {
+        "displayName": "action-button",
+        "description": "Dynamic button with text, link and icon."
+    },
+    "options": {},
+    "attributes": {
+        "text": {
+            "type": "string"
+        },
+        "url": {
+            "type": "string"
+        },
+        "icon": {
+            "type": "media",
+            "multiple": false,
+            "allowedTypes": [
+                "images",
+                "files"
+            ]
+        }
+    }
+}

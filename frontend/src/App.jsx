@@ -115,7 +115,7 @@ const App = () => {
                     <HeroCountdown />
                     <Features />
                     <AboutGame />
-                    <Trailer />
+                    {/* <Trailer /> */}
 
                     <Footer />
                   </>

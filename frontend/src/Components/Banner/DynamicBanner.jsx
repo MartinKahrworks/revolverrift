@@ -37,11 +37,10 @@ const DynamicBanner = ({ section }) => {
 
     return (
         <div
-            className="relative w-full bg-black h-screen bg-cover bg-no-repeat overflow-hidden"
+            className="relative w-full bg-black bg-cover bg-no-repeat overflow-hidden flex items-center min-h-[50vh] md:min-h-[calc(100dvh-80px)] py-16 md:py-0"
             style={{
                 backgroundImage: `url(${section.background_image})`,
                 backgroundPosition: section.bg_position || "center center",
-                height: `calc(100vh - ${navbarHeight}px)`,
             }}
         >
             {/* Texture Overlay */}
@@ -69,8 +68,8 @@ const DynamicBanner = ({ section }) => {
                 />
             </div>
 
-            <div className="w-full max-w-screen-xl mx-auto px-4 md:px-8 h-full flex items-center relative z-10">
-                <div className={`grid grid-cols-1 ${isCenter ? '' : 'lg:grid-cols-2'} gap-20 lg:gap-28 items-center w-full`}>
+            <div className="w-full max-w-screen-xl mx-auto px-4 sm:px-6 md:px-8 h-full flex items-center relative z-10">
+                <div className={`grid grid-cols-1 ${isCenter ? '' : 'lg:grid-cols-2'} gap-8 lg:gap-28 items-center w-full`}>
 
                     {/* Empty column if text needs to go right */}
                     {!isLeft && !isCenter && <div className="hidden lg:block"></div>}
@@ -82,7 +81,7 @@ const DynamicBanner = ({ section }) => {
                                 data-aos-delay="500"
                                 className="text-base md:text-lg leading-relaxed text-gray-300 space-y-4"
                             >
-                                <p className="font-semibold font-custom text-[#e4d6c3] text-3xl md:text-4xl lg:text-5xl">
+                                <p className="font-semibold font-custom text-[#e4d6c3] text-2xl sm:text-3xl md:text-4xl lg:text-5xl">
                                     {section.title}
                                 </p>
                                 {renderText()}

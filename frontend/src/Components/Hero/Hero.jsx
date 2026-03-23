@@ -11,10 +11,14 @@ const HeroCountdown = () => {
 
     // null = no media yet; CMS media applied after Promise resolves; skull as last resort
     const [bgMedia, setBgMedia] = useState(null);
+    const [actionButtons, setActionButtons] = useState([]);
 
     useEffect(() => {
         getHomePage().then((data) => {
             const media = data?.hero?.backgroundMedia;
+            if (data?.hero?.actionButtons) {
+                setActionButtons(data.hero.actionButtons);
+            }
 
             // If hero media is a video, render immediately.
             if (media?.type === 'video' && media?.url) {
@@ -75,7 +79,7 @@ const HeroCountdown = () => {
                             className="w-full h-full object-cover object-[65%_center] md:object-center"
                             style={{ animation: 'fadeInBg 0.6s ease-in-out forwards' }}
                             loading="eager"
-                            fetchPriority="high"
+                            fetchpriority="high"
                             decoding="async"
                         />
                     )}
@@ -89,11 +93,55 @@ const HeroCountdown = () => {
                     <div className="flex-1 flex flex-col items-center justify-end h-full pb-32 md:pb-40 text-center w-full pointer-events-auto">
                         <div className="max-w-4xl mx-auto px-2 sm:px-4 w-full">
 
-                            {/* Store Logos — temporarily hidden */}
-                            {/* <div className="flex items-center justify-center gap-3 md:gap-4 mt-4 md:mt-6">
-                                <img src="..." alt="Steam" className="h-10 sm:h-12 md:h-16 lg:h-20 w-auto object-contain" />
-                                <img src="..." alt="PC Store" className="h-10 sm:h-12 md:h-16 lg:h-20 w-auto object-contain" />
-                            </div> */}
+                            {/* Dynamic Store Badges & Action Buttons */}
+                            {actionButtons.length > 0 && (
+                                <div className="flex flex-wrap items-center justify-center gap-4 md:gap-6 mt-4 md:mt-8">
+                                    {actionButtons.map((btn, index) => {
+                                        // If no text is provided, render it as a large rectangular badge (like Steam)
+                                        if (btn.iconUrl && (!btn.text || btn.text.trim() === '')) {
+                                            return (
+                                                <a
+                                                    key={btn.id || index}
+                                                    href={btn.url || '#'}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="hover:scale-105 hover:brightness-110 transition-all duration-300 block drop-shadow-lg"
+                                                >
+                                                    <img
+                                                        src={btn.iconUrl}
+                                                        alt="Store Link"
+                                                        className="h-10 sm:h-12 md:h-16 lg:h-20 w-auto object-contain"
+                                                    />
+                                                </a>
+                                            );
+                                        }
+
+                                        // If text is provided, render it as a styled button
+                                        return (
+                                            <a
+                                                key={btn.id || index}
+                                                href={btn.url || '#'}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="group flex items-center justify-center gap-3 px-6 py-3 md:px-8 md:py-4 bg-black/60 hover:bg-[#ff3333] border border-white/20 hover:border-[#ff3333] transition-all duration-300 backdrop-blur-sm shadow-lg hover:shadow-[0_0_20px_rgba(255,51,51,0.5)] cursor-pointer"
+                                            >
+                                                {btn.iconUrl && (
+                                                    <img
+                                                        src={btn.iconUrl}
+                                                        alt={btn.text}
+                                                        className="w-5 h-5 md:w-6 md:h-6 object-contain group-hover:scale-110 group-hover:brightness-0 group-hover:invert transition-all duration-300"
+                                                    />
+                                                )}
+                                                {btn.text && (
+                                                    <span className="text-white font-godlike tracking-widest uppercase text-sm md:text-base drop-shadow-sm group-hover:text-white">
+                                                        {btn.text}
+                                                    </span>
+                                                )}
+                                            </a>
+                                        );
+                                    })}
+                                </div>
+                            )}
 
                         </div>
                     </div>

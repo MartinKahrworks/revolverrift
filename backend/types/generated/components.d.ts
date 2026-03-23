@@ -1,5 +1,18 @@
 import type { Schema, Struct } from '@strapi/strapi';
 
+export interface ElementsActionButton extends Struct.ComponentSchema {
+  collectionName: 'components_elements_action_buttons';
+  info: {
+    description: 'Dynamic button with text, link and icon.';
+    displayName: 'action-button';
+  };
+  attributes: {
+    icon: Schema.Attribute.Media<'images' | 'files'>;
+    text: Schema.Attribute.String;
+    url: Schema.Attribute.String;
+  };
+}
+
 export interface ElementsFeatureItem extends Struct.ComponentSchema {
   collectionName: 'components_elements_feature_items';
   info: {
@@ -101,6 +114,7 @@ export interface SectionsHeroSection extends Struct.ComponentSchema {
     displayName: 'hero-section';
   };
   attributes: {
+    action_buttons: Schema.Attribute.Component<'elements.action-button', true>;
     background_image: Schema.Attribute.Media<
       'images' | 'files' | 'videos' | 'audios'
     >;
@@ -236,6 +250,7 @@ export interface SharedSocialLink extends Struct.ComponentSchema {
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
+      'elements.action-button': ElementsActionButton;
       'elements.feature-item': ElementsFeatureItem;
       'elements.product-badge': ElementsProductBadge;
       'elements.product-variant': ElementsProductVariant;

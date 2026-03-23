@@ -26,7 +26,7 @@ export const NewsCardGrid = () => {
     <div className="w-full bg-black text-[#d1c7b7] pt-4 pb-0 bg-cover bg-fixed "
       style={{ backgroundImage: `url(${bgImage})` }}>
       <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-center items-center mb-12 mt-0 py-20">
+        <div className="flex justify-center items-center mb-8 sm:mb-12 mt-0 py-12 sm:py-20">
           <h1
             className="text-[clamp(1.8rem,4vw,3rem)] font-bold text-[#e4d6c3]"
             style={{ fontFamily: "'Cinzel', serif" }}
@@ -68,7 +68,7 @@ export const NewsCardGrid = () => {
             </Link>
           ))}
         </div>
-        <div className="flex justify-center mt-12 py-20">
+        <div className="flex justify-center mt-8 sm:mt-12 py-12 sm:py-20">
           <Link
             to="/blogs"
             className="text-[#e4d6c3] border border-[#b89a6f] px-6 py-3 rounded-md transition-all duration-300 hover:bg-[#b89a6f] hover:text-black font-custom"
@@ -123,10 +123,10 @@ export const AllBlogsPage = () => {
       />
 
       {/* Navigation / Header Area */}
-      <div className="relative z-10 pt-28 px-6 md:px-12 lg:px-24 pb-12">
+      <div className="relative z-10 pt-20 sm:pt-28 px-4 sm:px-6 md:px-12 lg:px-24 pb-12">
         {/* Title Section */}
-        <div className="mb-16 border-b border-white/10 pb-8">
-          <h1 className="text-6xl md:text-8xl font-black tracking-tighter uppercase text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-500 mb-4 font-melma">
+        <div className="mb-10 sm:mb-16 border-b border-white/10 pb-6 sm:pb-8">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-black tracking-tighter uppercase text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-500 mb-4 font-melma">
             {pageData?.pageTitle || "ALL DEVELOPER BLOGS"}
           </h1>
           <p className="text-red-500 font-mono tracking-widest uppercase text-sm">
@@ -160,7 +160,7 @@ export const AllBlogsPage = () => {
               <div className="inline-block px-3 py-1 bg-red-600 text-black text-xs font-bold uppercase tracking-wider mb-4">
                 Featured Story
               </div>
-              <h2 className="text-3xl md:text-6xl font-bold uppercase leading-none mb-6 font-custom group-hover:text-red-500 transition-colors duration-300">
+              <h2 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold uppercase leading-none mb-4 sm:mb-6 font-custom group-hover:text-red-500 transition-colors duration-300">
                 {featuredBlog.title}
               </h2>
               <p className="text-gray-300 text-lg md:text-xl line-clamp-3 mb-6" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
@@ -205,7 +205,7 @@ export const AllBlogsPage = () => {
                       {new Date(news.publishDate).toLocaleDateString()}
                     </div>
                   )}
-                  <h3 className="text-2xl font-bold uppercase mb-4 leading-tight font-custom group-hover:text-red-500 transition-colors duration-300">
+                  <h3 className="text-xl sm:text-2xl font-bold uppercase mb-4 leading-tight font-custom group-hover:text-red-500 transition-colors duration-300">
                     {news.title}
                   </h3>
                   <p className="text-gray-400 line-clamp-3 leading-relaxed" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
@@ -310,9 +310,9 @@ export const BlogPostPage = () => {
 
   if (!blogPost) {
     return (
-      <div className="w-full bg-cover bg-fixed text-[#d1c7b7] py-20 text-center"
+      <div className="w-full bg-cover bg-fixed text-[#d1c7b7] py-20 sm:py-32 text-center"
         style={{ backgroundImage: `url(${bgImage})` }}>
-        <h1 className="text-4xl font-bold text-[#b89a6f]" style={{ fontFamily: "'Cinzel', serif" }}>
+        <h1 className="text-2xl sm:text-4xl font-bold text-[#b89a6f]" style={{ fontFamily: "'Cinzel', serif" }}>
           Blog Post Not Found
         </h1>
         <Link to="/blogs" className="text-red-500 mt-4 inline-block font-custom">
@@ -323,10 +323,10 @@ export const BlogPostPage = () => {
   }
 
   return (
-    <div className="w-full bg-cover bg-fixed text-[#d1c7b7] py-60"
+    <div className="w-full bg-cover bg-fixed text-[#d1c7b7] pt-24 pb-16 sm:pt-40 sm:pb-32 lg:pt-60 lg:pb-40"
       style={{ backgroundImage: `url(${bgImage})` }}>
       <div className="max-w-screen-md mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="text-5xl font-bold mb-6 text-[#f4e1c1] font-melma">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6 text-[#f4e1c1] font-melma leading-tight">
           {blogPost.title}
         </h1>
         {blogPost.publishDate && (
