@@ -1,0 +1,20 @@
+# Dependency directories
+node_modules/
+.npm/
+
+# Strapi Build & Cache directories
+build/
+.cache/
+.strapi/
+dist/
+
+# Env & Settings
+.env
+.DS_Store
+
+# Git directories
+.git/
+.gitignore
+
+# Uploads & temporary media (Optional if Railway uses persistent storage, but don't bake into image)
+public/uploads/

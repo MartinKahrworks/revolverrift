@@ -39,18 +39,7 @@ const Features = () => {
             return (
               <div key={index} className="group cursor-default">
                 <div className="mb-5 relative inline-block">
-                  {feature.iconUrl ? (
-                    // Strapi-provided icon image
-                    <img
-                      src={feature.iconUrl}
-                      alt={feature.title}
-                      className="w-14 h-14 object-contain group-hover:scale-110 transition-transform duration-300 drop-shadow-lg"
-                      style={{ filter: 'brightness(0) invert(1)' }}
-                    />
-                  ) : (
-                    // Fallback React icon
-                    <Icon className="w-14 h-14 text-white/90 group-hover:text-[#ff3333] transition-colors duration-300 transform group-hover:scale-110 drop-shadow-lg" />
-                  )}
+                  <Icon className="w-14 h-14 text-white/90 group-hover:text-[#ff3333] transition-colors duration-300 transform group-hover:scale-110 drop-shadow-lg" />
                   <div className="absolute inset-0 bg-[#ff3333]/30 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>
                 <h3 className="text-xl font-godlike tracking-widest uppercase mb-3 text-white group-hover:text-[#ff3333] transition-colors duration-300 drop-shadow-md">
