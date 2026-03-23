@@ -24,8 +24,9 @@ const Contact = React.lazy(() => import("./Components/Contact/Contact"));
 const Shop = React.lazy(() => import("./Components/Shop/Shop"));
 const ProductDetail = React.lazy(() => import("./Components/Shop/ProductDetail"));
 const Cart = React.lazy(() => import("./Components/Cart/Cart"));
-const CharactersPage = React.lazy(() => import("./Components/Characters/CharactersPage"));
-const CharactersPageTest = React.lazy(() => import("./Components/Characters/CharactersPageTest"));
+// Characters removed for V1
+// const CharactersPage = React.lazy(() => import("./Components/Characters/CharactersPage"));
+// const CharactersPageTest = React.lazy(() => import("./Components/Characters/CharactersPageTest"));
 const AllBlogsPage = React.lazy(() => import("./Components/Features/NewsCardGrid").then(module => ({ default: module.AllBlogsPage })));
 const BlogPostPage = React.lazy(() => import("./Components/Features/NewsCardGrid").then(module => ({ default: module.BlogPostPage })));
 const NotFound = React.lazy(() => import("./Components/NotFound/NotFound"));
@@ -139,13 +140,11 @@ const App = () => {
               <Route path="/shop" element={<Shop />} />
               <Route path="/shop/:slug" element={<ProductDetail />} />
               <Route path="/cart" element={<Cart />} />
-              {/* Character Routes */}
-              <Route path="/characters" element={<Navigate to="/characters/leader" replace />} />
+              {/* Character Routes (Removed for V1) */}
+              {/* <Route path="/characters" element={<Navigate to="/characters/leader" replace />} />
               <Route path="/characters/:id" element={<CharactersPage />} />
-
-              {/* Character Test Routes */}
               <Route path="/characterstest" element={<Navigate to="/characterstest/leader" replace />} />
-              <Route path="/characterstest/:id" element={<CharactersPageTest />} />
+              <Route path="/characterstest/:id" element={<CharactersPageTest />} /> */}
 
               <Route path="/partners" element={<Partners />} />
               <Route path="/contact" element={<Contact />} />

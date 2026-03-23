@@ -124,7 +124,7 @@ export const FALLBACK_TRAILER = {
 
 // imageKey maps to local imports inside SlantedGallery.jsx
 export const FALLBACK_GALLERY_ITEMS = [
-    { id: 1, title: 'CHARACTERS', link: '/characters', openInNewTab: false, buttonText: 'Explore', imageKey: 'char2', position: 'center 20%' },
+    { id: 1, title: 'NEWS', link: '/news', openInNewTab: false, buttonText: 'Explore', imageKey: 'char2', position: 'center 20%' },
     { id: 2, title: 'SHOWCASE', link: '/showcase', openInNewTab: false, buttonText: 'Explore', imageKey: 'gun2', position: 'center' },
     { id: 3, title: 'GAME DEMO', link: '#', openInNewTab: false, buttonText: 'Explore', imageKey: 'gun3', position: 'center' },
     { id: 4, title: 'BLOGS', link: '/blogs', openInNewTab: false, buttonText: 'Explore', imageKey: 'gun4', position: 'center' },
