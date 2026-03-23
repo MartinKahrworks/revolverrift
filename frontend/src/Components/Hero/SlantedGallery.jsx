@@ -12,7 +12,7 @@ import { getHomePage } from '../../api/homeApi';
 const PANEL_COUNT = 4;
 
 const FALLBACK_SLOTS = [
-    { slot: 1, title: 'CHARACTERS', link: '/characters', openInNewTab: false, buttonText: 'Explore', image: char2, position: 'center 20%' },
+    { slot: 1, title: 'NEWS', link: '/news', openInNewTab: false, buttonText: 'Explore', image: char2, position: 'center 20%' },
     { slot: 2, title: 'SHOWCASE', link: '/showcase', openInNewTab: false, buttonText: 'Explore', image: gun2, position: 'center' },
     { slot: 3, title: 'GAME DEMO', link: '#', openInNewTab: false, buttonText: 'Explore', image: gun3, position: 'center' },
     { slot: 4, title: 'BLOGS', link: '/blogs', openInNewTab: false, buttonText: 'Explore', image: gun4, position: 'center' },
