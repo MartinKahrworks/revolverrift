@@ -3,7 +3,7 @@ import logo from "../../assets/logo/navbar-logo.webp";
 import titleImage from "../../assets/logo/revolver-rift-title.webp";
 import { HiMenuAlt1, HiMenuAlt3 } from "react-icons/hi";
 import { FaTwitter, FaDribbble, FaInstagram, FaPinterest, FaSearch, FaShoppingCart, FaTh, FaGlobe } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
 import "./cutting-animation.css";
 
@@ -20,9 +20,14 @@ const NavLinks = [
 
 const Navbar = () => {
   const { cartCount } = useCart();
+  const location = useLocation();
   const [showMenu, setShowMenu] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [activeLink, setActiveLink] = useState("/");
+  const [activeLink, setActiveLink] = useState(location.pathname);
+
+  useEffect(() => {
+    setActiveLink(location.pathname);
+  }, [location.pathname]);
 
   const toggleMenu = () => {
     setShowMenu((prev) => !prev);
@@ -52,7 +57,7 @@ const Navbar = () => {
             TOP BAR (USA ... PRIVACY CONTACT | Social Icons)
         ────────────────────────────────────────────────────────────── */}
         <div className={`w-full border-b border-white/10 transition-all duration-300 ${isScrolled ? "py-0.5" : "py-1"}`}>
-          <div className="container mx-auto px-4 md:px-12 flex justify-end items-center text-[9px] md:text-[10px] tracking-[0.2em] font-vintage text-white/70">
+          <div className="w-full px-4 md:px-12 flex justify-end items-center text-[9px] md:text-[10px] tracking-[0.2em] font-vintage text-white/70">
             {/* Right: Social Icons — hidden on very small screens */}
             <div className="hidden xs:flex items-center gap-3 md:gap-5">
               <a href="#" className="hover:text-white transition-colors"><FaTwitter size={10} /></a>
@@ -68,7 +73,7 @@ const Navbar = () => {
             MAIN NAVBAR (Logo | Links | Action Icons)
         ────────────────────────────────────────────────────────────── */}
         <div className={`w-full transition-all duration-300 ${isScrolled ? "py-3 md:py-3.5" : "py-4 md:py-5"}`}>
-          <div className="container mx-auto px-4 md:px-12 flex justify-between items-center relative">
+          <div className="w-full px-4 md:px-12 flex justify-between items-center relative">
 
             {/* 1. LOGO BLOCK (Left) - Logo Icon + Brand Text */}
             <Link to="/" className="flex-shrink-0 z-[70] group mr-8 relative">
